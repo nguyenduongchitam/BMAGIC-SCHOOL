@@ -1,7 +1,9 @@
 <?php
-$mysqli = new mysqli("localhost","root","","");
+$mysqli = new mysqli("localhost","root","","banhang");
+
 // Check connection
-if ($mysqli -> connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+if ($mysqli->connect_errno) {
+  echo "Kết nối SQL lỗi: " . $mysqli->connect_error;
+  exit();
 }
 ?>
