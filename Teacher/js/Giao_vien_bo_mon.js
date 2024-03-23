@@ -22,6 +22,3 @@ function selectNienKhoa() {
     }
   }
 
-// datatable
-
-

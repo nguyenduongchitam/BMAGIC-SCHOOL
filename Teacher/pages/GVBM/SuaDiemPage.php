@@ -9,6 +9,8 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <!-- DataTables JS -->
@@ -24,7 +26,6 @@
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
 </head>
-
 
 <body>
     <section>
@@ -212,36 +213,35 @@
                 },
                 layout: {
                     topStart: {
-                        buttons: [{
+                        buttons: [
+                            {
                                 extend: 'copyHtml5',
-                                exportOptions: {
-                                    columns: [0, ':visible']
-                                }
+                                text: '<i class="fa fa-files-o"></i>',
+                                titleAttr: 'Copy',
+
                             },
                             {
                                 extend: 'excelHtml5',
-                                exportOptions: {
-                                    columns: ':visible'
-                                }
+                                text: '<i class="fa fa-file-excel-o"></i>',
+                                titleAttr: 'Excel'
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                text: '<i class="fa fa-file-text-o"></i>',
+                                titleAttr: 'CSV'
                             },
                             {
                                 extend: 'pdfHtml5',
-                                exportOptions: {
-                                    columns: [0, 1, 2, 5]
-                                }
-                            },
-                            'colvis'
+                                text: '<i class="fa fa-file-pdf-o"></i>',
+                                titleAttr: 'PDF'
+                            }, 'colvis'
                         ]
                     },
-
                     topEnd: 'search',
-
                     bottomStart: 'pageLength',
                     bottomEnd: 'info',
-                    bottom2center: 'paging',
-
+                    bottom2center: 'paging'
                 }
-
 
             });
 
@@ -268,6 +268,9 @@
         <style>
             td.highlight {
                 background-color: rgba(var(--dt-row-hover), 0.052) !important;
+            }
+            .dt-buttons button.buttons-copy {
+
             }
         </style>
     </section>
