@@ -10,26 +10,41 @@ else
 }
 
 //chọn trang web cần xử lý
-if( $action=='BaoCao')
-    {
-        include("pages/BaoCao/BaoCao.php");
-    }
-else if ( $action=='ChiTietLop')
-    {
-        include("pages/ChiTietLop/ChiTietLop.php");
-    }
-    else if ( $action=='LapDanhSachLop')
-    {
-        include("pages/LapDanhSachLop/LapDanhSachLop.php");
-    }
-    else if ( $action=='ChiTietLop')
-    {
-        include("pages/QuanLyMonHoc/QuanLyMonHoc.php");
-    }
-    else if ( $action=='TiepNhanHocSinh')
+    if( $action=='TiepNhanHocSinh')
     {
         include("pages/TiepNhanHocSinh/TiepNhanHocSinh.php");
     }
- else  include("pages/DashBoard.php")
+else if( $action=='QuanLyLop')
+    {
+        include("pages/QuanLyLop/QuanLyLop.php");
+    }
+    else if( $action=='LapDanhSachLop')
+    {
+        include("pages/LapDanhSachLop/LapDanhSachLop.php");
+    }
+    else if( $action=='DanhSachHocSinh')
+    {
+        include("pages/DanhSachHocSinh/DanhSachHocSinh.php");
+    }
+    else if( $action=='QuanLyMonHoc')
+    {
+        include("pages/QuanLyMonHoc/QuanLyMonHoc.php");
+    }
+    else if( $action=='BangDiemMonHoc')
+    {
+        include("pages/BangDiemMonHoc/BangDiemMonHoc.php");
+    }
+    else if( $action=='BaoCao')
+    {
+        include("pages/BaoCao/BaoCao.php");
+    }
+    else if( $action=='CaiDat')
+    {
+        include("pages/CaiDat/CaiDat.php");
+    }
+    else 
+    {
+        include("pages/DashBoard.php");
+    }
 ?>
 </section>
