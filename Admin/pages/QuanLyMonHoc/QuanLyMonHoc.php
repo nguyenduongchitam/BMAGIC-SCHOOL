@@ -27,7 +27,7 @@
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
 </head>
 <style>
-    .btnThem {
+    .btnThem ,.btn-Update{
         border-radius: 25px;
         width: 90px;
         height: 40px;
@@ -35,7 +35,7 @@
         margin-left: 80%;
     }
 
-    .btnThem:hover {
+    .btnThem:hover ,.btn-Update:hover{
         background-color: #1F3BB3;
         color: white;
         border: 2px white;
@@ -98,7 +98,7 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="../../../Admin/pages/QuanLyMonHoc/DeleteMH.php?MaMonHoc=' . $rowMonHoc['MaMonHoc'] . '" type="button" class="btn-Xoa" style="color:black">
+                                                                <a href="../../../Admin/pages/QuanLyMonHoc/DeleteMH.php?MaMonHoc=' . $rowMonHoc['MaMonHoc'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
                                                                 </a>
                                                             </td>
@@ -137,7 +137,7 @@
                     <div class="modal-body">
                         <form class="forms-sample" action="../../../Admin/pages/QuanLyMonHoc/Update.php" method="post">
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã môn học</label>
-                            <input type="text" class="form-control mb-2" id="modalMaMonHoc" name="maMonHoc" readonly>
+                            <input type="text" class="form-control mb-2 bg-secondary" id="modalMaMonHoc"  name="maMonHoc" readonly>
 
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2">Tên môn học</label>
                             <input type="text" class="form-control mb-2" id="modalTenMonHoc" name="tenMonHoc" placeholder="Toán học">
@@ -147,7 +147,7 @@
                             <input type="number" class="form-control mb-2" id="modalDiemDat" name="diemDat" placeholder="8">
                             <span id="DiemDatError" class="error-message"></span> <!-- Thông báo lỗi -->
 
-                            <input type="submit" class="mt-4 fw-bold" name="submit" value="Cập nhật" size="50">
+                            <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50">
                         </form>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post">
+                        <form method="post" action="../../../Admin/pages/QuanLyMonHoc/AddMH.php">
                             <!-- Trong form thêm modal -->
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2">Tên môn học</label>
                             <div class="row">
@@ -181,17 +181,6 @@
                             </div>
                             <input type="submit" class="mt-4 fw-bold btnThem" name="submit" value="Thêm" size="50">
                         </form>
-                        <?php
-
-                        if (isset($_POST['submit']) && $_POST['submit'] == "Thêm") {
-
-                            $tenMonHoc = $_POST['tenMonHoc'];
-                            $diemDat = $_POST['diemDat'];
-
-                            $sql = "INSERT INTO MONHOC VALUES ('','$tenMonHoc', '$diemDat')";
-                            $mysqli->query($sql);
-                        }
-                        ?>
                     </div>
                 </div>
             </div>
