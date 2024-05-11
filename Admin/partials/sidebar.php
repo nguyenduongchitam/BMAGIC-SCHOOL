@@ -1,52 +1,84 @@
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" href="index.php">
+      <a class="nav-link" href="../../Admin/index.php">
         <i class="mdi mdi-grid-large menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
+        <span class="menu-title">Trang chủ</span>
       </a>
     </li>
-    <li class="nav-item nav-category">Chức năng của admin</li>
+    <!-- HỌC SINH -->
+    <li class="nav-item nav-category">Quản lý HỌC SINH</li>
     <li class="nav-item">
-    <a class="nav-link"  href="index.php?action=TiepNhanHocSinh" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
-        <span class="menu-title">Tiếp nhận học sinh</span>
-      </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=QuanLyLop" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
-        <span class="menu-title"> Quản lý Lớp</span>
-      </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=LapDanhSachLop" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
-        <span class="menu-title">Lập danh sách lớp</span>
-      </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=DanhSachHocSinh" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
+      <a class="nav-link" href="index.php?action=DanhSachHocSinh">
+        <i class="menu-icon"><span class="material-symbols-outlined">assignment_ind</span></i>
         <span class="menu-title">Danh sách học sinh</span>
       </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=QuanLyMonHoc" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?action=TiepNhanHocSinh">
+        <i class="menu-icon"><span class="material-symbols-outlined">person</span></i>
+        <span class="menu-title">Tiếp nhận học sinh</span>
+        <i class="menu-arrow"></i>
+      </a>
+    </li>
+
+    <!-- LỚP HỌC -->
+    <li class="nav-item nav-category">Quản lý lớp học</li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?action=QuanLyLop" >
+        <i class="menu-icon"> <span class="material-symbols-outlined">assignment</span></i>
+        <span class="menu-title">Quản lý lớp học</span>
+        <i class="menu-arrow"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?action=LapDanhSachLop">
+        <i class="menu-icon"><span class="material-symbols-outlined">tenancy</span></i>
+        <span class="menu-title">Lập danh sách lớp</span>
+        <i class="menu-arrow"></i>
+      </a>
+    </li>
+
+    <!-- MÔN HỌC -->
+    <li class="nav-item nav-category">Quản lý môn học</li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?action=QuanLyMonHoc">
+        <i class="menu-icon "><span class="material-symbols-outlined">prescriptions</span></i>
         <span class="menu-title">Quản lý môn học</span>
+        <i class="menu-arrow"></i>
       </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=BangDiemMonHoc" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
-        <span class="menu-title">Bảng điểm môn học</span>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?action=BangDiemMonHoc">
+        <i class="menu-icon "><span class="material-symbols-outlined">filter_list</span></i>
+          <span class="menu-title">Bảng điểm môn học</span>
+        <i class="menu-arrow"></i>
       </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=BaoCao" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
-        <span class="menu-title">Báo cáo </span>
+    </li>
+
+    <!-- BÁO CÁO -->
+    <li class="nav-item nav-category">Chức năng</li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#report" aria-expanded="false" aria-controls="report">
+        <i class="menu-icon"><span class="material-symbols-outlined">analytics</span></i>
+        <span class="menu-title">Báo cáo</span>
+        <i class="menu-arrow"></i>
       </a>
-      <br>
-      <a class="nav-link"  href="index.php?action=CaiDat" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon mdi mdi-floor-plan"></i>
+      <div class="collapse" id="report">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="index.php?action=BaoCao"> Báo cáo theo môn </a></li>
+          <li class="nav-item"> <a class="nav-link" href="index.php?action=BaoCao"> Báo cáo theo kỳ </a></li>
+        </ul>
+      </div>
+    </li>
+    <!-- CÀI ĐẶT -->
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?action=CaiDat">
+        <i class="menu-icon bx bx-cog"></i>
         <span class="menu-title">Cài đặt</span>
       </a>
     </li>
+
   </ul>
 </nav>
