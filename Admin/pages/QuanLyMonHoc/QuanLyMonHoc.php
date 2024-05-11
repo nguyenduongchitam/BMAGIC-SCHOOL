@@ -211,60 +211,6 @@
                 $(".btn-Them").click(function() {
                     $('#myModal1').modal('show');
                 });
-
-
-                $("#ThemTenMH").on('input', function() {
-                    validateSubjectName($(this).val().trim(), "#TenMHError", "#TenMHIcon");
-                });
-
-                $("#ThemDiemDat").on('input', function() {
-                    validateAchievementScore($(this).val().trim(), "#DiemDatError", "#DiemDatIcon");
-                });
-
-                function validateSubjectName(name, errorId, iconId) {
-                    var errorSpan = $(errorId);
-                    var icon = $(iconId);
-                    if (/^[\p{L} ]+$/u.test(name)) {
-                        errorSpan.text('');
-                        icon.show().removeClass('bx-x-circle').addClass('bx-check-circle').css('color', 'green');
-                        return true;
-                    } else {
-                        errorSpan.text('Chỉ được nhập chữ tiếng Việt và dấu cách.');
-                        icon.hide(); // Ẩn icon nếu dữ liệu không hợp lệ
-                        return false;
-                    }
-                }
-
-                function validateAchievementScore(score, errorId, iconId) {
-                    var errorSpan = $(errorId);
-                    var icon = $(iconId);
-                    if (parseFloat(score) >= 0 && parseFloat(score) <= 10) {
-                        errorSpan.text('');
-                        icon.show().removeClass('bx-x-circle').addClass('bx-check-circle').css('color', 'green');
-                        return true;
-                    } else {
-                        errorSpan.text('Hãy nhập số từ 0 đến 10.');
-                        icon.hide(); // Ẩn icon nếu dữ liệu không hợp lệ
-                        return false;
-                    }
-                }
-
-
-
-                $('#myModal1 form').submit(function(event) {
-                    var tenMonHoc = $('#ThemTenMH').val().trim();
-                    var diemDat = $('#ThemDiemDat').val().trim();
-
-                    var isTenMonHocValid = validateSubjectName(tenMonHoc, "#TenMHError", "#TenMHIcon");
-                    var isDiemDatValid = validateAchievementScore(diemDat, "#DiemDatError", "#DiemDatIcon");
-
-                    if (!isTenMonHocValid || !isDiemDatValid) {
-                        return false; // Prevent form submission
-                    }
-                    return true;
-                });
-
-
             });
         </script>
 
