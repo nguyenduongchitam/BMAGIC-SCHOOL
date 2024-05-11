@@ -67,8 +67,8 @@
       </a>
       <div class="collapse" id="report">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="index.php?action=BaoCao"> Báo cáo theo môn </a></li>
-          <li class="nav-item"> <a class="nav-link" href="index.php?action=BaoCao"> Báo cáo theo kỳ </a></li>
+          <li class="nav-item"> <a class="nav-link" href="index.php?action=BaoCaoTongKetMon"> Báo cáo theo môn </a></li>
+          <li class="nav-item"> <a class="nav-link" href="index.php?action=BaoCaoTongKetHocKy"> Báo cáo theo kỳ </a></li>
         </ul>
       </div>
     </li>
