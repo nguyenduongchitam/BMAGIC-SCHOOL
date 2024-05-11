@@ -34,9 +34,13 @@ else if( $action=='QuanLyLop')
     {
         include("pages/BangDiemMonHoc/BangDiemMonHoc.php");
     }
-    else if( $action=='BaoCao')
+    else if( $action=='BaoCaoTongKetMon')
     {
-        include("pages/BaoCao/BaoCao.php");
+        include("pages/BaoCao/BaoCaoMon.php");
+    }
+    else if( $action=='BaoCaoTongKetHocKy')
+    {
+        include("pages/BaoCao/BaoCaoHocKy.php");
     }
     else if( $action=='CaiDat')
     {
