@@ -135,9 +135,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" method="post">
+                        <form class="forms-sample" action="../../../Admin/pages/QuanLyMonHoc/Update.php" method="post">
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã môn học</label>
-                            <input type="text" class="form-control mb-2" id="modalMaMonHoc" name="maMonHoc" disabled>
+                            <input type="text" class="form-control mb-2" id="modalMaMonHoc" name="maMonHoc" readonly>
 
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2">Tên môn học</label>
                             <input type="text" class="form-control mb-2" id="modalTenMonHoc" name="tenMonHoc" placeholder="Toán học">
@@ -147,7 +147,7 @@
                             <input type="number" class="form-control mb-2" id="modalDiemDat" name="diemDat" placeholder="8">
                             <span id="DiemDatError" class="error-message"></span> <!-- Thông báo lỗi -->
 
-                            <input type="submit" class="mt-4 fw-bold btnThem" name="submit" value="Cập nhật" size="50">
+                            <input type="submit" class="mt-4 fw-bold" name="submit" value="Cập nhật" size="50">
                         </form>
                     </div>
                 </div>
@@ -272,9 +272,6 @@
                     if (!isTenMonHocValid || !isDiemDatValid) {
                         return false; // Prevent form submission
                     }
-
-                    // Continue form submission if all validations pass
-                    // Reload the page after successful submission
                     return true;
                 });
 
