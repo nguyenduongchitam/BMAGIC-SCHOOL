@@ -1,7 +1,7 @@
 <?php
 include "../../../Database/Config/config.php";
 
-$maLop = $_GET['maLop'];
+$maLop = $_GET['MaLop'];
 $sql = "DELETE FROM LOP WHERE MaLop = '$maLop'";
 
 $result = $mysqli->query($sql);

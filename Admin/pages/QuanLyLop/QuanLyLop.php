@@ -87,7 +87,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $sqlLop = "SELECT MaLop, TenLop, Lop.MaKhoi TenKhoi FROM LOP, KHOILOP WHERE LOP.MAKHOI = KHOILOP.MAKHOI";
+                                            $sqlLop = "SELECT MaLop, TenLop, Lop.MaKhoi, TenKhoi FROM LOP, KHOILOP WHERE LOP.MAKHOI = KHOILOP.MAKHOI";
                                             $resultLop = $mysqli->query($sqlLop);
                                             $stt = 0;
                                             while ($rowLop = $resultLop->fetch_assoc()) {
