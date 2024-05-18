@@ -24,8 +24,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
-    <!-- CHART -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -74,18 +81,11 @@
                             <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">Biểu đồ</a>
                         </li>
                     </ul>
-                    <div>
-                        <div class="btn-wrapper">
-                            <a href="#" class="btn btn-outline-dark align-items-center"><i class="fa fa-share"></i> Chia sẻ</a>
-                            <a href="#" class="btn btn-outline-dark"><i class="fa fa-print"></i> In</a>
-                            <a href="#" class="btn btn-primary text-white me-0"><i class="fa fa-download"></i> Xuất</a>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Nội dung chọn tab -->
                 <div class="tab-content tab-content-basic">
-                    <!-- Báo cáo -->
+                    <!-- table -->
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                         <div class="card card-rounded">
                             <div class="card-body">
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <!-- Báo cáo tổng kết môn học -->
+                    <!-- chart-->
                     <div class="tab-pane fade" id="more" role="tabpanel" aria-labelledby="more-tab">
                         <div class="row">
                             <div class="col-12 grid-margin stretch-card">
@@ -128,9 +128,13 @@
                                     <div class="card-body">
                                         <div class="d-sm-flex justify-content-between align-items-start">
                                             <div>
-                                                <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">TỔNG KẾT MÔN</div>
-                                                <canvas id="chart" width="400" height="400"></canvas>
-
+                                                <h4 class="card-title card-title-dash">Bảng điểm môn học</h4>
+                                                <div class="row chart-container">
+                                                    <div id="chartSiSo" style="width:100%;max-width:700px"></div>
+                                                </div>
+                                                <div class="row chart-container">
+                                                    <div id="chartTiLe" style="width:100%;max-width:700px"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -172,43 +176,45 @@
                     }
                 })
 
-                $.post("../../../Admin/pages/BaoCao/ChartBCM.php", {
-                    MonHoc: MonHoc,
+
+                $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
                     HocKy: HocKy
                 }, function(data, status) {
                     if (status == "success") {
-                        $("#chart").html(data);
+                        var chartData = JSON.parse(data);
+
+                        var labels = chartData.map(item => item.TenLop);
+                        var siSoData = chartData.map(item => item.SiSo);
+                        var tiLeData = chartData.map(item => item.TiLe);
+
+                        var layoutSiSo = {
+                            title: 'Sĩ số theo lớp'
+                        };
+                        var layoutTiLe = {
+                            title: 'Tỉ lệ theo lớp'
+                        };
+
+                        var dataSiSo = [{
+                            x: labels,
+                            y: siSoData,
+                            type: 'bar'
+                        }];
+
+                        var dataTiLe = [{
+                            x: labels,
+                            y: tiLeData,
+                            type: 'bar'
+                        }];
+
+                        Plotly.newPlot('chartSiSo', dataSiSo, layoutSiSo);
+                        Plotly.newPlot('chartTiLe', dataTiLe, layoutTiLe);
                     }
-                })
+                });
+
+
             });
         });
 
-        // Function to update progress bar
-        function updateProgressBar() {
-            $('#BaoCaoBoMon tbody tr').each(function() {
-                var tile = parseFloat($(this).find('td:nth-child(5)').text());
-                tile = tile * 100;
-
-                var progressBarColor = '';
-                if (tile >= 75) {
-                    progressBarColor = 'badge-success';
-                } else if (tile >= 50) {
-                    progressBarColor = 'badge-primary';
-                } else if (tile >= 25) {
-                    progressBarColor = 'badge-warning';
-                } else {
-                    progressBarColor = 'badge-danger';
-                }
-
-
-                var progressBarHTML = `<label class="badge ${progressBarColor}" style="width: 100%;">${tile}%</label>`;
-
-                $(this).find('td:nth-child(5)').html(progressBarHTML);
-            });
-        }
-
-        // Call updateProgressBar function initially when the document is ready
-        updateProgressBar();
     });
 </script>
 

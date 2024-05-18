@@ -24,6 +24,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,8 +43,7 @@
                 <select class="form-select" id="HocKy">
                     <option selected disabled>Học kỳ</option>
                     <?php
-                    $sql1 = "SELECT *
-                                FROM HOCKY";
+                    $sql1 = "SELECT * FROM HOCKY";
                     $result1 = $mysqli->query($sql1);
                     while ($row1 = $result1->fetch_assoc()) {
                         echo '<option value="' . $row1["MaHocKy"] . '">' . $row1["TenHocKy"] . '</option>';
@@ -47,7 +55,7 @@
         <br>
 
         <!-- MAIN -->
-        <div class=" col-sm-12">
+        <div class="col-sm-12">
             <div class="home-tab">
                 <!-- Lựa chọn tab -->
                 <div class="d-sm-flex align-items-center justify-content-between border-bottom">
@@ -59,18 +67,11 @@
                             <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">Biểu đồ</a>
                         </li>
                     </ul>
-                    <div>
-                        <div class="btn-wrapper">
-                            <a href="#" class="btn btn-outline-dark align-items-center"><i class="fa fa-share"></i> Chia sẻ</a>
-                            <a href="#" class="btn btn-outline-dark"><i class="fa fa-print"></i> In</a>
-                            <a href="#" class="btn btn-primary text-white me-0"><i class="fa fa-download"></i> Xuất</a>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Nội dung chọn tab -->
                 <div class="tab-content tab-content-basic">
-                    <!-- Báo cáo -->
+                    <!-- Table -->
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                         <div class="card card-rounded">
                             <div class="card-body">
@@ -88,8 +89,7 @@
                                                 <th class="text-center">Tỉ lệ</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tb">
-                                        </tbody>
+                                        <tbody id="tb"></tbody>
                                         <tfoot>
                                             <tr>
                                                 <th class="text-center">STT</th>
@@ -105,16 +105,19 @@
                         </div>
                     </div>
 
-                    <!-- Báo cáo tổng kết môn học -->
+                    <!-- Chart  -->
                     <div class="tab-pane fade" id="more" role="tabpanel" aria-labelledby="more-tab">
                         <div class="row">
                             <div class="col-12 grid-margin stretch-card">
                                 <div class="card card-rounded">
                                     <div class="card-body">
-                                        <div class="d-sm-flex justify-content-between align-items-start">
-                                            <div>
-                                                <h4 class="card-title card-title-dash">Báo cáo bảng điểm môn học</h4>
-
+                                        <div>
+                                            <h4 class="card-title card-title-dash">Bảng điểm môn học</h4>
+                                            <div class="row chart-container">
+                                                <div id="chartSiSo" style="width:100%;max-width:700px"></div>
+                                            </div>
+                                            <div class="row chart-container">
+                                                <div id="chartTiLe" style="width:100%;max-width:700px"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +133,6 @@
 
 </html>
 
-
 <script>
     $(document).ready(function() {
         $('#HocKy').change(function() {
@@ -141,12 +143,46 @@
                 HocKy: HocKy
             }, function(data, status) {
                 if (status == "success") {
+                    
                     $("#tb").html(data);
                 }
-            })
+            });
+
+            $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
+                HocKy: HocKy
+            }, function(data, status) {
+                if (status == "success") {
+                    var chartData = JSON.parse(data);
+
+                    var labels = chartData.map(item => item.TenLop);
+                    var siSoData = chartData.map(item => item.SiSo);
+                    var tiLeData = chartData.map(item => item.TiLe);
+
+                    var layoutSiSo = {
+                        title: 'Sĩ số theo lớp'
+                    };
+                    var layoutTiLe = {
+                        title: 'Tỉ lệ theo lớp'
+                    };
+
+                    var dataSiSo = [{
+                        x: labels,
+                        y: siSoData,
+                        type: 'bar'
+                    }];
+
+                    var dataTiLe = [{
+                        x: labels,
+                        y: tiLeData,
+                        type: 'bar'
+                    }];
+
+                    Plotly.newPlot('chartSiSo', dataSiSo, layoutSiSo);
+                    Plotly.newPlot('chartTiLe', dataTiLe, layoutTiLe);
+                }
+            });
         });
     });
-
 </script>
 
 <!-- DATATABLE -->
@@ -155,7 +191,6 @@
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
         },
-
         layout: {
             topStart: {
                 buttons: [
@@ -188,6 +223,5 @@
 <style>
     td.highlight {
         background-color: rgba(var(--dt-row-hover), 0.052) !important;
-
     }
 </style>

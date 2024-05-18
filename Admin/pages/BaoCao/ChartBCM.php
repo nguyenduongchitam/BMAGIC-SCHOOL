@@ -6,17 +6,29 @@ $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 
 // Viết truy vấn SQL để lấy dữ liệu từ cơ sở dữ liệu
-$sql = "SELECT Lop, SoLuongDat
-        FROM TenBang
-        WHERE MonHoc = '$MonHoc' AND HocKy = '$HocKy'";
+$sql = "
+    SELECT distinct lop.TenLop, ctbc_tkm.SoLuongDat, ctbc_tkm.TiLe, danhsachlop.SiSo
+    FROM ctbc_tkm, bc_tkm, danhsachlop, lop
+    WHERE bc_tkm.MAMONHOC = '$MonHoc' AND
+        bc_tkm.MAHOCKY = '$HocKy' AND
+        danhsachlop.MADSL = ctbc_tkm.MADSL and
+        danhsachlop.MALOP = lop.MaLop
+";
 $result = $mysqli->query($sql);
 
-// Tạo mảng để lưu dữ liệu lớp và số lượng đạt
-$data = array();
-while ($row = $result->fetch_assoc()) {
-    $data[$row['Lop']] = $row['SoLuongDat'];
+// Thực thi truy vấn SQL
+$result = $mysqli->query($sql);
+
+$data = [];
+if ($result !== false) {
+    while ($row = $result->fetch_assoc()) {
+        $data[] = [
+            'TenLop' => $row['TenLop'],
+            'SiSo' => $row['SiSo'],
+            'TiLe' => $row['TiLe']
+        ];
+    }
 }
 
-// Đóng kết nối cơ sở dữ liệu
-$mysqli->close();
+echo json_encode($data);
 ?>
