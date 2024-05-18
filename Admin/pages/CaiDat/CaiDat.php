@@ -21,34 +21,40 @@ $SiSo = $row["SiSo"];
         .btnMaxAge {
             background-color: transparent;
             width: 20%;
-            height: 32px;
+            height: 30px;
             float: left;
-            border-top-style: solid;
-            border-right-style: solid;
-            border-bottom-style: solid;
             border-left: none;
+            border: solid 1px black;
             border-radius: 0px 10px 10px 0px;
+            color: #1F3BB3;
             font-weight: bold;
+
         }
 
         .btnMinAge:hover,
         .btnMaxAge:hover {
             background-color: #1F3BB3;
             color: aliceblue;
-            font-weight: bold;
         }
 
         .MinAge,
         .MaxAge {
             background-color: transparent;
-            font-style: bold;
             width: 70%;
             height: 30px;
             float: left;
             padding-left: 20px;
-            border: solid 2px black;
+            border: solid 1px black;
+            border-right: none;
             border-radius: 10px 0px 0px 10px;
 
+        }
+
+        .list {
+            width: 200px;
+            height: 30px;
+            overflow-x: hidden;
+            overflow-y: scroll;
         }
     </style>
 </head>
@@ -58,6 +64,43 @@ $SiSo = $row["SiSo"];
         <div class=" col-sm-12">
             <div class="home-tab">
                 <div class="tab-content tab-content-basic">
+                    <div class="row flex-grow">
+                        <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                                <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h4 class="card-title card-title-dash text-primary">THÊM NĂM HỌC</h4>
+                                            <p class="card-subtitle card-subtitle-dash">Thêm niên khóa mới chỉ cần nhập năm hiện tại ứng dụng dẽ tự động lưu.<br>Ví dụ: Nhập 2023. Cơ sở dữ liệu sẽ lưu dưới dạng (2023-2024)</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="card-title card-title-dash text-primary">Danh sách năm học đã học</h4>
+                                            <div class="list">
+                                                <?php
+                                                $sqlNamHoc = "SELECT * FROM NAMHOC";
+                                                $resultNamHoc = $mysqli->query($sqlNamHoc);
+                                                while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
+                                                    echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . $rowNamHoc["Nam2"] . '</option>';
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class=" fw-bold pb-2 mt-3">Năm học</label>
+                                        <div class="col">
+                                            <form action="../../../Admin/pages/CaiDat/ThemNamHoc.php" method="post">
+                                                <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="SiSo" name="nam1">
+                                                <input name="submit" value="Thêm" class="btnMinAge" type="submit">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row flex-grow">
                         <div class="col-12 grid-margin stretch-card">
@@ -65,7 +108,7 @@ $SiSo = $row["SiSo"];
                                 <div class="card-body">
                                     <div class="d-sm-flex justify-content-between align-items-start">
                                         <div>
-                                            <h4 class="card-title card-title-dash">CÀI ĐẶT SỐ TUỔI</h4>
+                                            <h4 class="card-title card-title-dash text-primary">CÀI ĐẶT SỐ TUỔI</h4>
                                             <p class="card-subtitle card-subtitle-dash">Cài đặt số tuổi tối thiểu và tối đa để có thể nhập học</p>
                                         </div>
                                     </div>
@@ -94,14 +137,13 @@ $SiSo = $row["SiSo"];
                         </div>
                     </div>
 
-
                     <div class="row flex-grow">
                         <div class="col-12 grid-margin stretch-card">
                             <div class="card card-rounded">
                                 <div class="card-body">
                                     <div class="d-sm-flex justify-content-between align-items-start">
                                         <div>
-                                            <h4 class="card-title card-title-dash">CÀI ĐẶT ĐIỂM SỐ</h4>
+                                            <h4 class="card-title card-title-dash text-primary">CÀI ĐẶT ĐIỂM SỐ</h4>
                                             <p class="card-subtitle card-subtitle-dash">Cài đặt số điểm có thể để lơn lớp hoặc ở lại lớp & thang điểm</p>
                                         </div>
                                     </div>
@@ -147,7 +189,7 @@ $SiSo = $row["SiSo"];
                                 <div class="card-body">
                                     <div class="d-sm-flex justify-content-between align-items-start">
                                         <div>
-                                            <h4 class="card-title card-title-dash">CÀI ĐẶT SĨ SỐ</h4>
+                                            <h4 class="card-title card-title-dash text-primary">CÀI ĐẶT SĨ SỐ</h4>
                                             <p class="card-subtitle card-subtitle-dash">Cài đặt sĩ số tối đa cho một lớp</p>
                                         </div>
                                     </div>
