@@ -121,7 +121,7 @@
                     $('#tbDs').empty();
                     var namHoc = $(this).val();
 
-                    $.post("../../../Admin/pages/DanhSachHocSinh/tableDSHS.php", {
+                    $.post("../../../Admin/pages/DanhSachHocSinh/listHS.php", {
                         namHoc: namHoc
                     }, function(data, status) {
                         if (status == "success") {
@@ -131,6 +131,10 @@
                     })
                 });
             });
+
+            
+
+            
         </script>
     </section>
 </body>
