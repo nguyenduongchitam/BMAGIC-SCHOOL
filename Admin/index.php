@@ -18,13 +18,14 @@
 
     <!--plugins:css-boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="css/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="css/vendors/select.dataTables.min.css">
     <link rel="stylesheet" href="css/vendors/vertical-layout-light/style.css">
 
-    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="shortcut icon" href="../Admin/images/favicon.png" />
 
 </head>
 
