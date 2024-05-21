@@ -1,8 +1,22 @@
 <?php
 include "../../../Database/Config/config.php";
 
-$maLop = $_GET['MaLop'];
-$sql = "DELETE FROM LOP WHERE MaLop = '$maLop'";
+if (isset($_GET['MaLop'])) {
+    $MaLop = $_GET['MaLop'];
 
-$result = $mysqli->query($sql);
-header("Location: /Admin/index.php?action=QuanLyLop");
+    $sql = $mysqli->prepare("DELETE FROM LOP WHERE MaLop = ?");
+    $sql->bind_param("s", $MaLop);
+
+    try {
+        $sql->execute();
+        header("Location: /Admin/index.php?action=QuanLyLop");
+        exit();
+    } catch (mysqli_sql_exception $e) {
+        echo "<script>
+                alert('Không xóa được lớp học. Lớp học đang có học sinh.');
+                window.location.href='/Admin/index.php?action=QuanLyLop';
+              </script>";
+    }
+
+    $stmt->close();
+}
