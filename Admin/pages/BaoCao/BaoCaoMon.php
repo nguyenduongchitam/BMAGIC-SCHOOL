@@ -40,7 +40,19 @@
         <!-- CHỌN COMBOBOX MÔN, HỌC KỲ -->
         <div class="row">
             <div class="col">
-                <select class="form-select" id="MonHoc">
+                <select class="form-select" id="NamHoc">
+                    <option selected disabled>Năm học</option>
+                    <?php
+                    $sql = "SELECT * FROM NAMHOC ORDER BY Nam1 DESC";
+                    $result = $mysqli->query($sql);
+                    while ($rowNamHoc = $result->fetch_assoc()) {
+                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . $rowNamHoc["Nam2"] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-select" id="MonHoc" disabled>
                     <option selected disabled>Môn học</option>
                     <?php
                     $sql = "SELECT *
@@ -155,65 +167,74 @@
 
 <script>
     $(document).ready(function() {
-        $('#MonHoc').change(function() {
-            var MonHoc = $(this).val();
-            $('#HocKy').prop('disabled', false).val(""); // Reset dropdown when subject changes
-            $('#tb').empty(); // Clear table content when subject changes
+        $('#NamHoc').change(function() {
+            var NamHoc = $(this).val();
+            $('#MonHoc').prop('disabled', false).val("");
+            $('#HocKy').prop('disabled', false).val("");
+        
+            $('#MonHoc').change(function() {
+                var MonHoc = $(this).val();
+                $('#HocKy').prop('disabled', false).val(""); // Reset dropdown when subject changes
+                $('#tb').empty(); // Clear table content when subject changes
 
-            $('#HocKy').change(function() {
-                var HocKy = $(this).val();
-                $('#tb').empty();
+                $('#HocKy').change(function() {
+                    var HocKy = $(this).val();
+                    $('#tb').empty();
 
-                $.post("../../../Admin/pages/BaoCao/ListBCM.php", {
-                    MonHoc: MonHoc,
-                    HocKy: HocKy
-                }, function(data, status) {
-                    if (status == "success") {
-                        $("#tb").html(data);
+                    $.post("../../../Admin/pages/BaoCao/ListBCM.php", {
+                        MonHoc: MonHoc,
+                        HocKy: HocKy,
+                        NamHoc: NamHoc
+                    }, function(data, status) {
+                        if (status == "success") {
+                            $("#tb").html(data);
 
-                        // Update progress bar when data is loaded
-                        updateProgressBar();
-                    }
-                })
+                            // Update progress bar when data is loaded
+                            updateProgressBar();
+                        }
+                    })
 
 
-                $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
-                    HocKy: HocKy
-                }, function(data, status) {
-                    if (status == "success") {
-                        var chartData = JSON.parse(data);
+                    $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
+                        HocKy: HocKy
+                    }, function(data, status) {
+                        if (status == "success") {
+                            var chartData = JSON.parse(data);
 
-                        var labels = chartData.map(item => item.TenLop);
-                        var siSoData = chartData.map(item => item.SiSo);
-                        var tiLeData = chartData.map(item => item.TiLe);
+                            var labels = chartData.map(item => item.TenLop);
+                            var siSoData = chartData.map(item => item.SiSo);
+                            var tiLeData = chartData.map(item => item.TiLe);
 
-                        var layoutSiSo = {
-                            title: 'Sĩ số theo lớp'
-                        };
-                        var layoutTiLe = {
-                            title: 'Tỉ lệ theo lớp'
-                        };
+                            var layoutSiSo = {
+                                title: 'Sĩ số theo lớp'
+                            };
+                            var layoutTiLe = {
+                                title: 'Tỉ lệ theo lớp'
+                            };
 
-                        var dataSiSo = [{
-                            x: labels,
-                            y: siSoData,
-                            type: 'bar'
-                        }];
+                            var dataSiSo = [{
+                                x: labels,
+                                y: siSoData,
+                                type: 'bar'
+                            }];
 
-                        var dataTiLe = [{
-                            x: labels,
-                            y: tiLeData,
-                            type: 'bar'
-                        }];
+                            var dataTiLe = [{
+                                x: labels,
+                                y: tiLeData,
+                                type: 'bar'
+                            }];
 
-                        Plotly.newPlot('chartSiSo', dataSiSo, layoutSiSo);
-                        Plotly.newPlot('chartTiLe', dataTiLe, layoutTiLe);
-                    }
+                            Plotly.newPlot('chartSiSo', dataSiSo, layoutSiSo);
+                            Plotly.newPlot('chartTiLe', dataTiLe, layoutTiLe);
+                        }
+                    });
+
+
                 });
-
-
             });
         });
+
+
 
     });
 </script>
