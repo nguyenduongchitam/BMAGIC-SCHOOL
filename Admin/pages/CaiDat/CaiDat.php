@@ -28,7 +28,6 @@ $SiSo = $row["SiSo"];
             border-radius: 0px 10px 10px 0px;
             color: #1F3BB3;
             font-weight: bold;
-
         }
 
         .btnMinAge:hover,
@@ -47,12 +46,11 @@ $SiSo = $row["SiSo"];
             border: solid 1px black;
             border-right: none;
             border-radius: 10px 0px 0px 10px;
-
         }
 
         .list {
             width: 200px;
-            height: 30px;
+            height: 40px;
             overflow-x: hidden;
             overflow-y: scroll;
         }
@@ -61,7 +59,7 @@ $SiSo = $row["SiSo"];
 
 <body>
     <section>
-        <div class=" col-sm-12">
+        <div class="col-sm-12">
             <div class="home-tab">
                 <div class="tab-content tab-content-basic">
                     <div class="row flex-grow">
@@ -71,13 +69,13 @@ $SiSo = $row["SiSo"];
                                     <div class="d-sm-flex justify-content-between align-items-start">
                                         <div>
                                             <h4 class="card-title card-title-dash text-primary">THÊM NĂM HỌC</h4>
-                                            <p class="card-subtitle card-subtitle-dash">Thêm niên khóa mới chỉ cần nhập năm hiện tại ứng dụng dẽ tự động lưu.<br>Ví dụ: Nhập 2023. Cơ sở dữ liệu sẽ lưu dưới dạng (2023-2024)</p>
+                                            <p class="card-subtitle card-subtitle-dash">Thêm niên khóa mới chỉ cần nhập năm hiện tại ứng dụng sẽ tự động lưu.<br>Ví dụ: Nhập 2023. Cơ sở dữ liệu sẽ lưu dưới dạng (2023-2024)</p>
                                         </div>
                                         <div>
                                             <h4 class="card-title card-title-dash text-primary">Danh sách năm học đã học</h4>
                                             <div class="list">
                                                 <?php
-                                                $sqlNamHoc = "SELECT * FROM NAMHOC";
+                                                $sqlNamHoc = "SELECT * FROM NAMHOC ORDER BY Nam1 DESC";
                                                 $resultNamHoc = $mysqli->query($sqlNamHoc);
                                                 while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                                     echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . $rowNamHoc["Nam2"] . '</option>';
@@ -88,10 +86,10 @@ $SiSo = $row["SiSo"];
                                     </div>
 
                                     <div>
-                                        <label class=" fw-bold pb-2 mt-3">Năm học</label>
+                                        <label class="fw-bold pb-2 mt-3">Năm học</label>
                                         <div class="col">
                                             <form action="../../../Admin/pages/CaiDat/ThemNamHoc.php" method="post">
-                                                <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="SiSo" name="nam1">
+                                                <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="nienkhoa" name="nam1">
                                                 <input name="submit" value="Thêm" class="btnMinAge" type="submit">
                                             </form>
                                         </div>
@@ -123,7 +121,7 @@ $SiSo = $row["SiSo"];
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <label class=" fw-bold pb-2 mt-3">Số tuổi tối đa</label>
+                                            <label class="fw-bold pb-2 mt-3">Số tuổi tối đa</label>
                                             <div class="col">
                                                 <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post">
                                                     <input type="number" class="form-control MaxAge" id="MaxAge" name="MaxAge" value="<?php echo $MaxAge; ?>">
@@ -144,7 +142,7 @@ $SiSo = $row["SiSo"];
                                     <div class="d-sm-flex justify-content-between align-items-start">
                                         <div>
                                             <h4 class="card-title card-title-dash text-primary">CÀI ĐẶT ĐIỂM SỐ</h4>
-                                            <p class="card-subtitle card-subtitle-dash">Cài đặt số điểm có thể để lơn lớp hoặc ở lại lớp & thang điểm</p>
+                                            <p class="card-subtitle card-subtitle-dash">Cài đặt số điểm có thể để lên lớp hoặc ở lại lớp & thang điểm</p>
                                         </div>
                                     </div>
 
@@ -160,7 +158,7 @@ $SiSo = $row["SiSo"];
                                         </div>
 
                                         <div class="col-6">
-                                            <label class=" fw-bold pb-2 mt-3">Số điểm tối đa</label>
+                                            <label class="fw-bold pb-2 mt-3">Số điểm tối đa</label>
                                             <div class="col">
                                                 <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post">
                                                     <input type="number" class="form-control MaxAge" id="DiemToiDa" name="DiemToiDa" value="<?php echo $DiemToiDa; ?>">
@@ -170,7 +168,7 @@ $SiSo = $row["SiSo"];
                                         </div>
                                     </div>
                                     <div>
-                                        <label class=" fw-bold pb-2 mt-3">Điểm đạt</label>
+                                        <label class="fw-bold pb-2 mt-3">Điểm đạt</label>
                                         <div class="col">
                                             <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post">
                                                 <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="DiemDat" name="DiemDat" value="<?php echo $DiemDat; ?>">
@@ -195,7 +193,7 @@ $SiSo = $row["SiSo"];
                                     </div>
 
                                     <div>
-                                        <label class=" fw-bold pb-2 mt-3">Sĩ Số</label>
+                                        <label class="fw-bold pb-2 mt-3">Sĩ Số</label>
                                         <div class="col">
                                             <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post">
                                                 <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="SiSo" name="SiSo" value="<?php echo $SiSo; ?>">
