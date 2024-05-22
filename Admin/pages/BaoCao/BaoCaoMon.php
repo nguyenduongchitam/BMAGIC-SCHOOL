@@ -43,9 +43,9 @@
                 <select class="form-select" id="NamHoc">
                     <option selected disabled>Năm học</option>
                     <?php
-                    $sql = "SELECT * FROM NAMHOC ORDER BY Nam1 DESC";
-                    $result = $mysqli->query($sql);
-                    while ($rowNamHoc = $result->fetch_assoc()) {
+                    $sqlNamHoc = "SELECT * FROM NAMHOC ORDER BY Nam1 DESC";
+                    $resultNamHoc = $mysqli->query($sqlNamHoc);
+                    while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                         echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . $rowNamHoc["Nam2"] . '</option>';
                     }
                     ?>
@@ -167,11 +167,11 @@
 
 <script>
     $(document).ready(function() {
+
         $('#NamHoc').change(function() {
             var NamHoc = $(this).val();
             $('#MonHoc').prop('disabled', false).val("");
             $('#HocKy').prop('disabled', false).val("");
-        
             $('#MonHoc').change(function() {
                 var MonHoc = $(this).val();
                 $('#HocKy').prop('disabled', false).val(""); // Reset dropdown when subject changes
@@ -196,7 +196,9 @@
 
 
                     $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
-                        HocKy: HocKy
+                        MonHoc: MonHoc,
+                        HocKy: HocKy,
+                        NamHoc: NamHoc
                     }, function(data, status) {
                         if (status == "success") {
                             var chartData = JSON.parse(data);
@@ -232,6 +234,7 @@
 
                 });
             });
+
         });
 
 

@@ -4,12 +4,14 @@ include "../../../Database/Config/config.php";
 $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
+
+
 $sql = "
     SELECT distinct lop.TenLop, ctbc_tkm.SoLuongDat, ctbc_tkm.TiLe, danhsachlop.SiSo
     FROM ctbc_tkm, bc_tkm, danhsachlop, lop
     WHERE bc_tkm.MAMONHOC = '$MonHoc' AND
           bc_tkm.MAHOCKY = '$HocKy' AND
-          bc_tkm.MANAMHOC ='$NamHoc' AND
+          bc_tkm.MANAMHOC = '$NamHoc' AND
           danhsachlop.MADSL = ctbc_tkm.MADSL and
           danhsachlop.MALOP = lop.MaLop
 ";
@@ -32,7 +34,7 @@ if ($result === false) {
                     <td id="TenLop" class="text-center">' . $row['TenLop'] . '</td>
                     <td id="SiSo" class="text-center">' . $row['SiSo'] . '</td>
                     <td id="SoLuongDat" class="text-center">' . $row['SoLuongDat'] . '</td>
-                    <td id="TiLe" class="text-center">' . $row['TiLe'] . '</td>
+                    <td id="TiLe" >' . $row['TiLe'] . '</td>
                   </tr>';
         }
     } else {
