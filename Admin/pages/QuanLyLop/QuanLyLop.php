@@ -159,11 +159,16 @@
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaLop" name="maLop" readonly>
 
                             <label for="modalTenLop" class="col-sm-3 col-form-label fw-bold pb-2">Tên lớp học</label>
-                            <input type="text" class="form-control mb-2" id="modalTenLop" name="tenLop" placeholder="10A1">
+                            <input type="text" class="form-control mb-2" id="modalTenLop" name="tenLop" placeholder="Lớp 10A1">
                             <span id="TenLHError" class="error-message"></span> <!-- Thông báo lỗi -->
 
-                            <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold ">Khối lớp</label>
-                            <input type="text" class="form-control mb-2" id="modalTenKhoi" name="tenKhoi" placeholder="Khối 10/11/12">
+                            <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
+                            <select class="form-select" id="modalTenKhoi" name="tenKhoi" required>
+                                <option value="" selected>Chọn khối</option>
+                                <option value="Khối 10">Khối 10</option>
+                                <option value="Khối 11">Khối 11</option>
+                                <option value="Khối 12">Khối 12</option>
+                            </select>
                             <span id="TenKhoiError" class="error-message"></span> <!-- Thông báo lỗi -->
 
                             <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50">
@@ -187,17 +192,11 @@
                             <label for="modalTenLop" class="col-sm-3 col-form-label fw-bold pb-2">Tên lớp học</label>
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" class="form-control" id="modalTenLop" name="tenLop" placeholder="10A1" required>
+                                    <input type="text" class="form-control" id="modalTenLop" name="tenLop" placeholder="Lớp 10A1" required>
                                     <span id="TenLopError" class="error-message"></span> <!-- Thông báo lỗi -->
                                 </div>
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-12">
-                                    <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
-                                    <input type="text" class="form-control" id="modalTenKhoi" name="tenKhoi" placeholder="Khối 10/11/12">
-                                    <span id="TenKhoiError" class="error-message"></span> Thông báo lỗi -->
-                            <!-- </div>
-                            </div> -->
+
                             <div class="row">
                                 <div class="col-12">
                                     <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
@@ -218,36 +217,6 @@
             </div>
         </div>
 
-        <!-- <script>
-            $(document).ready(function() {
-                // Thiết lập kiểm tra cho form
-                $("#addLopForm").validate({
-                    rules: {
-                        tenLop: {
-                            required: true,
-                            pattern: /^Lớp\s/
-                        },
-                        tenKhoi: {
-                            required: true
-                        }
-                    },
-                    messages: {
-                        tenLop: {
-                            required: "Vui lòng nhập tên lớp học.",
-                            pattern: "Tên lớp phải bắt đầu bằng 'Lớp '."
-                        },
-                        tenKhoi: {
-                            required: "Vui lòng chọn tên khối."
-                        }
-                    },
-                    errorElement: "div",
-                    errorPlacement: function(error, element) {
-                        error.addClass("error-message");
-                        error.insertAfter(element);
-                    }
-                });
-            });
-        </script> -->
 
         <script>
             $(document).ready(function() {

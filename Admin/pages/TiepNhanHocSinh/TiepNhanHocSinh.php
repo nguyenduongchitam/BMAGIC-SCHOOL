@@ -172,8 +172,14 @@
                             <input type="date" class="form-control mb-2" id="modalNgaySinh" name="ngaySinh" placeholder="8">
                             <span id="NgaySinhError" class="error-message"></span> <!-- Thông báo lỗi -->
 
-                            <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2">Giới tính</label>
-                            <input type="text" class="form-control mb-2" id="modalGioiTinh" name="gioiTinh" placeholder="Nữ/Nam">
+
+
+                            <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Giới tính</label>
+                            <select class="form-select" id="modalGioiTinh" name="gioiTinh" required>
+                                <option value="" selected>Chọn giới tính</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
                             <span id="GTrror" class="error-message"></span> <!-- Thông báo lỗi -->
 
                             <label for="modalDiaChi" class="col-sm-3 col-form-label fw-bold pb-2">Địa chỉ</label>
@@ -218,12 +224,14 @@
                                     <span id="NgaySinhError" class="error-message"></span> <!-- Thông báo lỗi -->
                                 </div>
                             </div>
-                            <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2">Giới tính</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="text" class="form-control" id="modalGioiTinh" name="gioiTinh" placeholder="Nam/Nữ" required>
-                                    <span id="GioiTinhError" class="error-message"></span> <!-- Thông báo lỗi -->
-                                </div>
+                            <div class="col-12">
+                                <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Giới tính</label>
+                                <select class="form-select" id="modalGioiTinh" name="gioiTinh" required>
+                                    <option value="" disabled selected>Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                                <span id="GioiTinhError" class="error-message"></span> <!-- Thông báo lỗi -->
                             </div>
                             <div class="row">
                                 <div class="col-12">
