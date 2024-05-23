@@ -54,9 +54,8 @@ $MAGV = '11';
                     WHERE PC.MAGV = '$MAGV'";
                     $resultNamHoc = $mysqli->query($sqlNamHoc);
                     while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
-                    echo '<option value= '". $rowNamHoc[MaNamHoc] . '">' . $rowNamHoc[TenNamHoc] . '</option>' ; } 
-                    echo "<option value='" . $row['tinhthanh'] . "' selected>" . $row['tinhthanh'] . "</option>";
-                    ?>
+                    echo '<option value='". $rowNamHoc[MaNamHoc] . '">' . $rowNamHoc[TenNamHoc] . '</option>' ; } 
+                    echo " <option value='" . $row[' tinhthanh'] . "' selected>" . $row['tinhthanh'] . "</option>" ; ?>
                 </select>
             </div>
             <div class="col">
