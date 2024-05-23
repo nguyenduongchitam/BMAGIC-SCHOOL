@@ -17,12 +17,15 @@ $sql = "
 $result = $mysqli->query($sql);
 
 $data = [];
-
+$stt = 0;
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
+        $stt++;
         $data[] = [
+            'STT' => $stt,
             'TenLop' => $row['TenLop'],
             'SiSo' => $row['SiSo'],
+            'SoLuongDat' => $row['SoLuongDat'],
             'TiLe' => $row['TiLe']
         ];
     }

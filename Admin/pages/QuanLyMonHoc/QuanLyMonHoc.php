@@ -4,6 +4,7 @@ $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
 $DiemToiDa = $row["DiemToiDa"];
 $DiemToiThieu = $row["DiemToiThieu"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,9 +94,11 @@ $DiemToiThieu = $row["DiemToiThieu"];
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $monHocList = array();
                                             $sqlMonHoc = "SELECT * FROM MONHOC";
                                             $resultMonHoc = $mysqli->query($sqlMonHoc);
                                             while ($rowMonHoc = $resultMonHoc->fetch_assoc()) {
+                                                $monHocList[] = $rowMonHoc['TenMonHoc'];
                                                 echo '
                                                         <tr>
                                                             <td class="text-center">' . $rowMonHoc['MaMonHoc'] . '</td>
@@ -230,10 +233,12 @@ $DiemToiThieu = $row["DiemToiThieu"];
                 var flag2 = false;
                 var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
                 var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
+                var existingSubjects = <?php echo json_encode($monHocList); ?>;
 
                 $("#modalTenMonHoc").blur(function() {
                     var Ten = $(this).val();
                     var regex = /^[a-zA-Z\sÀ-ỹ]*$/; // Regular expression to allow only letters and spaces
+
                     if (!regex.test(Ten) || Ten.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#TenMHError").text("Tên môn học không được chứa số, ký tự đặc biệt và để trống");
@@ -275,7 +280,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
             });
         </script>
 
-        
+
         <!-- thêm -->
         <script>
             $(document).ready(function() {

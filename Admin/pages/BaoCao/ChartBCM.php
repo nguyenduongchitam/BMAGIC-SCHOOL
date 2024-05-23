@@ -20,13 +20,16 @@ $result = $mysqli->query($sql);
 
 // Thực thi truy vấn SQL
 $result = $mysqli->query($sql);
-
+$stt = 0;
 $data = [];
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
+        $stt++;
         $data[] = [
+            'STT' => $stt,
             'TenLop' => $row['TenLop'],
             'SiSo' => $row['SiSo'],
+            'SoLuongDat' => $row['SoLuongDat'],
             'TiLe' => $row['TiLe']
         ];
     }

@@ -4,6 +4,12 @@ include "../../../Database/Config/config.php";
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+$sqlDD = "SELECT * FROM THAMSO";
+$resultDD = $mysqli->query($sqlDD);
+$rowDD = $resultDD->fetch_assoc();
+$DiemDat = $rowDD["DiemDat"];
+
+
 $sql = "
     SELECT distinct lop.TenLop, bc_tkhk.SoLuongDat, bc_tkhk.TiLe, danhsachlop.SiSo
     FROM bc_tkhk, danhsachlop, lop
