@@ -15,7 +15,6 @@ if (isset($_POST['submit'])) {
     $mysqli->query($sql);
 
 
-
     $sql = "INSERT INTO HOCSINH (TenHocSinh, NgaySinh, GioiTinh, DiaChi, Email) VALUES ('$tenHocSinh', '$ngaySinh', '$gioiTinh', '$diaChi', '$email')";
     $mysqli->query($sql);
 

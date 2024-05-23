@@ -5,14 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách học sinh</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
     <!-- AJAX  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
     <!-- DataTables Buttons JS -->
@@ -90,54 +95,97 @@
 
         <!-- <link rel="stylesheet" href="../../../Admin/pages/DanhSachHocSinh/tableDSHS.php"> -->
 
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script> -->
         <script>
             // Datatable
-            var table = new DataTable('#example', {
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
-                },
+            // var table = new DataTable('#example', {
+            //     language: {
+            //         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
+            //     },
 
-                layout: {
-                    topStart: {
-                        buttons: [
-                            'pdf',
-                            'csv',
-                            'excel',
-                            'copy',
-                            'colvis'
-                        ]
-                    },
-                    topEnd: 'search',
-                    bottomStart: 'pageLength',
-                    bottomEnd: 'info',
-                    bottom2center: 'paging'
-                }
-            });
+            //     layout: {
+            //         topStart: {
+            //             buttons: [
+            //                 'pdf',
+            //                 'csv',
+            //                 'excel',
+            //                 'copy',
+            //                 'colvis'
+            //             ]
+            //         },
+            //         topEnd: 'search',
+            //         bottomStart: 'pageLength',
+            //         bottomEnd: 'info',
+            //         bottom2center: 'paging'
+            //     }
+            // });
 
-            //Hiển thị danh sách học sinh
+            // //Hiển thị danh sách học sinh
             $(document).ready(function() {
+                $.noConflict(true);
+                var table = $('#example').DataTable({
+                    "Processing": true,
+                    "ajax": {
+                        "type": "POST",
+                        "url": "../../../../BMAGIC-SCHOOL/Admin/pages/DanhSachHocSinh/ListHS.php",
+                        "dataSrc": "",
+                        data: function(d) {
+                            d.namHoc = document.getElementById("NamHoc").value;
+                        }
+                    },
+                    "columns": [{
+                            "data": "MaCTDSL"
+                        },
+                        {
+                            "data": "TenHocSinh"
+                        },
+                        {
+                            "data": "GioiTinh"
+                        },
+                        {
+                            "data": "NgaySinh"
+                        },
+                        {
+                            "data": "DiaChi"
+                        },
+                        {
+                            "data": "Email"
+                        },
+                        {
+                            "data": "MaHocSinh",
+                            visible: false,
+                        },
+                        {
+                            "data": "Status",
+                            visible: false,
+                        }, {
+                            defaultContent: '<input type="button" class="delete" value="Xóa"/>'
+                        },
+                    ],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+
+                });;
+
                 $('#NamHoc').change(function() {
                     $('#tbDs').empty();
-                    var namHoc = $(this).val();
+                    table.ajax.reload();
+                    // var namHoc = $(this).val();
 
-                    $.post("../../../Admin/pages/DanhSachHocSinh/listHS.php", {
-                        namHoc: namHoc
-                    }, function(data, status) {
-                        if (status == "success") {
-                            $("#tbDs").html(data);
-                        }
+                    // $.post("pages/DanhSachHocSinh/listHS.php", {
+                    //     namHoc: namHoc
+                    // }, function(data, status) {
+                    //     if (status == "success") {
+                    //         $("#tbDs").html(data);
+                    //     }
 
-                    })
+                    // })
                 });
             });
-
-            
-
-            
         </script>
     </section>
 </body>
 
 </html>
-

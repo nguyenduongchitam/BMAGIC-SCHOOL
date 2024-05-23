@@ -354,6 +354,7 @@ $MAGV = '11';
 
             var MaCTDSL = table.row(row).data().MaCTDSL;
             var MaHocSinh = table.row(row).data().MaHocSinh;
+            
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
                 $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/XoaHocSinh.php", {

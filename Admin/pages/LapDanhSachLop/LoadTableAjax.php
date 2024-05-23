@@ -5,32 +5,6 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
 $namhoc = $_POST['namhoc'];
 $lop = $_POST['lop'];
 
-// $sql = "select chitietdanhsachlop.MaCTDSL,TenHocSinh, GioiTinh, NgaySinh, DiaChi, Email from hocsinh, chitietdanhsachlop, danhsachlop WHERE danhsachlop.MaDSL = chitietdanhsachlop.MaDSL and chitietdanhsachlop.MaHocSinh = hocsinh.MaHocSinh and MaNamHoc = '" . $namhoc . "' and Malop = '" . $lop . "'";
-// $rs = $mysqli->query($sql);
-// $ind = 0;
-// if ($rs->num_rows > 0) {
-//     while ($row = $rs->fetch_row()) {
-//         $ind++;
-//         $phpdate = strtotime($row[3]);
-//         $mysqldate = date('Y', $phpdate);
-//         echo "<tr val='$row[0]'>
-//                     <td class='STT' style='text-align: center;'>$ind</td>
-//                     <td class='Ho_va_Ten' style='text-align: center;'>$row[1]</td>
-//                     <td class='Gioi_tinh' style='text-align: center;'>$row[2]</td>
-//                     <td class='Nam_sinh' style='text-align: center;'>$mysqldate</td>
-//                     <td class='Dia_chi' style='text-align: center;'>$row[4]</td>
-//                     <td style='text-align: center;'>
-//                         <button style='background-color:transparent; border-width: 0;' class='btn_ChiTiet' type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#myModal'>
-//                             <i class='bx bxs-edit'></i>
-//                         </button>
-//                     </td>
-//                 </tr>";
-//     }
-// } else {
-//     echo "-1";
-// }
-
-
 $sql1 = "select chitietdanhsachlop.MaCTDSL, TenHocSinh, GioiTinh, NgaySinh, DiaChi, Email, hocsinh.MaHocSinh, Status from hocsinh, chitietdanhsachlop, danhsachlop WHERE danhsachlop.MaDSL = chitietdanhsachlop.MaDSL and chitietdanhsachlop.MaHocSinh = hocsinh.MaHocSinh and MaNamHoc = '" . $namhoc . "' and Malop = '" . $lop . "'";
 $data = mysqli_query($mysqli, $sql1);
 
