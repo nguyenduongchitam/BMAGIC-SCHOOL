@@ -1,3 +1,10 @@
+<?php
+$sql = "SELECT * FROM THAMSO";
+$result = $mysqli->query($sql);
+$row = $result->fetch_assoc();
+$DiemToiDa = $row["DiemToiDa"];
+$DiemToiThieu = $row["DiemToiThieu"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +34,8 @@
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
 </head>
 <style>
-    .btnThem ,.btn-Update{
+    .btnThem,
+    .btn-Update {
         border-radius: 25px;
         width: 90px;
         height: 40px;
@@ -35,7 +43,8 @@
         margin-left: 80%;
     }
 
-    .btnThem:hover ,.btn-Update:hover{
+    .btnThem:hover,
+    .btn-Update:hover {
         background-color: #1F3BB3;
         color: white;
         border: 2px white;
@@ -137,7 +146,7 @@
                     <div class="modal-body">
                         <form class="forms-sample" action="../../../Admin/pages/QuanLyMonHoc/Update.php" method="post">
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã môn học</label>
-                            <input type="text" class="form-control mb-2 bg-secondary" id="modalMaMonHoc"  name="maMonHoc" readonly>
+                            <input type="text" class="form-control mb-2 bg-secondary" id="modalMaMonHoc" name="maMonHoc" readonly>
 
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2">Tên môn học</label>
                             <input type="text" class="form-control mb-2" id="modalTenMonHoc" name="tenMonHoc" placeholder="Toán học">
@@ -147,7 +156,7 @@
                             <input type="number" class="form-control mb-2" id="modalDiemDat" name="diemDat" placeholder="8">
                             <span id="DiemDatError" class="error-message"></span> <!-- Thông báo lỗi -->
 
-                            <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50">
+                            <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50" id="Suamodel">
                         </form>
                     </div>
                 </div>
@@ -169,17 +178,17 @@
                             <div class="row">
                                 <div class="col-12">
                                     <input type="text" class="form-control" id="ThemTenMH" name="tenMonHoc" placeholder="Toán học">
-                                    <span id="TenMHError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <span id="ThemTenMHError" class="error-message"></span> <!-- Thông báo lỗi -->
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <label for="modalDiemDat" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Số điểm đạt</label>
                                     <input type="number" class="form-control" id="ThemDiemDat" name="diemDat" placeholder="8">
-                                    <span id="DiemDatError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <span id="ThemDiemDatError" class="error-message"></span> <!-- Thông báo lỗi -->
                                 </div>
                             </div>
-                            <input type="submit" class="mt-4 fw-bold btnThem" name="submit" value="Thêm" size="50">
+                            <input type="submit" class="mt-4 fw-bold btnThem" name="submit" value="Thêm" size="50" id="Themmodel">
                         </form>
                     </div>
                 </div>
@@ -201,7 +210,6 @@
                     $('#modalMaMonHoc').val(maMonHoc);
                     $('#modalTenMonHoc').val(tenMonHoc);
                     $('#modalDiemDat').val(diemDat);
-
                 });
                 // Xóa
                 $(".btn-Xoa").click(function() {
@@ -210,10 +218,113 @@
                 // Thêm
                 $(".btn-Them").click(function() {
                     $('#myModal1').modal('show');
+                    $("#Themmodel").prop("disabled", true);
                 });
             });
         </script>
 
+        <!-- sửa -->
+        <script>
+            $(document).ready(function() {
+                var flag1 = false; // được submit
+                var flag2 = false;
+                var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
+                var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
+
+                $("#modalTenMonHoc").blur(function() {
+                    var Ten = $(this).val();
+                    var regex = /^[a-zA-Z\sÀ-ỹ]*$/; // Regular expression to allow only letters and spaces
+                    if (!regex.test(Ten) || Ten.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenMHError").text("Tên môn học không được chứa số, ký tự đặc biệt và để trống");
+                        flag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenMHError").text("");
+                        flag1 = false;
+                    }
+                    toggleSubmitButton();
+                });
+
+                $("#modalDiemDat").blur(function() {
+                    var Diem = $(this).val();
+                    if (Diem === "") {
+                        $(this).addClass("is-invalid");
+                        $("#DiemDatError").text("Điểm môn học không được để trống");
+                        flag1 = true;
+                    } else if (Diem < parseFloat(DiemToiThieu) || Diem > parseFloat(DiemToiDa)) {
+                        $(this).addClass("is-invalid");
+                        $("#DiemDatError").text("Điểm môn học phải nằm trong khoảng [" + DiemToiThieu + ";" + DiemToiDa + "]");
+                        flag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#DiemDatError").text("");
+                        flag1 = false;
+                    }
+                    toggleSubmitButton();
+                });
+
+                // Kích hoạt hoặc vô hiệu hóa nút "Thêm" dựa trên trạng thái của cả hai trường nhập liệu
+                function toggleSubmitButton() {
+                    if (flag1 == false && flag2 == false) {
+                        $("#Suamodel").prop("disabled", false);
+                    } else {
+                        $("#Suamodel").prop("disabled", true);
+                    }
+                }
+            });
+        </script>
+
+        
+        <!-- thêm -->
+        <script>
+            $(document).ready(function() {
+                var flag1 = true; // không được submit
+                var flag2 = true;
+                var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
+                var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
+                console.log(parseFloat(DiemToiDa));
+
+                $("#ThemTenMH").blur(function() {
+                    var Ten = $(this).val();
+                    var regex = /^[a-zA-Z\sÀ-ỹ]*$/; // Regular expression to allow only letters and spaces
+                    if (!regex.test(Ten) || Ten.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#ThemTenMHError").text("Tên môn học không được chứa số hoặc ký tự đặc biệt và không được để trống");
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#ThemTenMHError").text("");
+                        flag1 = false;
+                    }
+                    toggleSubmitButton();
+                });
+
+                $("#ThemDiemDat").blur(function() {
+                    var Diem = $(this).val();
+                    if (Diem === "") {
+                        $(this).addClass("is-invalid");
+                        $("#ThemDiemDatError").text("Điểm môn học không được để trống");
+                    } else if (Diem < parseFloat(DiemToiThieu) || Diem > parseFloat(DiemToiDa)) {
+                        $(this).addClass("is-invalid");
+                        $("#ThemDiemDatError").text("Điểm môn học phải nằm trong khoảng [" + DiemToiThieu + ";" + DiemToiDa + "]");
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#ThemDiemDatError").text("");
+                        flag2 = false;
+                    }
+                    toggleSubmitButton();
+                });
+
+                // Kích hoạt hoặc vô hiệu hóa nút "Thêm" dựa trên trạng thái của cả hai trường nhập liệu
+                function toggleSubmitButton() {
+                    if (flag1 == false && flag2 == false) {
+                        $("#Themmodel").prop("disabled", false);
+                    } else {
+                        $("#Themmodel").prop("disabled", true);
+                    }
+                }
+            });
+        </script>
 
         <!-- datatable -->
         <script>
