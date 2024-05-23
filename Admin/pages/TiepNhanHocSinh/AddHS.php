@@ -9,14 +9,14 @@ if (isset($_POST['submit'])) {
     $diaChi = $_POST['diaChi'];
     $email = $_POST['email'];
 
-    $sql = "UPDATE HOCSINH 
-            SET TenHocSinh='$tenHocSinh', NgaySinh='$ngaySinh', GioiTinh='$gioiTinh', DiaChi='$diaChi', Email='$email' 
-            WHERE MaHocSinh='$maHocSinhS'";
-    $mysqli->query($sql);
+    // $sql = "UPDATE HOCSINH 
+    //         SET TenHocSinh='$tenHocSinh', NgaySinh='$ngaySinh', GioiTinh='$gioiTinh', DiaChi='$diaChi', Email='$email', Status = 'Mới' 
+    //         WHERE MaHocSinh='$maHocSinhS'";
+    // $mysqli->query($sql);
 
 
 
-    $sql = "INSERT INTO HOCSINH (TenHocSinh, NgaySinh, GioiTinh, DiaChi, Email) VALUES ('$tenHocSinh', '$ngaySinh', '$gioiTinh', '$diaChi', '$email')";
+    $sql = "INSERT INTO HOCSINH (TenHocSinh, NgaySinh, GioiTinh, DiaChi, Email, status) VALUES ('$tenHocSinh', '$ngaySinh', '$gioiTinh', '$diaChi', '$email', 'Mới')";
     $mysqli->query($sql);
 
     header("Location: /Admin/index.php?action=TiepNhanHocSinh");
