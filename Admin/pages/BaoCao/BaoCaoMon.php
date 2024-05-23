@@ -188,7 +188,6 @@
                     }, function(data, status) {
                         if (status == "success") {
                             $("#tb").html(data);
-
                             // Update progress bar when data is loaded
                             updateProgressBar();
                         }
