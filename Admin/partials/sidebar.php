@@ -1,4 +1,3 @@
-
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
@@ -26,7 +25,7 @@
     <!-- LỚP HỌC -->
     <li class="nav-item nav-category">Quản lý lớp học</li>
     <li class="nav-item">
-      <a class="nav-link" href="index.php?action=QuanLyLop" >
+      <a class="nav-link" href="index.php?action=QuanLyLop">
         <i class="menu-icon"> <span class="material-symbols-outlined">assignment</span></i>
         <span class="menu-title">Quản lý lớp học</span>
         <i class="menu-arrow"></i>
@@ -52,7 +51,7 @@
     <li class="nav-item">
       <a class="nav-link" href="index.php?action=BangDiemMonHoc">
         <i class="menu-icon "><span class="material-symbols-outlined">filter_list</span></i>
-          <span class="menu-title">Bảng điểm môn học</span>
+        <span class="menu-title">Bảng điểm môn học</span>
         <i class="menu-arrow"></i>
       </a>
     </li>

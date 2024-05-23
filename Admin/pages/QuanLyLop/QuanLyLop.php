@@ -247,6 +247,7 @@
             });
         </script>
 
+
         <!-- datatable -->
         <script>
             var table = new DataTable('#example', {
