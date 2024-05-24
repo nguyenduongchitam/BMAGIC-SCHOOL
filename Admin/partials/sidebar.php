@@ -2,7 +2,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" href="../../Admin/index.php">
+      <a class="nav-link" href="../../../BMAGIC-SCHOOL/Admin/index.php">
         <i class="mdi mdi-grid-large menu-icon"></i>
         <span class="menu-title">Trang chủ</span>
       </a>
