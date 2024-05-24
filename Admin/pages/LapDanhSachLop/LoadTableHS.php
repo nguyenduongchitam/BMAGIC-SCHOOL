@@ -1,6 +1,6 @@
 <?php
 // echo "xcv asdf xcv";
-$mysqli = new mysqli("localhost","root","","hocsinhphothong");
+$mysqli = new mysqli("localhost","root","","qlhs");
 
 
 $sql = "select hocsinh.MaHocSinh,TenHocSinh, GioiTinh, NgaySinh, DiaChi, Email, status from hocsinh where status = 'Mới'";

@@ -27,9 +27,9 @@ $file = $_FILES['file']['tmp_name'];
         $DiaChi= $row['3'];
         $Email= $row['4'];
         $status = $row['5'];
-        $sql_add = "INSERT INTO `hocsinh`(`TenHocSinh`, `NgaySinh`, `GioiTinh`, `DiaChi`, `Email`, `status`) VALUES ('$TenHocSinh','$NgaySinh','$GioiTinh','$DiaChi','$Email','$status')";
+        $sql_add = "INSERT INTO `hocsinh`(`TenHocSinh`, `NgaySinh`, `GioiTinh`, `DiaChi`, `Email`, `status`) VALUES ('$TenHocSinh','$NgaySinh','$GioiTinh','$DiaChi','$Email','Mới')";
        $insert =  mysqli_query($mysqli,$sql_add);
     }
  }
- header('Location:/Admin/index.php?action=TiepNhanHocSinh');
+ header('Location:http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=TiepNhanHocSinh');
 ?>

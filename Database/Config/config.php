@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "phothong");
+$mysqli = new mysqli("localhost","root","","qlhs");
 
 // Check connection
 if ($mysqli->connect_errno) {

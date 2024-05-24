@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo cáo</title>
-    <link rel="stylesheet" href="../../css/Giao_vien_bo_mon.css">
-    <script src="../../../Teacher/js/Giao_vien_bo_mon.js"></script>
+    <link rel="stylesheet" href="../../../../BMAGIC-SCHOOL/Admin/Css/Giao_vien_bo_mon.css">
+    <!-- <script src="../../../Teacher/js/Giao_vien_bo_mon.js"></script> -->
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
@@ -88,7 +88,7 @@
                         <div class="card card-rounded">
                             <div class="card-body">
                                 <br>
-                                <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">BÁO CÁO TỔNG KẾT MÔN</div>
+                                <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">BÁO CÁO TỔNG KẾT HỌC KỲ</div>
                                 <p class="card-description"></p>
                                 <div class="table-responsive">
                                     <table class="display corder-column" id="BaoCaoBoMon" width="100%">
@@ -165,7 +165,7 @@
                 //     }
                 // });
 
-                $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
+                $.post("pages/BaoCao/ChartBCHK.php", {
                     HocKy: HocKy,
                     NamHoc: NamHoc
 
