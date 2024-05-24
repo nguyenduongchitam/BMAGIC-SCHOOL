@@ -9,12 +9,12 @@ if (isset($_GET['MaLop'])) {
 
     try {
         $sql->execute();
-        header("Location: /Admin/index.php?action=QuanLyLop");
+        header("Location: http://localhost:3000/Admin/index.php?action=QuanLyLop");
         exit();
     } catch (mysqli_sql_exception $e) {
         echo "<script>
                 alert('Không xóa được lớp học. Lớp học đang có học sinh.');
-                window.location.href='/Admin/index.php?action=QuanLyLop';
+                window.location.href='http://localhost:3000/Admin/index.php?action=QuanLyLop';
               </script>";
     }
 
