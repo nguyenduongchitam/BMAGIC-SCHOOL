@@ -5,6 +5,19 @@ $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+$sqlDD = "SELECT * FROM MONHOC WHERE MAMONHOC = '$MonHoc'";
+$resultDD = $mysqli->query($sqlDD);
+$rowDD = $resultDD->fetch_assoc();
+$DiemDat = $rowDD["DiemDat"];
+
+$sqlSoLuongDat = "select * 
+                from bangdiem, bangdiemmh, chitietdanhsachlop,danhsachlop
+                where bangdiemmh.mabd = bangdiem.mabangdiem 
+                and bangdiem.mahocky = '$HocKy' 
+                and bangdiemmh.mamonhoc ='$$MonHoc'
+                and chitietdanhsachlop.mactdsl = bangdiem.mactdsl 
+                and chitietdanhsachlop.madsl = danhsachlop.madsl
+                and danhsachlop.manamhoc ='$NamHoc'";
 
 $sql = "
     SELECT distinct lop.TenLop, ctbc_tkm.SoLuongDat, ctbc_tkm.TiLe, danhsachlop.SiSo
@@ -43,3 +56,5 @@ if ($result === false) {
     }
 }
 ?>
+
+

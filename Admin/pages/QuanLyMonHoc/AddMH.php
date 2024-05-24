@@ -8,7 +8,7 @@ if(isset($_POST['submit'])) {
     $sql = "INSERT INTO MONHOC (TenMonHoc, DiemDat) VALUES ('$tenMonHoc', '$diemDat')";
     
     $result =$mysqli->query($sql);
-    header("Location: /Admin/index.php?action=QuanLyMonHoc");
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyMonHoc");
     exit; // It's a good practice to include an exit after redirection
 }
 ?>

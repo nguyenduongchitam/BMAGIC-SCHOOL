@@ -50,8 +50,6 @@
 <!-- Kết nối cơ sở dữ liệu -->
 <?php
 $mysqli = new mysqli("localhost", "root", "", "qlhs");
-///Lúc đăng nhập sẽ sửa lại bây giờ chỉ lấy đại 1 giáo viên để test chạy backend
-$MAGV = '11';
 ?>
 
 <body>
@@ -65,7 +63,7 @@ $MAGV = '11';
                     $sqlNamHoc = "SELECT * FROM NAMHOC";
                     $resultNamHoc = $mysqli->query($sqlNamHoc);
                     while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
-                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . '</option>';
+                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . ($rowNamHoc["Nam1"] + 1) .  '</option>';
                     }
                     ?>
                 </select>
@@ -265,9 +263,9 @@ $MAGV = '11';
     // });
 </script>
 
-
 <script>
     var listSelectHS = [];
+    
 
     $(document).ready(function() {
         $.noConflict(true);
@@ -275,7 +273,7 @@ $MAGV = '11';
             "Processing": true,
             "ajax": {
                 "type": "POST",
-                "url": "../../../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/LoadTableAjax.php",
+                "url": "pages/LapDanhSachLop/LoadTableAjax.php",
                 "dataSrc": "",
                 data: function(d) {
                     d.namhoc = document.getElementById("NamHoc").value;
@@ -330,25 +328,11 @@ $MAGV = '11';
                 alert("Vui lòng chọn năm học!!!");
             } else {
                 $("#table_body").empty();
-
-                // $.post("../../../../../CNPM/BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/LoadTableAjax.php", {
-                //         namhoc: namhoc,
-                //         lop: lop,
-                //     },
-                //     function(data, status) {
-                //         if (status == "success") {
-                //             if (data != -1) {
-                //                 $('#DanhSachLop').find('tbody').append(data);
-                //             }
-                //         }
-                //     }
-                // );
-
-
                 table.ajax.reload();
             }
 
         });
+        
         $('#DanhSachLop tbody').on('click', '.delete', function() {
             var row = $(this).closest('tr');
 
@@ -357,7 +341,7 @@ $MAGV = '11';
             
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/XoaHocSinh.php", {
+                $.post("pages/LapDanhSachLop/XoaHocSinh.php", {
                         MaCTDSL: MaCTDSL,
                         MaHocSinh: MaHocSinh,
                     },
@@ -372,25 +356,7 @@ $MAGV = '11';
             }
         });
 
-        // Xoa HS ra khoi lop
-        // $(document).on('click', '.btn_ChiTiet', function(event) {
-        //     MaCTDSL = $(this).closest('tr').attr("val");
-
-        //     let text = "Bạn có muốn xóa không?";
-        //     if (confirm(text) == true) {
-        //         $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/XoaHocSinh.php", {
-        //                 MaCTDSL: MaCTDSL,
-        //             },
-        //             function(data, status) {
-        //                 if (status == "success") {
-        //                     alert(data);
-        //                 }
-        //             }
-        //         );
-        //         // $(this).parents("tr").remove();
-        //     }
-
-        // })
+    
 
         // Xu ly su kien nhan row thi check checkbox
         $(document).on('click', '.row_hs', function(event) {
@@ -413,7 +379,7 @@ $MAGV = '11';
             var lop = document.getElementById("Lop").value;
 
             if (listSelectHS.length == 0) {} else {
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/ThemHSVaoLopAjax.php", {
+                $.post("pages/LapDanhSachLop/ThemHSVaoLopAjax.php", {
                         listSelectHS: listSelectHS,
                         namhoc: namhoc,
                         lop: lop
@@ -450,7 +416,7 @@ $MAGV = '11';
             } else {
                 $("#exampleModalLong").modal('show');
                 // Load table them hs
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/LoadTableHS.php", {
+                $.post("pages/LapDanhSachLop/LoadTableHS.php", {
 
                     },
                     function(data, status) {
@@ -471,7 +437,7 @@ $MAGV = '11';
         $("#search").keyup(function() {
             var Search = $("#search").val();
             if ($(this).val().length >= 0) {
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/SearchHSAjax.php", {
+                $.post("pages/LapDanhSachLop/SearchHSAjax.php", {
                         Search: Search,
                     },
                     function(data, status) {

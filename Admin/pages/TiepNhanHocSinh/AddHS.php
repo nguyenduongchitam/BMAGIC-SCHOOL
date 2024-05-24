@@ -18,6 +18,6 @@ if (isset($_POST['submit'])) {
     $sql = "INSERT INTO HOCSINH (TenHocSinh, NgaySinh, GioiTinh, DiaChi, Email) VALUES ('$tenHocSinh', '$ngaySinh', '$gioiTinh', '$diaChi', '$email')";
     $mysqli->query($sql);
 
-    header("Location: /Admin/index.php?action=TiepNhanHocSinh");
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=TiepNhanHocSinh");
     exit; // It's a good practice to include an exit after redirection
 }

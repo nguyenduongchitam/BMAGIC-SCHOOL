@@ -41,8 +41,7 @@
                 <select class="form-select" id="NamHoc">
                     <option selected disabled>Năm học</option>
                     <?php
-                    $sqlNamHoc = "SELECT DISTINCT nh.MaNamHoc, nh.Nam1, nh.Nam2
-                            FROM NAMHOC NH";
+                    $sqlNamHoc = "SELECT DISTINCT nh.MaNamHoc, nh.Nam1, nh.Nam2 FROM NAMHOC NH";
                     $resultNamHoc = $mysqli->query($sqlNamHoc);
                     while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                         echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . $rowNamHoc["Nam2"] . '</option>';
@@ -73,7 +72,6 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbDs">
-
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -92,100 +90,69 @@
                 </div>
             </div>
         </div>
-
-        <!-- <link rel="stylesheet" href="../../../Admin/pages/DanhSachHocSinh/tableDSHS.php"> -->
-
-        <!-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script> -->
-        <script>
-            // Datatable
-            // var table = new DataTable('#example', {
-            //     language: {
-            //         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
-            //     },
-
-            //     layout: {
-            //         topStart: {
-            //             buttons: [
-            //                 'pdf',
-            //                 'csv',
-            //                 'excel',
-            //                 'copy',
-            //                 'colvis'
-            //             ]
-            //         },
-            //         topEnd: 'search',
-            //         bottomStart: 'pageLength',
-            //         bottomEnd: 'info',
-            //         bottom2center: 'paging'
-            //     }
-            // });
-
-            // //Hiển thị danh sách học sinh
-            $(document).ready(function() {
-                $.noConflict(true);
-                var table = $('#example').DataTable({
-                    "Processing": true,
-                    "ajax": {
-                        "type": "POST",
-                        "url": "../../../../BMAGIC-SCHOOL/Admin/pages/DanhSachHocSinh/ListHS.php",
-                        "dataSrc": "",
-                        data: function(d) {
-                            d.namHoc = document.getElementById("NamHoc").value;
-                        }
-                    },
-                    "columns": [{
-                            "data": "MaCTDSL"
-                        },
-                        {
-                            "data": "TenHocSinh"
-                        },
-                        {
-                            "data": "GioiTinh"
-                        },
-                        {
-                            "data": "NgaySinh"
-                        },
-                        {
-                            "data": "DiaChi"
-                        },
-                        {
-                            "data": "Email"
-                        },
-                        {
-                            "data": "MaHocSinh",
-                            visible: false,
-                        },
-                        {
-                            "data": "Status",
-                            visible: false,
-                        }, {
-                            defaultContent: '<input type="button" class="delete" value="Xóa"/>'
-                        },
-                    ],
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-
-                });;
-
-                $('#NamHoc').change(function() {
-                    $('#tbDs').empty();
-                    table.ajax.reload();
-                    // var namHoc = $(this).val();
-
-                    // $.post("pages/DanhSachHocSinh/listHS.php", {
-                    //     namHoc: namHoc
-                    // }, function(data, status) {
-                    //     if (status == "success") {
-                    //         $("#tbDs").html(data);
-                    //     }
-
-                    // })
-                });
-            });
-        </script>
     </section>
 </body>
 
 </html>
+
+<script>
+    var listSelectHS = [];
+
+    $(document).ready(function() {
+        $.noConflict(true);
+        var table = $('#example').DataTable({
+            "Processing": true,
+            "ajax": {
+                "type": "POST",
+                "url": "pages/DanhSachHocSinh/AjaxDatatable.php",
+                "dataSrc": "",
+                "data": function(d) {
+                    d.namHoc = $('#NamHoc').val();
+                }
+            },
+            "columns": [
+                {
+                    "data": "STT",
+                    "className": "text-center"
+                },
+                {
+                    "data": "TenHocSinh"
+                },
+                {
+                    "data": "TenLop",
+                    "className": "text-center"
+                },
+                {
+                    "data": "DTBHK1"
+                },
+                {
+                    "data": "DTBHK2"
+                }
+            ],
+            // dom: 'Bfrtip',
+
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
+            },
+            layout: {
+                topStart: {
+                    buttons: [
+                        'pdf',
+                        'csv',
+                        'excel',
+                        'copy',
+                        'colvis'
+                    ]
+                },
+                topEnd: 'search',
+                bottomStart: 'pageLength',
+                bottomEnd: 'info',
+                bottom2center: 'paging'
+            }
+        });
+
+        $('#NamHoc').on("change", function() {
+            table.ajax.reload();
+        });
+    });
+</script>

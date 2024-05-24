@@ -160,7 +160,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="../../../Admin/pages/TiepNhanHocSinh/Update.php" method="post">
+                        <form class="forms-sample" action="pages/TiepNhanHocSinh/Update.php" method="post">
                             <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã học sinh</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaHocSinh" name="maHocSinh" readonly>
 
@@ -202,7 +202,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="registration" id="ValidateForm" method="post" action="../../../Admin/pages/TiepNhanHocSinh/AddHS.php">
+                        <form name="registration" id="ValidateForm" method="post" action="pages/TiepNhanHocSinh/AddHS.php">
                             <!-- Trong form thêm modal -->
                             <label for="modalTenHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
                             <div class="row">
