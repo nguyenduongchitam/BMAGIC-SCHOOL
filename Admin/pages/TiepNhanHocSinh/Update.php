@@ -14,6 +14,6 @@ if (isset($_POST['submit']) && ($_POST['submit'] == 'Cập nhật')) {
             WHERE MaHocSinh='$maHocSinhS'";
     $mysqli->query($sql);
 
-    header("Location: /Admin/index.php?action=TiepNhanHocSinh");
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=TiepNhanHocSinh");
     exit();
 }

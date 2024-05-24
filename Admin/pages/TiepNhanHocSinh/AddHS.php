@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     $mysqli->query($sql);
 
 
-    $sql = "INSERT INTO HOCSINH (TenHocSinh, NgaySinh, GioiTinh, DiaChi, Email) VALUES ('$tenHocSinh', '$ngaySinh', '$gioiTinh', '$diaChi', '$email')";
+    $sql = "INSERT INTO HOCSINH VALUES ('$tenHocSinh', '$ngaySinh', '$gioiTinh', '$diaChi', '$email','Mới')";
     $mysqli->query($sql);
 
     header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=TiepNhanHocSinh");

@@ -49,7 +49,7 @@
 
 <!-- Kết nối cơ sở dữ liệu -->
 <?php
-$mysqli = new mysqli("localhost", "root", "", "hocsinhphothong");
+$mysqli = new mysqli("localhost", "root", "", "qlhs");
 ?>
 
 <body>

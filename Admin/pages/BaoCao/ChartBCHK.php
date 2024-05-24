@@ -10,7 +10,11 @@ $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
 $DiemDat = -1;
 if($rowDD > 0){
+<<<<<<< HEAD
     $DiemDat = $rowDD ["DiemDat"];
+=======
+    $DiemDat = $rowDD["DiemDat"];
+>>>>>>> 8e11861f084e619e168cc3c779f95c538b500fe3
 }
 
 $sql = "
@@ -18,7 +22,7 @@ SELECT
     danhsachlop.malop,
     danhsachlop.siso,
     lop.tenlop,
-    COUNT(CASE WHEN bangdiem.dtbhk >= $DiemDat THEN 1 END) AS soluongdat
+    COUNT(CASE WHEN bangdiem.dtbhk >= ' " .$DiemDat. "' THEN 1 END) AS soluongdat
 FROM 
     bangdiem
 JOIN 
@@ -28,8 +32,8 @@ JOIN
 JOIN 
     lop ON lop.malop = danhsachlop.malop
 WHERE 
-    bangdiem.mahocky = $HocKy AND
-    danhsachlop.manamhoc = $NamHoc
+    bangdiem.mahocky = '$HocKy' AND
+    danhsachlop.manamhoc = '$NamHoc'
 GROUP BY 
     danhsachlop.malop
 ";
