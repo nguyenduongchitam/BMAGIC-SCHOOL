@@ -154,7 +154,7 @@
                 var HocKy = $(this).val();
                 $('#tb').empty();
 
-                $.post("../../../Admin/pages/BaoCao/ListBCHK.php", {
+                $.post("pages/BaoCao/ListBCHK.php", {
                     HocKy: HocKy,
                     NamHoc: NamHoc
                 }, function(data, status) {
@@ -164,7 +164,7 @@
                     }
                 });
 
-                $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
+                $.post("pages/BaoCao/ChartBCHK.php", {
                     HocKy: HocKy,
                     NamHoc: NamHoc
 

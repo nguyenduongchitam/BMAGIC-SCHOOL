@@ -181,7 +181,7 @@
                     var HocKy = $(this).val();
                     $('#tb').empty();
 
-                    $.post("../../../Admin/pages/BaoCao/ListBCM.php", {
+                    $.post("pages/BaoCao/ListBCM.php", {
                         MonHoc: MonHoc,
                         HocKy: HocKy,
                         NamHoc: NamHoc
@@ -194,7 +194,7 @@
                     })
 
 
-                    $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
+                    $.post("pages/BaoCao/ChartBCHK.php", {
                         MonHoc: MonHoc,
                         HocKy: HocKy,
                         NamHoc: NamHoc
