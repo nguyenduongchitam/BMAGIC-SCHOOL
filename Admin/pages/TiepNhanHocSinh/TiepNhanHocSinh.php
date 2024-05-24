@@ -553,6 +553,11 @@
                 $(".btn-Them").click(function() {
                     $('#myModal1').modal('show');
                 });
+
+                //Import 
+                $(".btn-Nhap").click(function() {
+                    $('#exampleModalCenter').modal('show');
+                });
             });
             // });
         </script>
