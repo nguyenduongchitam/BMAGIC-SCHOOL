@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo cáo</title>
-    <link rel="stylesheet" href="../../css/Giao_vien_bo_mon.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="../../../../BMAGIC-SCHOOL/Admin/Css/Giao_vien_bo_mon.css">
     <script src="../../../Teacher/js/Giao_vien_bo_mon.js"></script>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
     <!-- DataTables Buttons JS -->
@@ -162,11 +163,73 @@
 
 </html>
 
-
-
-
+<!-- CHART -->
 <script>
     $(document).ready(function() {
+        $.noConflict(true);
+        var table = $('#BaoCaoBoMon').DataTable({
+            "Processing": true,
+            "ajax": {
+                "type": "POST",
+                "url": "pages/BaoCao/ChartBCM.php",
+                "dataSrc": "",
+                "data": function(d) {
+                    d.NamHoc = $('#NamHoc').val();
+                    d.MonHoc = $('#MonHoc').val();
+                    d.HocKy = $('#HocKy').val();
+                }
+            },
+            "columns": [{
+                    "data": "STT",
+                    "className": "text-center"
+                },
+                {
+                    "data": "TenLop",
+                    "className": "text-center"
+                },
+                {
+                    "data": "SiSo",
+                    "className": "text-center"
+                },
+                {
+                    "data": "SoLuongDat",
+                    "className": "text-center"
+                },
+                {
+                    "data": "TiLe",
+                    "className": "text-center"
+                },
+            ],
+
+
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
+            },
+            layout: {
+                topStart: {
+                    buttons: [
+                        'pdf',
+                        'csv',
+                        'excel',
+                        'copy',
+                        'colvis'
+                    ]
+                },
+                topEnd: 'search',
+                bottomStart: 'pageLength',
+                bottomEnd: 'info',
+                bottom2center: 'paging'
+            }
+        });
+
+        $("#HocKy").change(function(e) {
+            var NamHoc = document.getElementById("NamHoc").value;
+            var MonHoc = document.getElementById("HocKy").value;
+            var HocKy = document.getElementById("HocKy").value;
+
+            $("#tb").empty();
+            table.ajax.reload();
+        });
 
         $('#NamHoc').change(function() {
             var NamHoc = $(this).val();
@@ -179,22 +242,8 @@
 
                 $('#HocKy').change(function() {
                     var HocKy = $(this).val();
-                    $('#tb').empty();
 
-                    $.post("pages/BaoCao/ListBCM.php", {
-                        MonHoc: MonHoc,
-                        HocKy: HocKy,
-                        NamHoc: NamHoc
-                    }, function(data, status) {
-                        if (status == "success") {
-                            $("#tb").html(data);
-                            // Update progress bar when data is loaded
-                            updateProgressBar();
-                        }
-                    })
-
-
-                    $.post("pages/BaoCao/ChartBCHK.php", {
+                    $.post("pages/BaoCao/ChartBCM.php", {
                         MonHoc: MonHoc,
                         HocKy: HocKy,
                         NamHoc: NamHoc
@@ -235,45 +284,6 @@
             });
 
         });
-
-
-
-    });
-</script>
-
-<!-- DATATABLE -->
-<script>
-    var table = new DataTable('#BaoCaoBoMon', {
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
-        },
-
-        layout: {
-            topStart: {
-                buttons: [
-                    'pdf',
-                    'csv',
-                    'excel',
-                    'copy',
-                    'colvis'
-                ]
-            },
-            topEnd: 'search',
-            bottomStart: 'pageLength',
-            bottomEnd: 'info',
-            bottom2center: 'paging'
-        }
-    });
-
-    $('#submit').on('click', function(e) {
-        e.preventDefault();
-        var data = table.$('input, select').serialize();
-    });
-
-    table.on('mouseenter', 'td', function() {
-        let colIdx = table.cell(this).index().column;
-        table.cells().nodes().each((el) => el.classList.remove('highlight'));
-        table.column(colIdx).nodes().each((el) => el.classList.add('highlight'));
     });
 </script>
 
@@ -283,3 +293,4 @@
 
     }
 </style>
+

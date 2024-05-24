@@ -6,19 +6,22 @@ $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
-$sqlDD = "SELECT * FROM MONHOC WHERE MAMONHOC = '$MonHoc'";
+// Fetch DiemDat for the specific subject
+$sqlDD = "SELECT * FROM MONHOC WHERE MAMONHOC = ' " .$MonHoc . "'";
 $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
-$DiemDat = $rowDD["DiemDat"];
+$DiemDat = -1;
+if($rowDD > 0){
+    $DiemDat = $rowDD["DiemDat"];
+}
+
 
 $sql = "
 SELECT 
     danhsachlop.malop,
     danhsachlop.siso,
     lop.tenlop,
-    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) AS soluongdat,
-    COUNT(*) AS tonghocsinh,
-    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) / COUNT(*) * 100 AS tile
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= ' " . $DiemDat . " ' THEN 1 END) AS soluongdat
 FROM 
     bangdiemmh
 JOIN 
@@ -37,24 +40,26 @@ GROUP BY
     danhsachlop.malop
 ";
 
-$result = $mysqli->query($sql);
-
 // Thực thi truy vấn SQL
 $result = $mysqli->query($sql);
-$stt = 0;
+
 $data = [];
+$stt = 0;
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
         $stt++;
+        // Check if 'siso' index exists in the row array
+        // $siso = isset($row['siso']) ? $row['siso'] : 'N/A';
+        // Calculate TiLe here
+        // $tile = ($row['soluongdat'] / $siso) * 100;
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
             'SiSo' => $row['siso'],
             'SoLuongDat' => $row['soluongdat'],
-            'TiLe' => $row['tile']
+            'TiLe' => ($row['soluongdat'] / $row['siso']) * 100
         ];
     }
 }
-
 echo json_encode($data);
 ?>

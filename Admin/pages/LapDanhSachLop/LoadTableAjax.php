@@ -1,6 +1,6 @@
 <?php
 // echo "xcv asdf xcv";
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
+$mysqli = new mysqli("localhost","root","","qlhs");
 
 $namhoc = $_POST['namhoc'];
 $lop = $_POST['lop'];

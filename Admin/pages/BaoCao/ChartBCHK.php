@@ -4,17 +4,21 @@ include "../../../Database/Config/config.php";
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+// Fetch DiemDat from THAMSO table
 $sqlDD = "SELECT * FROM THAMSO";
 $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
-$DiemDat = $rowDD["DiemDat"];
+$DiemDat = -1;
+if($rowDD > 0){
+    $DiemDat = $rowDD["DiemDat"];
+}
 
 $sql = "
 SELECT 
     danhsachlop.malop,
     danhsachlop.siso,
     lop.tenlop,
-    COUNT(CASE WHEN bangdiem.dtbhk >= $DiemDat THEN 1 END) AS soluongdat
+    COUNT(CASE WHEN bangdiem.dtbhk >= ' " .$DiemDat. "' THEN 1 END) AS soluongdat
 FROM 
     bangdiem
 JOIN 
@@ -24,8 +28,8 @@ JOIN
 JOIN 
     lop ON lop.malop = danhsachlop.malop
 WHERE 
-    bangdiem.mahocky = $HocKy AND
-    danhsachlop.manamhoc = $NamHoc
+    bangdiem.mahocky = '$HocKy' AND
+    danhsachlop.manamhoc = '$NamHoc'
 GROUP BY 
     danhsachlop.malop
 ";
@@ -41,9 +45,10 @@ if ($result !== false) {
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
-            'SiSo' => $row['SiSo'],
+            'SiSo' => $row['siso'],
             'SoLuongDat' => $row['soluongdat'],
-            'TiLe' => $row['tile']
+            // Calculate TiLe here
+            'TiLe' => ($row['soluongdat'] / $row['siso']) * 100
         ];
     }
 }
