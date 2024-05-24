@@ -101,7 +101,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                     <div>
                                         <label class="fw-bold pb-2 mt-3">Năm học</label>
                                         <div class="col">
-                                            <form action="../../../Admin/pages/CaiDat/ThemNamHoc.php" method="post" onsubmit="return validateYear()">
+                                            <form action="pages/CaiDat/ThemNamHoc.php" method="post" onsubmit="return validateYear()">
                                                 <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="nienkhoa" name="nam1" required>
                                                 <input name="submit" value="Thêm" class="btnMinAge" type="submit" id="ThemNamHoc">
                                             </form>
@@ -128,7 +128,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                         <div class="col-6">
                                             <label class="fw-bold pb-2 mt-3">Số tuổi tối thiểu</label>
                                             <div class="col">
-                                                <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateAge()">
+                                                <form action="pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateAge()">
                                                     <input type="number" class="form-control MinAge" id="MinAge" name="MinAge" value="<?php echo $MinAge; ?>">
                                                     <input name="submit" value="Lưu" class="btnMinAge" type="submit">
                                                 </form>
@@ -137,7 +137,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                         <div class="col-6">
                                             <label class="fw-bold pb-2 mt-3">Số tuổi tối đa</label>
                                             <div class="col">
-                                                <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateAge()">
+                                                <form action="pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateAge()">
                                                     <input type="number" class="form-control MaxAge" id="MaxAge" name="MaxAge" value="<?php echo $MaxAge; ?>">
                                                     <input name="submit" value="Lưu" class="btnMinAge" type="submit">
                                                 </form>
@@ -164,7 +164,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                         <div class="col-6">
                                             <label class="fw-bold pb-2 mt-3">Số điểm tối thiểu</label>
                                             <div class="col">
-                                                <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateScore()">
+                                                <form action="pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateScore()">
                                                     <input type="number" class="form-control MinAge" id="DiemToiThieu" name="DiemToiThieu" value="<?php echo $DiemToiThieu; ?>" step="0.1">
                                                     <input name="submit" value="Lưu" class="btnMinAge" type="submit">
                                                 </form>
@@ -174,7 +174,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                         <div class="col-6">
                                             <label class="fw-bold pb-2 mt-3">Số điểm tối đa</label>
                                             <div class="col">
-                                                <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateScore()">
+                                                <form action="pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateScore()">
                                                     <input type="number" class="form-control MaxAge" id="DiemToiDa" name="DiemToiDa" value="<?php echo $DiemToiDa; ?>" step="0.1">
                                                     <input name="submit" value="Lưu" class="btnMinAge" type="submit">
                                                 </form>
@@ -184,7 +184,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                     <div>
                                         <label class="fw-bold pb-2 mt-3">Điểm đạt</label>
                                         <div class="col">
-                                            <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateScore()">
+                                            <form action="pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateScore()">
                                                 <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="DiemDat" name="DiemDat" value="<?php echo $DiemDat; ?>" step="0.1">
                                                 <input name="submit" value="Lưu" class="btnMinAge" type="submit">
                                             </form>
@@ -208,7 +208,7 @@ while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
                                     <div>
                                         <label class="fw-bold pb-2 mt-3">Sĩ số</label>
                                         <div class="col">
-                                            <form action="../../../Admin/pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateClassSize()">
+                                            <form action="pages/CaiDat/UpdateCD.php" method="post" onsubmit="return validateClassSize()">
                                                 <input style="width: 75.2%;" type="number" class="form-control MaxAge" id="SiSo" name="SiSo" value="<?php echo $SiSo; ?>">
                                                 <input name="submit" value="Lưu" class="btnMinAge" type="submit">
                                             </form>

@@ -63,7 +63,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                     $sqlNamHoc = "SELECT * FROM NAMHOC";
                     $resultNamHoc = $mysqli->query($sqlNamHoc);
                     while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
-                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . '</option>';
+                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . ($rowNamHoc["Nam1"] + 1) .  '</option>';
                     }
                     ?>
                 </select>
@@ -273,7 +273,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             "Processing": true,
             "ajax": {
                 "type": "POST",
-                "url": "../../../Admin/pages/LapDanhSachLop/LoadTableAjax.php",
+                "url": "pages/LapDanhSachLop/LoadTableAjax.php",
                 "dataSrc": "",
                 data: function(d) {
                     d.namhoc = document.getElementById("NamHoc").value;
@@ -338,9 +338,10 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
 
             var MaCTDSL = table.row(row).data().MaCTDSL;
             var MaHocSinh = table.row(row).data().MaHocSinh;
+            
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
-                $.post("../../../Admin/pages/LapDanhSachLop/XoaHocSinh.php", {
+                $.post("pages/LapDanhSachLop/XoaHocSinh.php", {
                         MaCTDSL: MaCTDSL,
                         MaHocSinh: MaHocSinh,
                     },
@@ -378,7 +379,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             var lop = document.getElementById("Lop").value;
 
             if (listSelectHS.length == 0) {} else {
-                $.post("../../../Admin/pages/LapDanhSachLop/ThemHSVaoLopAjax.php", {
+                $.post("pages/LapDanhSachLop/ThemHSVaoLopAjax.php", {
                         listSelectHS: listSelectHS,
                         namhoc: namhoc,
                         lop: lop
@@ -415,7 +416,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             } else {
                 $("#exampleModalLong").modal('show');
                 // Load table them hs
-                $.post("../../../Admin/LapDanhSachLop/LoadTableHS.php", {
+                $.post("pages/LapDanhSachLop/LoadTableHS.php", {
 
                     },
                     function(data, status) {
@@ -436,7 +437,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
         $("#search").keyup(function() {
             var Search = $("#search").val();
             if ($(this).val().length >= 0) {
-                $.post("../../../Admin/LapDanhSachLop/SearchHSAjax.php", {
+                $.post("pages/LapDanhSachLop/SearchHSAjax.php", {
                         Search: Search,
                     },
                     function(data, status) {

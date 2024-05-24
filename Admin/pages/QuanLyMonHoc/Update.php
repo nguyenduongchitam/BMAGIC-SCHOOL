@@ -9,6 +9,6 @@ if (isset($_POST['submit']) && ($_POST['submit'] == 'Cập nhật')) {
     $sql = "UPDATE MONHOC SET TenMonHoc='$tenMonHoc', DiemDat='$diemDat' WHERE MaMonHoc='$maMonHoc'";
     $mysqli->query($sql);
 
-    header("Location: /Admin/index.php?action=QuanLyMonHoc");
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyMonHoc");
     exit();
 }
