@@ -162,6 +162,7 @@
                             <input type="text" class="form-control mb-2" id="modalTenLop" name="tenLop" placeholder="Lớp 10A1">
                             <span id="TenLHError" class="error-message"></span> <!-- Thông báo lỗi -->
 
+                            <br />
                             <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
                             <select class="form-select" id="modalTenKhoi" name="tenKhoi" required>
                                 <option value="" selected>Chọn khối</option>
@@ -189,33 +190,35 @@
                     <div class="modal-body">
                         <form method="post" id="addLopForm" action="../../../Admin/pages/QuanLyLop/AddLop.php">
                             <!-- Trong form thêm modal -->
-                            <label for="modalTenLop" class="col-sm-3 col-form-label fw-bold pb-2">Tên lớp học</label>
+                            <label for="modalTenLopadd" class="col-sm-3 col-form-label fw-bold pb-2">Tên lớp học</label>
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" class="form-control" id="modalTenLop" name="tenLop" placeholder="Lớp 10A1" required>
-                                    <span id="TenLopError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <input type="text" class="form-control" id="modalTenLopadd" name="tenLop" placeholder="Lớp 10A1" required>
+                                    <span id="TenLopErroradd" class="error-message"></span> <!-- Thông báo lỗi -->
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
-                                    <select class="form-select" id="modalTenKhoi" name="tenKhoi" required>
+                                    <label for="modalTenKhoiadd" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
+                                    <select class="form-select" id="modalTenKhoiadd" name="tenKhoi" required>
                                         <option value="" disabled selected>Chọn khối</option>
                                         <option value="Khối 10">Khối 10</option>
                                         <option value="Khối 11">Khối 11</option>
                                         <option value="Khối 12">Khối 12</option>
                                     </select>
-                                    <span id="TenKhoiError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <span id="TenKhoiErroradd" class="error-message"></span> <!-- Thông báo lỗi -->
                                 </div>
                             </div>
-                            <div id="errorContainer" class="error-message"></div> <!-- Hiển thị thông báo lỗi -->
-                            <input type="submit" class="mt-4 fw-bold btnThem" name="submit" value="Thêm" size="50">
+
+                            <input type="submit" class="btnThem mt-4 fw-bold" id="btnThem" name="submit" value="Thêm" size="50">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
+
 
 
         <script>
@@ -225,7 +228,6 @@
                     $('#myModal').modal('show');
 
                     var row = $(this).closest('tr');
-                    // var maLop = row.find('td:eq(0)').text();
                     var maLop = row.find('td:eq(1)').text();
                     var tenLop = row.find('td:eq(2)').text();
                     var tenKhoi = row.find('td:eq(3)').text();
@@ -234,18 +236,102 @@
                     $('#modalMaLop').val(maLop);
                     $('#modalTenLop').val(tenLop);
                     $('#modalTenKhoi').val(tenKhoi);
-
                 });
+
                 // Xóa
                 $(".btn-Xoa").click(function() {
                     $(this).closest('tr').remove();
                 });
+
                 // Thêm
                 $(".btn-Them").click(function() {
                     $('#myModal1').modal('show');
                 });
+
+                // Xử lý validation cho modal Sửa
+                var updateFlag1 = false; // được submit
+                var updateFlag2 = false;
+
+                $("#modalTenLop").blur(function() {
+                    var Lop = $(this).val();
+                    var regex = /^[a-zA-ZÀ-ỹ\s0-9]*$/;
+                    if (!regex.test(Lop) || Lop.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenLHError").text("Tên lớp học không được chứa ký tự đặc biệt và để trống");
+                        updateFlag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenLHError").text("");
+                        updateFlag1 = false;
+                    }
+                    toggleUpdateButton();
+                });
+
+                $("#modalTenKhoi").blur(function() {
+                    var Khoi = $(this).val();
+                    if (Khoi.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenKhoiError").text("Tên khối lớp không được để trống");
+                        updateFlag2 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenKhoiError").text("");
+                        updateFlag2 = false;
+                    }
+                    toggleUpdateButton();
+                });
+
+                function toggleUpdateButton() {
+                    if (!updateFlag1 && !updateFlag2) {
+                        $(".btn-Update").prop("disabled", false);
+                    } else {
+                        $(".btn-Update").prop("disabled", true);
+                    }
+                }
+
+                // Xử lý validation cho modal Thêm
+                var addFlag1 = true; // không được submit
+                var addFlag2 = true;
+
+                $("#modalTenLopadd").blur(function() {
+                    var Lop = $(this).val();
+                    var regex = /^[a-zA-ZÀ-ỹ\s0-9]*$/;
+                    if (!regex.test(Lop) || Lop.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenLopErroradd").text("Tên lớp học không được chứa ký tự đặc biệt và không được để trống");
+                        addFlag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenLopErroradd").text("");
+                        addFlag1 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalTenKhoiadd").blur(function() {
+                    var Khoi = $(this).val();
+                    if (Khoi.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenKhoiErroradd").text("Tên khối không được để trống");
+                        addFlag2 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenKhoiErroradd").text("");
+                        addFlag2 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                function toggleAddButton() {
+                    if (!addFlag1 && !addFlag2) {
+                        $("#btnThem").prop("disabled", false);
+                    } else {
+                        $("#btnThem").prop("disabled", true);
+                    }
+                }
             });
         </script>
+
 
 
         <!-- datatable -->
