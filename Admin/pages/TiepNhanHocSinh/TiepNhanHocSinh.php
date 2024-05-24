@@ -123,14 +123,20 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="../../../Admin/pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                <button style="background-color:transparent; border-width: 0;" type="button" id="' . $rowHOCSINH['MaHocSinh'] . '" class="btn btn-primary btnXoa">
                                                                     <i class="bx bx-trash"></i>
-                                                                </a>
+                                                                </button>
                                                             </td>
+                                                            
                                                         </tr>
                                                     ';
                                             }
                                             ?>
+                                            <!-- <td class="text-center">
+                                                                <a href="../../../Admin/pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                    <i class="bx bx-trash"></i>
+                                                                </a>
+                                                            </td> -->
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -196,7 +202,7 @@
                             <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Trạng thái</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modaltrangthai" name="trangthai" readonly>
 
-                            <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50">
+                            <input type="submit" class="mt-4 fw-bold btn-Update" id="btn-Update" name="submit" value="Cập nhật" size="50">
                         </form>
                     </div>
                 </div>
@@ -292,6 +298,7 @@
                     var regex = /^[a-zA-ZÀ-ỹ\s]*$/;
                     if (!regex.test(tenHocSinh) || tenHocSinh.trim() === "") {
                         $(this).addClass("is-invalid");
+                        s
                         $("#TenHSError").text("Tên học sinh không được chứa ký tự đặc biệt và không được để trống");
                         updateFlag1 = true;
                     } else {
@@ -311,7 +318,7 @@
                         updateFlag2 = true;
                     } else {
                         var age = moment().diff(moment(ngaySinh), 'years');
-                        alert(age);
+                        // alert(age);
                         if (age < minAge || age > maxAge) {
                             $(this).addClass("is-invalid");
                             $("#NgaySinhError").text("Tuổi của học sinh phải nằm trong khoảng từ " + minAge + " đến " + maxAge + " tuổi");
@@ -371,9 +378,9 @@
 
                 function toggleUpdateButton() {
                     if (!updateFlag1 && !updateFlag2 && !updateFlag3 && !updateFlag4 && !updateFlag5) {
-                        $(".btn-Update").prop("disabled", false);
+                        $("#btn-Update").prop("disabled", false);
                     } else {
-                        $(".btn-Update").prop("disabled", true);
+                        $("#btn-Update").prop("disabled", true);
                     }
                 }
 
@@ -489,9 +496,47 @@
                     $('#modaltrangthai').val(trangthai);
                 });
 
+
+
                 // Xóa
-                $(".btn-Xoa").click(function() {
-                    $(this).closest('tr').remove();
+                $(".btnXoa").click(function() {
+
+                    var row = $(this).closest('tr');
+
+                    var MaHS = $(this).attr('id');
+                    // let text = "Bạn có muốn xóa không?";
+                    // if (confirm(text) == true) {
+                    // $.post("Admin\pages\TiepNhanHocSinh\DeleteHS.php", {
+                    //         MaHocSinh: MaHS,
+                    //     },
+                    //     function(data, status) {
+                    //         if (status == "success") {
+                    //             alert(data);
+                    //             $(this).parents("tr").remove();
+                    //         }
+                    //     }
+                    // );
+                    $.ajax({
+
+                        url: 'pages/TiepNhanHocSinh/TiepNhanHocSinh.php',
+                        method: 'GET',
+                        dataType: "json",
+                        data: {
+                            MaHocSinh: MaHS
+                        },
+                        success: function(response) {
+                            // Handle success
+                            console.log('Data submitted successfully');
+                            // Hide the modal
+
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            // Handle error
+                            console.log('Error: ' + errorThrown);
+                        }
+                    });
+
+                    // }
                 });
 
                 // Thêm
@@ -499,6 +544,7 @@
                     $('#myModal1').modal('show');
                 });
             });
+            // });
         </script>
 
         <!-- datatable -->

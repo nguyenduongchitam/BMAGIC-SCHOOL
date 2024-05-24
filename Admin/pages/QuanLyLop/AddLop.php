@@ -1,26 +1,6 @@
 <?php
 include "../../../Database/Config/config.php";
 
-if (isset($_POST['checkTenLop'])) {
-    $tenLop = $_POST['tenLop'];
-    $sql = "SELECT * FROM lop WHERE TenLop = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $tenLop);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo json_encode(['exists' => true]);
-    } else {
-        echo json_encode(['exists' => false]);
-    }
-
-    $stmt->close();
-    $conn->close();
-    exit();
-}
-
-// Đoạn mã xử lý thêm lớp học vào database
 if (isset($_POST['submit'])) {
     $tenLop = $_POST['tenLop'];
     $tenKhoi = $_POST['tenKhoi'];
