@@ -6,16 +6,37 @@ $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+$sqlDD = "SELECT * FROM MONHOC WHERE MAMONHOC = '$MonHoc'";
+$resultDD = $mysqli->query($sqlDD);
+$rowDD = $resultDD->fetch_assoc();
+$DiemDat = $rowDD["DiemDat"];
 
 $sql = "
-    SELECT distinct lop.TenLop, ctbc_tkm.SoLuongDat, ctbc_tkm.TiLe, danhsachlop.SiSo
-    FROM ctbc_tkm, bc_tkm, danhsachlop, lop
-    WHERE bc_tkm.MAMONHOC = '$MonHoc' AND
-          bc_tkm.MAHOCKY = '$HocKy' AND
-          bc_tkm.MANAMHOC = '$NamHoc' AND
-          danhsachlop.MADSL = ctbc_tkm.MADSL and
-          danhsachlop.MALOP = lop.MaLop
+SELECT 
+    danhsachlop.malop,
+    danhsachlop.siso,
+    lop.tenlop,
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) AS soluongdat,
+    COUNT(*) AS tonghocsinh,
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) / COUNT(*) * 100 AS tile
+FROM 
+    bangdiemmh
+JOIN 
+    bangdiem ON bangdiemmh.mabd = bangdiem.mabangdiem
+JOIN 
+    chitietdanhsachlop ON bangdiem.mactdsl = chitietdanhsachlop.mactdsl
+JOIN 
+    danhsachlop ON chitietdanhsachlop.madsl = danhsachlop.madsl
+JOIN 
+    lop ON lop.malop = danhsachlop.malop
+WHERE 
+    bangdiemmh.mamonhoc = '$MonHoc' AND
+    bangdiem.mahocky = '$HocKy' AND
+    danhsachlop.manamhoc = '$NamHoc'
+GROUP BY 
+    danhsachlop.malop
 ";
+
 $result = $mysqli->query($sql);
 
 // Thực thi truy vấn SQL
@@ -27,10 +48,10 @@ if ($result !== false) {
         $stt++;
         $data[] = [
             'STT' => $stt,
-            'TenLop' => $row['TenLop'],
-            'SiSo' => $row['SiSo'],
-            'SoLuongDat' => $row['SoLuongDat'],
-            'TiLe' => $row['TiLe']
+            'TenLop' => $row['tenlop'],
+            'SiSo' => $row['siso'],
+            'SoLuongDat' => $row['soluongdat'],
+            'TiLe' => $row['tile']
         ];
     }
 }

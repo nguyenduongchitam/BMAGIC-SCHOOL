@@ -4,13 +4,30 @@ include "../../../Database/Config/config.php";
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+$sqlDD = "SELECT * FROM THAMSO";
+$resultDD = $mysqli->query($sqlDD);
+$rowDD = $resultDD->fetch_assoc();
+$DiemDat = $rowDD["DiemDat"];
+
 $sql = "
-    SELECT distinct lop.TenLop, bc_tkhk.SoLuongDat, bc_tkhk.TiLe, danhsachlop.SiSo
-    FROM bc_tkhk, danhsachlop, lop
-    WHERE bc_tkhk.MAHOCKY = '$HocKy' AND
-          danhsachlop.MANAMHOC = '$NamHoc' AND
-          danhsachlop.MADSL = bc_tkhk.MADSL and
-          danhsachlop.MALOP = lop.MaLop
+SELECT 
+    danhsachlop.malop,
+    danhsachlop.siso,
+    lop.tenlop,
+    COUNT(CASE WHEN bangdiem.dtbhk >= $DiemDat THEN 1 END) AS soluongdat
+FROM 
+    bangdiem
+JOIN 
+    chitietdanhsachlop ON bangdiem.mactdsl = chitietdanhsachlop.mactdsl
+JOIN 
+    danhsachlop ON chitietdanhsachlop.madsl = danhsachlop.madsl
+JOIN 
+    lop ON lop.malop = danhsachlop.malop
+WHERE 
+    bangdiem.mahocky = $HocKy AND
+    danhsachlop.manamhoc = $NamHoc
+GROUP BY 
+    danhsachlop.malop
 ";
 
 // Thực thi truy vấn SQL
@@ -23,10 +40,10 @@ if ($result !== false) {
         $stt++;
         $data[] = [
             'STT' => $stt,
-            'TenLop' => $row['TenLop'],
+            'TenLop' => $row['tenlop'],
             'SiSo' => $row['SiSo'],
-            'SoLuongDat' => $row['SoLuongDat'],
-            'TiLe' => $row['TiLe']
+            'SoLuongDat' => $row['soluongdat'],
+            'TiLe' => $row['tile']
         ];
     }
 }
