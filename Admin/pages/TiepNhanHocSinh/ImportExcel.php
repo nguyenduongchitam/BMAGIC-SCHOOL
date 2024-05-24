@@ -25,30 +25,27 @@ if (isset($_POST['Send'])) {
     $GioiTinh = $row['2'];
     $DiaChi = $row['3'];
     $Email = $row['4'];
-    
+
     //Xử lý ngày
     $ngay_sinh_date = new DateTime($NgaySinh);
 
-// Lấy ngày tháng hiện tại
-$ngay_hien_tai = new DateTime();
+    // Lấy ngày tháng hiện tại
+    $ngay_hien_tai = new DateTime();
 
-// Tính toán số năm giữa ngày hiện tại và ngày sinh
- $soNam = $ngay_hien_tai->diff($ngay_sinh_date)->y;
+    // Tính toán số năm giữa ngày hiện tại và ngày sinh
+    $soNam = $ngay_hien_tai->diff($ngay_sinh_date)->y;
 
     $sql = "SELECT * FROM THAMSO";
     $result = $mysqli->query($sql);
     $row = $result->fetch_assoc();
     $MinAge = $row["MinAge"];
     $MaxAge = $row["MaxAge"];
-  
-   
-     if ($soNam > $MinAge and  $soNam < $MaxAge)
-     { 
-    $sql_add = "INSERT INTO `hocsinh`(`TenHocSinh`, `NgaySinh`, `GioiTinh`, `DiaChi`, `Email`, `status`) VALUES ('$TenHocSinh','$NgaySinh','$GioiTinh','$DiaChi','$Email','Mới')";
-    $insert  =  mysqli_query($mysqli, $sql_add);
-     }
-     
-     
+
+
+    if ($soNam > $MinAge and  $soNam < $MaxAge) {
+      $sql_add = "INSERT INTO `hocsinh`(`TenHocSinh`, `NgaySinh`, `GioiTinh`, `DiaChi`, `Email`, `status`) VALUES ('$TenHocSinh','$NgaySinh','$GioiTinh','$DiaChi','$Email','Mới')";
+      $insert  =  mysqli_query($mysqli, $sql_add);
+    }
   }
 }
-header('Location:/Admin/index.php?action=TiepNhanHocSinh');
+header('Location:http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=TiepNhanHocSinh');

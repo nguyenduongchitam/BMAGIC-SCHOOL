@@ -525,6 +525,18 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         isValid = false;
                     }
                     if (isValid) {
+                        if (isNaN(Diem15p))
+                        {
+                            Diem15p=null;
+                        }
+                        if (isNaN(Diem1tiet))
+                        {
+                            Diem1tiet=null;
+                        }
+                        if (isNaN(Diemhocky))
+                        {
+                            Diemhocky=null;
+                        }
                         $.ajax({
                             url: 'pages/BangDiemMonHoc/ThemBangDiemMonhoc.php',
                             method: 'GET',

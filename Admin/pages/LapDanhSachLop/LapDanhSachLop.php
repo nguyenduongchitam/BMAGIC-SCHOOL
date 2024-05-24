@@ -55,7 +55,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
 <body>
     <section>
         <!-- Chọn khối lớp liên khóa học kỳ -->
-        <div class="row" style="width: 400px;">
+        <div class="row" style="width: 700px;">
             <div class="col">
                 <select class="form-select" id="NamHoc">
                     <option selected disabled value="-1">Năm học</option>
@@ -80,6 +80,10 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                     }
                     ?>
                 </select>
+            </div>
+
+            <div class="col">
+                <input type="text" class="form-control" id="SiSo" style="height: 80%;">
             </div>
         </div>
         <br>
@@ -328,7 +332,17 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                 alert("Vui lòng chọn năm học!!!");
             } else {
                 $("#table_body").empty();
-                table.ajax.reload();
+                $.post("pages/LapDanhSachLop/GetSiSoAjax.php", {
+                        namhoc: namhoc,
+                        lop: lop,
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+                            document.getElementById("SiSo").value = data;
+                            table.ajax.reload();
+                        }
+                    }
+                );
             }
 
         });

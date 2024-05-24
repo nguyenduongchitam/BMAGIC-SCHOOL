@@ -48,7 +48,7 @@ else if( $action=='QuanLyLop')
     }
     else 
     {
-        include("pages/DashBoard.php");
+        include("pages/TiepNhanHocSinh/TiepNhanHocSinh.php");
     }
 ?>
 </section>

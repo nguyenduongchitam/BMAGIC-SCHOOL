@@ -28,5 +28,5 @@ $file = $_FILES['file']['tmp_name'];
        $insert =  mysqli_query($mysqli,$sql_add);
     }
  }
- header('Location:/Admin/index.php?action=QuanLyMonHoc');
+ header('Location:http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyMonHoc');
 ?>

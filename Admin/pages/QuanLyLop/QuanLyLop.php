@@ -116,7 +116,7 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="../../../Admin/pages/QuanLyLop/DeleteLop.php?MaLop=' . $rowLop['MaLop'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                <a href="pages/QuanLyLop/DeleteLop.php?MaLop=' . $rowLop['MaLop'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
                                                                 </a>
                                                             </td>
@@ -154,7 +154,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="../../../Admin/pages/QuanLyLop/Update.php" method="post">
+                        <form class="forms-sample" action="pages/QuanLyLop/Update.php" method="post">
                             <label for="modalMaLop" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã lớp học</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaLop" name="maLop" readonly>
 
@@ -170,10 +170,6 @@
                                 <option value="Khối 11">Khối 11</option>
                                 <option value="Khối 12">Khối 12</option>
                             </select>
-                            <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold ">Khối lớp</label>
-                            <input type="text" class="form-control mb-2" id="modalTenKhoi" name="tenKhoi" placeholder="Khối 10/11/12">
-                            <span id="TenKhoiError" class="error-message"></span> <!-- Thông báo lỗi -->
-
                             <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50">
                         </form>
                     </div>
@@ -190,7 +186,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" id="addLopForm" action="../../../Admin/pages/QuanLyLop/AddLop.php">
+                        <form method="post" id="addLopForm" action="pages/QuanLyLop/AddLop.php">
                             <!-- Trong form thêm modal -->
                             <label for="modalTenLopadd" class="col-sm-3 col-form-label fw-bold pb-2">Tên lớp học</label>
                             <div class="row">
@@ -198,16 +194,9 @@
                                     <input type="text" class="form-control" id="modalTenLopadd" name="tenLop" placeholder="Lớp 10A1" required>
                                     <span id="TenLopErroradd" class="error-message"></span> <!-- Thông báo lỗi -->
 
-
                                 </div>
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-12">
-                                    <label for="modalTenKhoi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
-                                    <input type="text" class="form-control" id="modalTenKhoi" name="tenKhoi" placeholder="Khối 10/11/12">
-                                    <span id="TenKhoiError" class="error-message"></span> Thông báo lỗi -->
-                            <!-- </div>
-                            </div> -->
+
                             <div class="row">
                                 <div class="col-12">
                                     <label for="modalTenKhoiadd" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Tên khối</label>
@@ -228,38 +217,6 @@
             </div>
         </div>
 
-
-
-        <!-- <script>
-            $(document).ready(function() {
-                // Thiết lập kiểm tra cho form
-                $("#addLopForm").validate({
-                    rules: {
-                        tenLop: {
-                            required: true,
-                            pattern: /^Lớp\s/
-                        },
-                        tenKhoi: {
-                            required: true
-                        }
-                    },
-                    messages: {
-                        tenLop: {
-                            required: "Vui lòng nhập tên lớp học.",
-                            pattern: "Tên lớp phải bắt đầu bằng 'Lớp '."
-                        },
-                        tenKhoi: {
-                            required: "Vui lòng chọn tên khối."
-                        }
-                    },
-                    errorElement: "div",
-                    errorPlacement: function(error, element) {
-                        error.addClass("error-message");
-                        error.insertAfter(element);
-                    }
-                });
-            });
-        </script> -->
 
         <script>
             $(document).ready(function() {

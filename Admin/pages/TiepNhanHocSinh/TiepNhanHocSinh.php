@@ -85,7 +85,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card card-rounded">
                             <br>
-                            <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách Học Sinh</div>
+                            <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Tiếp nhận học sinh</div>
                             <div class="card-body">
                                 <button style="float: left" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button>
                                 <button style="float: right" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Nhap" type="button"><i class='bx bx-import btn-Nhap'></i>Nhập file</button><br><br><br>
@@ -140,20 +140,16 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button style="background-color:transparent; border-width: 0;" type="button" id="' . $rowHOCSINH['MaHocSinh'] . '" class="btn btn-primary btnXoa">
+                                                                <a href="pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
-                                                                </button>
+                                                                </a>
                                                             </td>
                                                             
                                                         </tr>
                                                     ';
                                             }
                                             ?>
-                                            <!-- <td class="text-center">
-                                                                <a href="../../../Admin/pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
-                                                                    <i class="bx bx-trash"></i>
-                                                                </a>
-                                                            </td> -->
+                                            
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -188,7 +184,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="../../../Admin/pages/TiepNhanHocSinh/Update.php" method="post" id="updateForm">
+                        <form class="forms-sample" action="pages/TiepNhanHocSinh/Update.php" method="post" id="updateForm">
                             <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Mã học sinh</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaHocSinh" name="maHocSinh" readonly>
 
@@ -235,7 +231,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="registration" id="addForm" method="post" action="../../../Admin/pages/TiepNhanHocSinh/AddHS.php">
+                        <form name="registration" id="addForm" method="post" action="pages/TiepNhanHocSinh/AddHS.php">
                             <label for="modalTenHocSinhAdd" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
                             <div class="row">
                                 <div class="col-12">
@@ -290,41 +286,275 @@
         ?>
 
         <script>
-            // upload
-            $(".btn-Nhap").click(function() {
-                $('#exampleModalCenter').modal('show');
-            })
+            $(document).ready(function() {
+                //Biến minAge, maxAge
+                var minAge = <?php echo json_encode($minAge); ?>;
+                var maxAge = <?php echo json_encode($maxAge); ?>;
 
-            // Sửa
-            $(document).on('click', '.btn-Sua', function(event) {
-                $('#myModal').modal('show');
-                var row = $(this).closest('tr');
-                var maHocSinh = row.find('td:eq(0)').text();
-                var tenHocSinh = row.find('td:eq(1)').text();
-                var ngaySinh = row.find('td:eq(2)').text();
-                var gioiTinh = row.find('td:eq(3)').text();
-                var diaChi = row.find('td:eq(4)').text();
-                var email = row.find('td:eq(5)').text();
-                var trangthai = row.find('td:eq(6)').text();
-                // alert(email);
-                // Điền dữ liệu vào modal
-                $('#modalMaHocSinh').val(maHocSinh);
-                $('#modalTenHocSinh').val(tenHocSinh);
-                $('#modalNgaySinh').val(ngaySinh);
-                $('#modalGioiTinh').val(gioiTinh);
-                $('#modalDiaChi').val(diaChi);
-                $('#modalEmail').val(email);
-                $('#modaltrangthai').val(trangthai);
+                // Biến cờ cho form cập nhật
+                var updateFlag1 = true;
+                var updateFlag2 = true;
+                var updateFlag3 = true;
+                var updateFlag4 = true;
+                var updateFlag5 = true;
 
+                // Biến cờ cho form thêm
+                var addFlag1 = true;
+                var addFlag2 = true;
+                var addFlag3 = true;
+                var addFlag4 = true;
+                var addFlag5 = true;
+
+                // Kiểm tra hợp lệ cho form cập nhật
+                $("#modalTenHocSinh").blur(function() {
+                    var tenHocSinh = $(this).val();
+                    var regex = /^[a-zA-ZÀ-ỹ\s]*$/;
+                    if (!regex.test(tenHocSinh) || tenHocSinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        s
+                        $("#TenHSError").text("Tên học sinh không được chứa ký tự đặc biệt và không được để trống");
+                        updateFlag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenHSError").text("");
+                        updateFlag1 = false;
+                    }
+                    
+                });
+
+
+                $("#modalNgaySinh").blur(function() {
+                    var ngaySinh = $(this).val();
+                    if (ngaySinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#NgaySinhError").text("Ngày sinh không được để trống");
+                        updateFlag2 = true;
+                    } else {
+                        var age = moment().diff(moment(ngaySinh), 'years');
+                        // alert(age);
+                        if (age < minAge || age > maxAge) {
+                            $(this).addClass("is-invalid");
+                            $("#NgaySinhError").text("Tuổi của học sinh phải nằm trong khoảng từ " + minAge + " đến " + maxAge + " tuổi");
+                            updateFlag2 = true;
+                        } else {
+                            $(this).removeClass("is-invalid");
+                            $("#NgaySinhError").text("");
+                            updateFlag2 = false;
+                        }
+                    }
+                    
+                });
+
+
+                $("#modalGioiTinh").blur(function() {
+                    var gioiTinh = $(this).val();
+                    if (gioiTinh === "") {
+                        $(this).addClass("is-invalid");
+                        $("#GTrror").text("Giới tính không được để trống");
+                        updateFlag3 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#GTrror").text("");
+                        updateFlag3 = false;
+                    }
+                });
+
+                $("#modalDiaChi").blur(function() {
+                    var diaChi = $(this).val();
+                    if (diaChi.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#DiaChiError").text("Địa chỉ không được để trống");
+                        updateFlag4 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#DiaChiError").text("");
+                        updateFlag4 = false;
+                    }
+                });
+
+                $("#modalEmail").blur(function() {
+                    var email = $(this).val();
+                    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                    if (!emailPattern.test(email) || email.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#EmailError").text("Email không hợp lệ và không được để trống");
+                        updateFlag5 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#EmailError").text("");
+                        updateFlag5 = false;
+                    }
+                });
+
+                function toggleUpdateButton() {
+                    if (!updateFlag1 && !updateFlag2 && !updateFlag3 && !updateFlag4 && !updateFlag5) {
+                        $("#btn-Update").prop("disabled", false);
+                    } else {
+                        $("#btn-Update").prop("disabled", true);
+                    }
+                }
+
+                // Kiểm tra hợp lệ cho form thêm
+                $("#modalTenHocSinhAdd").blur(function() {
+                    var tenHocSinh = $(this).val();
+                    var regex = /^[a-zA-ZÀ-ỹ\s]*$/;
+                    if (!regex.test(tenHocSinh) || tenHocSinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenHSErrorAdd").text("Tên học sinh không được chứa ký tự đặc biệt và không được để trống");
+                        addFlag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenHSErrorAdd").text("");
+                        addFlag1 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalNgaySinhAdd").blur(function() {
+                    var ngaySinh = $(this).val();
+                    if (ngaySinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#NgaySinhErrorAdd").text("Ngày sinh không được để trống");
+                        addFlag2 = true;
+                    } else {
+                        var birthday = moment(ngaySinh);
+                        var now = moment();
+                        var age = now.diff(birthday, 'years');
+                        if (age < minAge || age > maxAge) {
+                            $(this).addClass("is-invalid");
+                            $("#NgaySinhErrorAdd").text("Tuổi phải từ " + minAge + " đến " + maxAge);
+                            addFlag2 = true;
+                        } else {
+                            $(this).removeClass("is-invalid");
+                            $("#NgaySinhErrorAdd").text("");
+                            addFlag2 = false;
+                        }
+                    }
+                    toggleAddButton();
+                });
+
+
+                $("#modalGioiTinhAdd").blur(function() {
+                    var gioiTinh = $(this).val();
+                    if (gioiTinh === "") {
+                        $(this).addClass("is-invalid");
+                        $("#GioiTinhErrorAdd").text("Giới tính không được để trống");
+                        addFlag3 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#GioiTinhErrorAdd").text("");
+                        addFlag3 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalDiaChiAdd").blur(function() {
+                    var diaChi = $(this).val();
+                    if (diaChi.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#DiaChiErrorAdd").text("Địa chỉ không được để trống");
+                        addFlag4 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#DiaChiErrorAdd").text("");
+                        addFlag4 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalEmailAdd").blur(function() {
+                    var email = $(this).val();
+                    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                    if (!emailPattern.test(email) || email.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#EmailErrorAdd").text("Email không hợp lệ và không được để trống");
+                        addFlag5 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#EmailErrorAdd").text("");
+                        addFlag5 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                function toggleAddButton() {
+                    if (!addFlag1 && !addFlag2 && !addFlag3 && !addFlag4 && !addFlag5) {
+                        $(".btnThem").prop("disabled", false);
+                    } else {
+                        $(".btnThem").prop("disabled", true);
+                    }
+                }
+
+                // Mở modal sửa và điền dữ liệu vào modal
+                $(document).on('click', '.btn-Sua', function(event) {
+                    $('#myModal').modal('show');
+                    var row = $(this).closest('tr');
+                    var maHocSinh = row.find('td:eq(0)').text();
+                    var tenHocSinh = row.find('td:eq(1)').text();
+                    var ngaySinh = row.find('td:eq(2)').text();
+                    var gioiTinh = row.find('td:eq(3)').text();
+                    var diaChi = row.find('td:eq(4)').text();
+                    var email = row.find('td:eq(5)').text();
+                    var trangthai = row.find('td:eq(6)').text();
+
+                    $('#modalMaHocSinh').val(maHocSinh);
+                    $('#modalTenHocSinh').val(tenHocSinh);
+                    $('#modalNgaySinh').val(ngaySinh);
+                    $('#modalGioiTinh').val(gioiTinh);
+                    $('#modalDiaChi').val(diaChi);
+                    $('#modalEmail').val(email);
+                    $('#modaltrangthai').val(trangthai);
+                });
+
+
+
+                // Xóa
+                $(".btnXoa").click(function() {
+
+                    var row = $(this).closest('tr');
+
+                    var MaHS = $(this).attr('id');
+                    // let text = "Bạn có muốn xóa không?";
+                    // if (confirm(text) == true) {
+                    // $.post("Admin\pages\TiepNhanHocSinh\DeleteHS.php", {
+                    //         MaHocSinh: MaHS,
+                    //     },
+                    //     function(data, status) {
+                    //         if (status == "success") {
+                    //             alert(data);
+                    //             $(this).parents("tr").remove();
+                    //         }
+                    //     }
+                    // );
+                    $.ajax({
+
+                        url: 'pages/TiepNhanHocSinh/TiepNhanHocSinh.php',
+                        method: 'GET',
+                        dataType: "json",
+                        data: {
+                            MaHocSinh: MaHS
+                        },
+                        success: function(response) {
+                            // Handle success
+                            console.log('Data submitted successfully');
+                            // Hide the modal
+
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            // Handle error
+                            console.log('Error: ' + errorThrown);
+                        }
+                    });
+
+                    // }
+                });
+
+                // Thêm
+                $(".btn-Them").click(function() {
+                    $('#myModal1').modal('show');
+                });
             });
-            // Xóa
-            $(".btn-Xoa").click(function() {
-                $(this).closest('tr').remove();
-            });
-            // Thêm
-            $(".btn-Them").click(function() {
-                $('#myModal1').modal('show');
-            });
+            // });
         </script>
 
         <!-- datatable -->

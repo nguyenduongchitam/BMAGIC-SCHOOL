@@ -8,7 +8,7 @@ if(isset($_POST['submit'])) {
     $sql = "INSERT INTO MONHOC (TenMonHoc, DiemDat) VALUES ('$tenMonHoc', '$diemDat')";
     
     $result =$mysqli->query($sql);
-    header("Location: http://localhost:3000/Admin/index.php?action=QuanLyMonHoc");
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyMonHoc");
     exit; 
 }
 ?>

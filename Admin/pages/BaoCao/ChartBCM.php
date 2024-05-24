@@ -52,12 +52,18 @@ $stt = 0;
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
         $stt++;
+        // Check if 'siso' index exists in the row array
+        // $siso = isset($row['siso']) ? $row['siso'] : 'N/A';
+        // Calculate TiLe here
+        // $tile = ($row['soluongdat'] / $siso) * 100;  
+        $percentage = round(( $row['soluongdat'] / $row['siso']) * 100, 3);
+
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
             'SiSo' => $row['siso'],
             'SoLuongDat' => $row['soluongdat'],
-            'TiLe' => ($row['soluongdat'] / $row['siso']) * 100
+            'TiLe' => $percentage
         ];
     }
 }
