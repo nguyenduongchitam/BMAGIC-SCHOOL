@@ -80,8 +80,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                             <br>
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách môn học</div>
                             <div class="card-body">
-                                <button style="float: left" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button>
-                                <button style="float: right" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Nhap" type="button"><i class='bx bx-import btn-Nhap'></i>Nhập file</button><br><br><br>
+                                <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button><br><br>
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -106,12 +105,11 @@ $DiemToiThieu = $row["DiemToiThieu"];
                                                             <td class="text-center">' . $rowMonHoc['TenMonHoc'] . '</td>
                                                             <td class="text-center">' . $rowMonHoc['DiemDat'] . '</td>
                                                             <td class="text-center">
-                                                                <button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Sua">
-                                                                    <i class="bx bxs-edit"></i>
-                                                                </button>
+                                                            <a href="../../../Admin/pages/QuanLyMonHoc/new.php?MaLop=' . $rowMonHoc['MaMonHoc']  . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                            <i class="bx bxs-edit"></i>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="pages/QuanLyMonHoc/DeleteMH.php?MaMonHoc=' . $rowMonHoc['MaMonHoc'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                <a href="../../../Admin/pages/QuanLyMonHoc/DeleteMH.php?MaMonHoc=' . $rowMonHoc['MaMonHoc'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
                                                                 </a>
                                                             </td>
@@ -119,6 +117,9 @@ $DiemToiThieu = $row["DiemToiThieu"];
                                                     ';
                                             }
                                             ?>
+                                            <!-- <button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Sua">
+                                                <i class="bx bxs-edit"></i>
+                                            </button> -->
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -139,7 +140,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
             </div>
         </div>
 
-        <!--Sửa Modal -->
+        <!-- Modal -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -148,7 +149,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="pages/QuanLyMonHoc/Update.php" method="post">
+                        <form class="forms-sample" action="../../../Admin/pages/QuanLyMonHoc/Update.php" method="post">
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã môn học</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaMonHoc" name="maMonHoc" readonly>
 
@@ -176,7 +177,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="pages/QuanLyMonHoc/AddMH.php">
+                        <form method="post" action="../../../Admin/pages/QuanLyMonHoc/AddMH.php">
                             <!-- Trong form thêm modal -->
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2">Tên môn học</label>
                             <div class="row">
@@ -199,43 +200,22 @@ $DiemToiThieu = $row["DiemToiThieu"];
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php">
-                            <input id="file" type="file" class="importfile">
-                            <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
         <script>
             $(document).ready(function() {
+                // // Sửa
+                // $(".btn-Sua").click(function() {
+                //     $('#myModal').modal('show');
 
-                // upload
-                $(".btn-Nhap").click(function() {
-                    $('#exampleModalCenter').modal('show');
-                })
+                //     var row = $(this).closest('tr');
+                //     var maMonHoc = row.find('td:eq(0)').text();
+                //     var tenMonHoc = row.find('td:eq(1)').text();
+                //     var diemDat = row.find('td:eq(2)').text();
 
-                // Sửa
-                $(".btn-Sua").click(function() {
-                    $('#myModal').modal('show');
-
-                    var row = $(this).closest('tr');
-                    var maMonHoc = row.find('td:eq(0)').text();
-                    var tenMonHoc = row.find('td:eq(1)').text();
-                    var diemDat = row.find('td:eq(2)').text();
-
-                    // Điền dữ liệu vào modal
-                    $('#modalMaMonHoc').val(maMonHoc);
-                    $('#modalTenMonHoc').val(tenMonHoc);
-                    $('#modalDiemDat').val(diemDat);
-                });
+                //     // Điền dữ liệu vào modal
+                //     $('#modalMaMonHoc').val(maMonHoc);
+                //     $('#modalTenMonHoc').val(tenMonHoc);
+                //     $('#modalDiemDat').val(diemDat);
+                // });
                 // Xóa
                 $(".btn-Xoa").click(function() {
                     $(this).closest('tr').remove();
@@ -249,27 +229,21 @@ $DiemToiThieu = $row["DiemToiThieu"];
         </script>
 
         <!-- sửa -->
-        <script>
+        <!-- <script>
             $(document).ready(function() {
                 var flag1 = false; // được submit
                 var flag2 = false;
                 var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
                 var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
                 var existingSubjects = <?php echo json_encode($monHocList); ?>;
-                const originalSubjectName = $(modalTenMonHoc).val();
 
                 $("#modalTenMonHoc").blur(function() {
                     var Ten = $(this).val();
-
                     var regex = /^[a-zA-Z\sÀ-ỹ]*$/; // Regular expression to allow only letters and spaces
 
                     if (!regex.test(Ten) || Ten.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#TenMHError").text("Tên môn học không được chứa số, ký tự đặc biệt và để trống");
-                        flag1 = true;
-                    } else if (existingSubjects.includes(Ten) && Ten !== originalSubjectName) {
-                        $(this).addClass("is-invalid");
-                        $("#TenMHError").text("Tên môn học đã tồn tại");
                         flag1 = true;
                     } else {
                         $(this).removeClass("is-invalid");
@@ -306,8 +280,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                     }
                 }
             });
-        </script>
-
+        </script> -->
 
 
         <!-- thêm -->
@@ -317,7 +290,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                 var flag2 = true;
                 var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
                 var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
-                var existingSubjects = <?php echo json_encode($monHocList); ?>;
+                console.log(parseFloat(DiemToiDa));
 
                 $("#ThemTenMH").blur(function() {
                     var Ten = $(this).val();
@@ -325,9 +298,6 @@ $DiemToiThieu = $row["DiemToiThieu"];
                     if (!regex.test(Ten) || Ten.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#ThemTenMHError").text("Tên môn học không được chứa số hoặc ký tự đặc biệt và không được để trống");
-                    } else if (existingSubjects.includes(Ten)) {
-                        $(this).addClass("is-invalid");
-                        $("#ThemTenMHError").text("Tên môn học đã tồn tại");
                     } else {
                         $(this).removeClass("is-invalid");
                         $("#ThemTenMHError").text("");

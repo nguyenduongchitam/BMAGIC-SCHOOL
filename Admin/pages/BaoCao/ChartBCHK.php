@@ -10,11 +10,7 @@ $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
 $DiemDat = -1;
 if($rowDD > 0){
-<<<<<<< HEAD
-    $DiemDat = $rowDD ["DiemDat"];
-=======
     $DiemDat = $rowDD["DiemDat"];
->>>>>>> 8e11861f084e619e168cc3c779f95c538b500fe3
 }
 
 $sql = "

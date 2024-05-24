@@ -38,4 +38,7 @@ if (isset($_POST['submit'])) {
         $sql5 = "INSERT INTO danhsachlop (manamhoc, malop, siso) VALUES ('$manamhoc', '$malop', '$siso')";
         $mysqli->query($sql5);
     }
+
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyLop");
+    exit();
 }

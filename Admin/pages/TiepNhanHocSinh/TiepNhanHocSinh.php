@@ -87,53 +87,52 @@
                             <br>
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách Học Sinh</div>
                             <div class="card-body">
-<<<<<<< HEAD
-                                <button style="float: left" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button>
-                                <button style="float: right" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Nhap" type="button"><i class='bx bx-import btn-Nhap'></i>Nhập file</button><br><br><br>
-                                
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
-                                                    <input type="file" name="file">
-                                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
-                                                </form>
-                                            </div>
+                                <<<<<<< HEAD <button style="float: left" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button>
+                                    <button style="float: right" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Nhap" type="button"><i class='bx bx-import btn-Nhap'></i>Nhập file</button><br><br><br>
 
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
+                                                        <input type="file" name="file">
+                                                        <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-=======
-                                <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button><br><br>
-                                <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
-                                    <input type="file" name="file">
-                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
-                                </form>
->>>>>>> 8e11861f084e619e168cc3c779f95c538b500fe3
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">Mã học sinh</th>
-                                                <th class="text-center">Tên học sinh</th>
-                                                <th class="text-center">Ngày sinh</th>
-                                                <th class="text-center">Giới tính</th>
-                                                <th class="text-center">Địa chỉ</th>
-                                                <th class="text-center">Email</th>
-                                                <th class="text-center">Trạng thái</th>
-                                                <th class="text-center">Chỉnh sửa</th>
-                                                <th class="text-center">Xóa</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $sqlHOCSINH = "SELECT * FROM HOCSINH";
-                                            $resultHOCSINH = $mysqli->query($sqlHOCSINH);
-                                            while ($rowHOCSINH = $resultHOCSINH->fetch_assoc()) {
-                                                echo '
+                                    =======
+                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button><br><br>
+                                    <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
+                                        <input type="file" name="file">
+                                        <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                                    </form>
+                                    >>>>>>> 8e11861f084e619e168cc3c779f95c538b500fe3
+                                    <div class="table-responsive">
+                                        <table id="example" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Mã học sinh</th>
+                                                    <th class="text-center">Tên học sinh</th>
+                                                    <th class="text-center">Ngày sinh</th>
+                                                    <th class="text-center">Giới tính</th>
+                                                    <th class="text-center">Địa chỉ</th>
+                                                    <th class="text-center">Email</th>
+                                                    <th class="text-center">Trạng thái</th>
+                                                    <th class="text-center">Chỉnh sửa</th>
+                                                    <th class="text-center">Xóa</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $sqlHOCSINH = "SELECT * FROM HOCSINH";
+                                                $resultHOCSINH = $mysqli->query($sqlHOCSINH);
+                                                while ($rowHOCSINH = $resultHOCSINH->fetch_assoc()) {
+                                                    echo '
                                                         <tr>
                                                             <td class="text-center">' . $rowHOCSINH['MaHocSinh'] . '</td>
                                                             <td class="text-center">' . $rowHOCSINH['TenHocSinh'] . '</td>
@@ -155,30 +154,30 @@
                                                             
                                                         </tr>
                                                     ';
-                                            }
-                                            ?>
-                                            <!-- <td class="text-center">
+                                                }
+                                                ?>
+                                                <!-- <td class="text-center">
                                                                 <a href="../../../Admin/pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
                                                                 </a>
                                                             </td> -->
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th class="text-center">Mã học sinh</th>
-                                                <th class="text-center">Tên học sinh</th>
-                                                <th class="text-center">Ngày sinh</th>
-                                                <th class="text-center">Giới tính</th>
-                                                <th class="text-center">Địa chỉ</th>
-                                                <th class="text-center">Email</th>
-                                                <th class="text-center">Trạng thái</th>
-                                                <th class="text-center">Chỉnh sửa</th>
-                                                <th class="text-center">Xóa</th>
-                                            </tr>
-                                        </tfoot>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th class="text-center">Mã học sinh</th>
+                                                    <th class="text-center">Tên học sinh</th>
+                                                    <th class="text-center">Ngày sinh</th>
+                                                    <th class="text-center">Giới tính</th>
+                                                    <th class="text-center">Địa chỉ</th>
+                                                    <th class="text-center">Email</th>
+                                                    <th class="text-center">Trạng thái</th>
+                                                    <th class="text-center">Chỉnh sửa</th>
+                                                    <th class="text-center">Xóa</th>
+                                                </tr>
+                                            </tfoot>
 
-                                    </table>
-                                </div>
+                                        </table>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -298,38 +297,13 @@
         ?>
 
         <script>
-<<<<<<< HEAD
-            // upload
-            $(".btn-Nhap").click(function() {
-                $('#exampleModalCenter').modal('show');
-            })
-
-            // Sửa
-            $(document).on('click', '.btn-Sua', function(event) {
-                $('#myModal').modal('show');
-                var row = $(this).closest('tr');
-                var maHocSinh = row.find('td:eq(0)').text();
-                var tenHocSinh = row.find('td:eq(1)').text();
-                var ngaySinh = row.find('td:eq(2)').text();
-                var gioiTinh = row.find('td:eq(3)').text();
-                var diaChi = row.find('td:eq(4)').text();
-                var email = row.find('td:eq(5)').text();
-                var trangthai = row.find('td:eq(6)').text();
-                // alert(email);
-                // Điền dữ liệu vào modal
-                $('#modalMaHocSinh').val(maHocSinh);
-                $('#modalTenHocSinh').val(tenHocSinh);
-                $('#modalNgaySinh').val(ngaySinh);
-                $('#modalGioiTinh').val(gioiTinh);
-                $('#modalDiaChi').val(diaChi);
-                $('#modalEmail').val(email);
-                $('#modaltrangthai').val(trangthai);
-=======
             $(document).ready(function() {
+                $(".btn-Nhap").click(function() {
+                    $('#exampleModalCenter').modal('show');
+                })
                 //Biến minAge, maxAge
                 var minAge = <?php echo json_encode($minAge); ?>;
                 var maxAge = <?php echo json_encode($maxAge); ?>;
->>>>>>> 8e11861f084e619e168cc3c779f95c538b500fe3
 
                 // Biến cờ cho form cập nhật
                 var updateFlag1 = true;

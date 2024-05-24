@@ -18,7 +18,7 @@ if (isset($_GET['MaLop'])) {
             $flag = false;
             echo "<script>
             alert('Không xóa được lớp. Lớp học đang có học sinh.');
-            window.location.href='http://localhost:3000/Admin/index.php?action=QuanLyLop';
+            window.location.href='http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyLop';
           </script>";
             break;
         }
@@ -32,7 +32,7 @@ if (isset($_GET['MaLop'])) {
         $sql4 = "DELETE FROM LOP WHERE MaLop = $MaLop";
         $mysqli->query($sql4);
         echo "<script>
-        alert('Xóa thành công')window.location.href='http://localhost:3000/Admin/index.php?action=QuanLyLop';
+        alert('Xóa thành công');window.location.href='http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyLop';
         </script>";
     }
 }
