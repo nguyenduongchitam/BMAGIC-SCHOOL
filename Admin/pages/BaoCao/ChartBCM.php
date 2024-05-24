@@ -12,6 +12,10 @@ $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
 $DiemDat = -1;
 if($rowDD > 0){
+    $DiemDat = $rowDD ["DiemDat"];
+}
+$DiemDat = -1;
+if($rowDD > 0){
     $DiemDat = $rowDD["DiemDat"];
 }
 

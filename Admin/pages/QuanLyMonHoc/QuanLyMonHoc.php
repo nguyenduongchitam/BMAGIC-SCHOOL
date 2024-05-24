@@ -142,7 +142,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
             </div>
         </div>
 
-        <!-- Modal -->
+        <!--Sửa Modal -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -202,8 +202,28 @@ $DiemToiThieu = $row["DiemToiThieu"];
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php">
+                            <input id="file" type="file" class="importfile">
+                            <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function() {
+
+                // upload
+                $(".btn-Nhap").click(function() {
+                    $('#exampleModalCenter').modal('show');
+                })
 
                 // Sửa
                 $('#example').on('click', '.btn-Sua', function() {
@@ -316,7 +336,6 @@ $DiemToiThieu = $row["DiemToiThieu"];
                 var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
                 var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
                 var existingSubjects = <?php echo json_encode($monHocList); ?>;
-
 
                 $("#ThemTenMH").blur(function() {
                     var Ten = $(this).val();
