@@ -7,7 +7,7 @@
     <title>Danh sách học sinh</title>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -49,7 +49,7 @@
 
 <!-- Kết nối cơ sở dữ liệu -->
 <?php
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
+
 ///Lúc đăng nhập sẽ sửa lại bây giờ chỉ lấy đại 1 giáo viên để test chạy backend
 $MAGV = '11';
 ?>
@@ -275,7 +275,7 @@ $MAGV = '11';
             "Processing": true,
             "ajax": {
                 "type": "POST",
-                "url": "../../../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/LoadTableAjax.php",
+                "url": "pages/LapDanhSachLop/LoadTableAjax.php",
                 "dataSrc": "",
                 data: function(d) {
                     d.namhoc = document.getElementById("NamHoc").value;
@@ -356,7 +356,7 @@ $MAGV = '11';
             var MaHocSinh = table.row(row).data().MaHocSinh;
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/XoaHocSinh.php", {
+                $.post("pages/LapDanhSachLop/XoaHocSinh.php", {
                         MaCTDSL: MaCTDSL,
                         MaHocSinh: MaHocSinh,
                     },
@@ -412,7 +412,7 @@ $MAGV = '11';
             var lop = document.getElementById("Lop").value;
 
             if (listSelectHS.length == 0) {} else {
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/ThemHSVaoLopAjax.php", {
+                $.post("pages/LapDanhSachLop/ThemHSVaoLopAjax.php", {
                         listSelectHS: listSelectHS,
                         namhoc: namhoc,
                         lop: lop
@@ -449,7 +449,7 @@ $MAGV = '11';
             } else {
                 $("#exampleModalLong").modal('show');
                 // Load table them hs
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/LoadTableHS.php", {
+                $.post("pages/LapDanhSachLop/LoadTableHS.php", {
 
                     },
                     function(data, status) {
@@ -470,7 +470,7 @@ $MAGV = '11';
         $("#search").keyup(function() {
             var Search = $("#search").val();
             if ($(this).val().length >= 0) {
-                $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/SearchHSAjax.php", {
+                $.post("pages/LapDanhSachLop/SearchHSAjax.php", {
                         Search: Search,
                     },
                     function(data, status) {

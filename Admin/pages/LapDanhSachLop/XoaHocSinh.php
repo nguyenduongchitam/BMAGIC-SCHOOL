@@ -1,6 +1,6 @@
 <?php
 // echo "xcv asdf xcv";
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
+$mysqli = new mysqli("localhost","root","","hocsinhphothong");
 
 $MaCTDSL = $_POST['MaCTDSL'];
 $MaHocSinh = $_POST['MaHocSinh'];

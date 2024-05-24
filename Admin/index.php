@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>BMagic School </title>
-
+   
     <!-- plugins:css -->
     <link rel="stylesheet" href="css/vendors/feather/feather.css">
     <link rel="stylesheet" href="css/vendors/mdi/css/materialdesignicons.min.css">
@@ -31,7 +31,8 @@
 
 <body>
     <!-- kết nối cơ sở dữ liệu -->
-    <?php include "../Database/Config/config.php" ?>
+    <?php include "../Database/Config/config.php"
+    ?>
 
     <div class="container-scroller">
         <!-- thanh menu ngang -->
