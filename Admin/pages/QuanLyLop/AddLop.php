@@ -5,16 +5,37 @@ if (isset($_POST['submit'])) {
     $tenLop = $_POST['tenLop'];
     $tenKhoi = $_POST['tenKhoi'];
 
-    $sql = "Select MAKHOI FROM KHOILOP WHERE TENKHOI = '$tenKhoi' ";
+    //MAKHOI
+    $sql = "SELECT MAKHOI FROM KHOILOP WHERE TENKHOI = '$tenKhoi'";
     $result = $mysqli->query($sql);
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         $maKhoi = $row['MAKHOI'];
     }
-
+    // Insert LOP 
     $sql1 = "INSERT INTO LOP (TenLop, MaKhoi) VALUES ('$tenLop', '$maKhoi')";
     $mysqli->query($sql1);
 
-    header("Location: /Admin/index.php?action=QuanLyLop");
-    exit; // It's a good practice to include an exit after redirection
+
+    $sql2 = "SELECT SiSo FROM thamso LIMIT 1";
+    $result2 = $mysqli->query($sql2);
+    if ($result2->num_rows == 1) {
+        $row2 = $result2->fetch_assoc();
+        $siso = $row2['SiSo'];
+    }
+
+    $sql3 = "SELECT MaLop FROM LOP WHERE tenlop = '$tenLop' and makhoi = '$maKhoi'";
+    $result3 = $mysqli->query($sql3);
+    if ($result3->num_rows == 1) {
+        $row3 = $result3->fetch_assoc();
+        $malop = $row3['MaLop'];
+    }
+
+    $sql4 = "SELECT MaNamHoc FROM namhoc";
+    $result4 = $mysqli->query($sql4);
+    while ($row4 = $result4->fetch_assoc()) {
+        $manamhoc = $row4['MaNamHoc'];
+        $sql5 = "INSERT INTO danhsachlop (manamhoc, malop, siso) VALUES ('$manamhoc', '$malop', '$siso')";
+        $mysqli->query($sql5);
+    }
 }

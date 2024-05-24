@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo cáo</title>
-    <link rel="stylesheet" href="../../css/Giao_vien_bo_mon.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="../../../../BMAGIC-SCHOOL/Admin/Css/Giao_vien_bo_mon.css">
     <script src="../../../Teacher/js/Giao_vien_bo_mon.js"></script>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
     <!-- DataTables Buttons JS -->
@@ -162,81 +163,8 @@
 
 </html>
 
-
-
 <!-- CHART -->
 <script>
-    $(document).ready(function() {
-
-        $('#NamHoc').change(function() {
-            var NamHoc = $(this).val();
-            $('#MonHoc').prop('disabled', false).val("");
-            $('#HocKy').prop('disabled', false).val("");
-            $('#MonHoc').change(function() {
-                var MonHoc = $(this).val();
-                $('#HocKy').prop('disabled', false).val(""); // Reset dropdown when subject changes
-                $('#tb').empty(); // Clear table content when subject changes
-
-                $('#HocKy').change(function() {
-                    var HocKy = $(this).val();
-
-                    $.post("../../../Admin/pages/BaoCao/ChartBCM.php", {
-                        MonHoc: MonHoc,
-                        HocKy: HocKy,
-                        NamHoc: NamHoc
-                    }, function(data, status) {
-                        if (status == "success") {
-                            var chartData = JSON.parse(data);
-
-                            var labels = chartData.map(item => item.TenLop);
-                            var siSoData = chartData.map(item => item.SiSo);
-                            var tiLeData = chartData.map(item => item.TiLe);
-
-                            var layoutSiSo = {
-                                title: 'Sĩ số theo lớp'
-                            };
-                            var layoutTiLe = {
-                                title: 'Tỉ lệ theo lớp'
-                            };
-
-                            var dataSiSo = [{
-                                x: labels,
-                                y: siSoData,
-                                type: 'bar'
-                            }];
-
-                            var dataTiLe = [{
-                                x: labels,
-                                y: tiLeData,
-                                type: 'bar'
-                            }];
-
-                            Plotly.newPlot('chartSiSo', dataSiSo, layoutSiSo);
-                            Plotly.newPlot('chartTiLe', dataTiLe, layoutTiLe);
-                        }
-                    });
-
-
-                });
-            });
-
-        });
-
-
-
-    });
-</script>
-
-<style>
-    td.highlight {
-        background-color: rgba(var(--dt-row-hover), 0.052) !important;
-
-    }
-</style>
-
-<script>
-    var listSelectHS = [];
-
     $(document).ready(function() {
         $.noConflict(true);
         var table = $('#BaoCaoBoMon').DataTable({
@@ -294,8 +222,6 @@
             }
         });
 
-
-
         $("#HocKy").change(function(e) {
             var NamHoc = document.getElementById("NamHoc").value;
             var MonHoc = document.getElementById("HocKy").value;
@@ -304,5 +230,67 @@
             $("#tb").empty();
             table.ajax.reload();
         });
+
+        $('#NamHoc').change(function() {
+            var NamHoc = $(this).val();
+            $('#MonHoc').prop('disabled', false).val("");
+            $('#HocKy').prop('disabled', false).val("");
+            $('#MonHoc').change(function() {
+                var MonHoc = $(this).val();
+                $('#HocKy').prop('disabled', false).val(""); // Reset dropdown when subject changes
+                $('#tb').empty(); // Clear table content when subject changes
+
+                $('#HocKy').change(function() {
+                    var HocKy = $(this).val();
+
+                    $.post("pages/BaoCao/ChartBCM.php", {
+                        MonHoc: MonHoc,
+                        HocKy: HocKy,
+                        NamHoc: NamHoc
+                    }, function(data, status) {
+                        if (status == "success") {
+                            var chartData = JSON.parse(data);
+
+                            var labels = chartData.map(item => item.TenLop);
+                            var siSoData = chartData.map(item => item.SiSo);
+                            var tiLeData = chartData.map(item => item.TiLe);
+
+                            var layoutSiSo = {
+                                title: 'Sĩ số theo lớp'
+                            };
+                            var layoutTiLe = {
+                                title: 'Tỉ lệ theo lớp'
+                            };
+
+                            var dataSiSo = [{
+                                x: labels,
+                                y: siSoData,
+                                type: 'bar'
+                            }];
+
+                            var dataTiLe = [{
+                                x: labels,
+                                y: tiLeData,
+                                type: 'bar'
+                            }];
+
+                            Plotly.newPlot('chartSiSo', dataSiSo, layoutSiSo);
+                            Plotly.newPlot('chartTiLe', dataTiLe, layoutTiLe);
+                        }
+                    });
+
+
+                });
+            });
+
+        });
     });
 </script>
+
+<style>
+    td.highlight {
+        background-color: rgba(var(--dt-row-hover), 0.052) !important;
+
+    }
+</style>
+
