@@ -38,7 +38,7 @@ GROUP BY
 
 // Thực thi truy vấn SQL
 $result = $mysqli->query($sql);
-
+$data = [];
 // Kiểm tra xem truy vấn có thành công không
 if ($result === false) {
     // Xử lý trường hợp truy vấn không thành công
@@ -49,17 +49,16 @@ if ($result === false) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $stt++;
-            echo '<tr>
-                    <td class="text-center">' . $stt . '</td>
-                    <td id="TenLop" class="text-center">' . $row['tenlop'] . '</td>
-                    <td id="SiSo" class="text-center">' . $row['siso'] . '</td>
-                    <td id="SoLuongDat" class="text-center">' . $row['soluongdat'] . '</td>
-                    <td id="TiLe" >' . $row['tile'] . '</td>
-                  </tr>';
+            $data[] = [
+                'STT' => $stt,
+                'TenLop' => $row['tenlop'],
+                'SiSo' => $siso,
+                'SoLuongDat' => $row['soluongdat'],
+                'TiLe' => $tile
+            ];
         }
-    } else {
-        // Nếu không có dữ liệu, in ra thông báo không có dữ liệu
-        echo '<tr><td colspan="5">Không có dữ liệu.</td></tr>';
-    }
+    } 
 }
+
+echo json_encode($data);
 ?>

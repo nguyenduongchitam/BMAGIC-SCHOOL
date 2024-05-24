@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 
         $mysqli->commit();
 
-        header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=CaiDat");
+        header("Location: http://localhost:3000/Admin/index.php?action=CaiDat");
         exit();
     } catch (Exception $e) {
         // Rollback the transaction if something went wrong

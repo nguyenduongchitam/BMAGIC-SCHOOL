@@ -17,9 +17,7 @@ SELECT
     danhsachlop.malop,
     danhsachlop.siso,
     lop.tenlop,
-    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) AS soluongdat,
-    COUNT(*) AS tonghocsinh,
-    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) / COUNT(*) * 100 AS tile
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) AS soluongdat
 FROM 
     bangdiemmh
 JOIN 
@@ -38,24 +36,26 @@ GROUP BY
     danhsachlop.malop
 ";
 
+// Thực thi truy vấn SQL
 $result = $mysqli->query($sql);
 
-$stt = 0;
 $data = [];
+$stt = 0;
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
         $stt++;
-        // Calculate percentage with proper rounding
-        $tile = round(($row['soluongdat'] / $row['tonghocsinh']) * 100, 2);
+        // Check if 'siso' index exists in the row array
+        // $siso = isset($row['siso']) ? $row['siso'] : 'N/A';
+        // Calculate TiLe here
+        // $tile = ($row['soluongdat'] / $siso) * 100;
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
             'SiSo' => $row['siso'],
             'SoLuongDat' => $row['soluongdat'],
-            'TiLe' => $tile
+            'TiLe' => ($row['soluongdat'] / $row['siso']) * 100
         ];
     }
 }
-
 echo json_encode($data);
 ?>
