@@ -12,6 +12,10 @@ $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
 $DiemDat = -1;
 if($rowDD > 0){
+    $DiemDat = $rowDD ["DiemDat"];
+}
+$DiemDat = -1;
+if($rowDD > 0){
     $DiemDat = $rowDD["DiemDat"];
 }
 
@@ -48,10 +52,6 @@ $stt = 0;
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
         $stt++;
-        // Check if 'siso' index exists in the row array
-        // $siso = isset($row['siso']) ? $row['siso'] : 'N/A';
-        // Calculate TiLe here
-        // $tile = ($row['soluongdat'] / $siso) * 100;
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
