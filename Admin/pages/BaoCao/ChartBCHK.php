@@ -4,6 +4,7 @@ include "../../../Database/Config/config.php";
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+// Fetch DiemDat from THAMSO table
 $sqlDD = "SELECT * FROM THAMSO";
 $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
@@ -41,9 +42,10 @@ if ($result !== false) {
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
-            'SiSo' => $row['SiSo'],
+            'SiSo' => $row['siso'],
             'SoLuongDat' => $row['soluongdat'],
-            'TiLe' => $row['tile']
+            // Calculate TiLe here
+            'TiLe' => ($row['soluongdat'] / $row['siso']) * 100
         ];
     }
 }
