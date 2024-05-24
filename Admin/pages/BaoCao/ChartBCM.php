@@ -6,6 +6,7 @@ $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+// Fetch DiemDat for the specific subject
 $sqlDD = "SELECT * FROM MONHOC WHERE MAMONHOC = '$MonHoc'";
 $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
@@ -39,19 +40,19 @@ GROUP BY
 
 $result = $mysqli->query($sql);
 
-// Thực thi truy vấn SQL
-$result = $mysqli->query($sql);
 $stt = 0;
 $data = [];
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
         $stt++;
+        // Calculate percentage with proper rounding
+        $tile = round(($row['soluongdat'] / $row['tonghocsinh']) * 100, 2);
         $data[] = [
             'STT' => $stt,
             'TenLop' => $row['tenlop'],
             'SiSo' => $row['siso'],
             'SoLuongDat' => $row['soluongdat'],
-            'TiLe' => $row['tile']
+            'TiLe' => $tile
         ];
     }
 }
