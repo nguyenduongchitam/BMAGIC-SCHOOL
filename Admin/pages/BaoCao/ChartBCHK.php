@@ -2,26 +2,50 @@
 include "../../../Database/Config/config.php";
 
 $HocKy = $_POST['HocKy'];
+$NamHoc = $_POST['NamHoc'];
+
+// Fetch DiemDat from THAMSO table
+$sqlDD = "SELECT * FROM THAMSO";
+$resultDD = $mysqli->query($sqlDD);
+$rowDD = $resultDD->fetch_assoc();
+$DiemDat = $rowDD["DiemDat"];
 
 $sql = "
-    SELECT distinct lop.TenLop, bc_tkhk.SoLuongDat, bc_tkhk.TiLe, danhsachlop.SiSo
-    FROM bc_tkhk, danhsachlop, lop
-    WHERE bc_tkhk.MAHOCKY = '$HocKy' AND
-          danhsachlop.MADSL = bc_tkhk.MADSL AND
-          danhsachlop.MALOP = lop.MaLop
+SELECT 
+    danhsachlop.malop,
+    danhsachlop.siso,
+    lop.tenlop,
+    COUNT(CASE WHEN bangdiem.dtbhk >= $DiemDat THEN 1 END) AS soluongdat
+FROM 
+    bangdiem
+JOIN 
+    chitietdanhsachlop ON bangdiem.mactdsl = chitietdanhsachlop.mactdsl
+JOIN 
+    danhsachlop ON chitietdanhsachlop.madsl = danhsachlop.madsl
+JOIN 
+    lop ON lop.malop = danhsachlop.malop
+WHERE 
+    bangdiem.mahocky = $HocKy AND
+    danhsachlop.manamhoc = $NamHoc
+GROUP BY 
+    danhsachlop.malop
 ";
 
 // Thực thi truy vấn SQL
 $result = $mysqli->query($sql);
 
 $data = [];
-
+$stt = 0;
 if ($result !== false) {
     while ($row = $result->fetch_assoc()) {
+        $stt++;
         $data[] = [
-            'TenLop' => $row['TenLop'],
-            'SiSo' => $row['SiSo'],
-            'TiLe' => $row['TiLe']
+            'STT' => $stt,
+            'TenLop' => $row['tenlop'],
+            'SiSo' => $row['siso'],
+            'SoLuongDat' => $row['soluongdat'],
+            // Calculate TiLe here
+            'TiLe' => ($row['soluongdat'] / $row['siso']) * 100
         ];
     }
 }

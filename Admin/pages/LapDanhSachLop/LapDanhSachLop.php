@@ -49,9 +49,7 @@
 
 <!-- Kết nối cơ sở dữ liệu -->
 <?php
-
-///Lúc đăng nhập sẽ sửa lại bây giờ chỉ lấy đại 1 giáo viên để test chạy backend
-$MAGV = '11';
+$mysqli = new mysqli("localhost", "root", "", "hocsinhphothong");
 ?>
 
 <body>
@@ -65,7 +63,7 @@ $MAGV = '11';
                     $sqlNamHoc = "SELECT * FROM NAMHOC";
                     $resultNamHoc = $mysqli->query($sqlNamHoc);
                     while ($rowNamHoc = $resultNamHoc->fetch_assoc()) {
-                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . '</option>';
+                        echo '<option value="' . $rowNamHoc["MaNamHoc"] . '">' . $rowNamHoc["Nam1"] . ' - ' . ($rowNamHoc["Nam1"] + 1) .  '</option>';
                     }
                     ?>
                 </select>
@@ -265,9 +263,9 @@ $MAGV = '11';
     // });
 </script>
 
-
 <script>
     var listSelectHS = [];
+    
 
     $(document).ready(function() {
         $.noConflict(true);
@@ -330,30 +328,17 @@ $MAGV = '11';
                 alert("Vui lòng chọn năm học!!!");
             } else {
                 $("#table_body").empty();
-
-                // $.post("../../../../../CNPM/BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/LoadTableAjax.php", {
-                //         namhoc: namhoc,
-                //         lop: lop,
-                //     },
-                //     function(data, status) {
-                //         if (status == "success") {
-                //             if (data != -1) {
-                //                 $('#DanhSachLop').find('tbody').append(data);
-                //             }
-                //         }
-                //     }
-                // );
-
-
                 table.ajax.reload();
             }
 
         });
+        
         $('#DanhSachLop tbody').on('click', '.delete', function() {
             var row = $(this).closest('tr');
 
             var MaCTDSL = table.row(row).data().MaCTDSL;
             var MaHocSinh = table.row(row).data().MaHocSinh;
+            
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
                 $.post("pages/LapDanhSachLop/XoaHocSinh.php", {
@@ -371,25 +356,7 @@ $MAGV = '11';
             }
         });
 
-        // Xoa HS ra khoi lop
-        // $(document).on('click', '.btn_ChiTiet', function(event) {
-        //     MaCTDSL = $(this).closest('tr').attr("val");
-
-        //     let text = "Bạn có muốn xóa không?";
-        //     if (confirm(text) == true) {
-        //         $.post("../../../../BMAGIC-SCHOOL/Admin/pages/LapDanhSachLop/XoaHocSinh.php", {
-        //                 MaCTDSL: MaCTDSL,
-        //             },
-        //             function(data, status) {
-        //                 if (status == "success") {
-        //                     alert(data);
-        //                 }
-        //             }
-        //         );
-        //         // $(this).parents("tr").remove();
-        //     }
-
-        // })
+    
 
         // Xu ly su kien nhan row thi check checkbox
         $(document).on('click', '.row_hs', function(event) {

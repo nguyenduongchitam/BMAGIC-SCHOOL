@@ -41,7 +41,7 @@
         <!-- trang chính -->
         <div class="container-fluid page-body-wrapper">
             <!-- thanh menu dọc -->
-            <?php include "partials/sidebar.php"; ?>
+            <?php include "partials/sidebar.php";  ?>
             <!-- custom panel -->
             <?php include "partials/settings-panel.php"; ?>
             <!-- Nội dung trang -->
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-
+      
     <!-- plugins:js -->
     <script src="js/vendors/vendor.bundle.base.js"></script>
     <script src="js/vendors/bootstrap-datepicker.min.js"></script>

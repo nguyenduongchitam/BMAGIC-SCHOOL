@@ -84,6 +84,10 @@
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách Học Sinh</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button><br><br>
+                                <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php"> 
+                                    <input type="file" name="file">
+                                    <button type="submit" id= "ImportExcel"name="Send"> Nhập dữ liệu </button>
+                              </form> 
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -160,7 +164,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="../../../Admin/pages/TiepNhanHocSinh/Update.php" method="post">
+                        <form class="forms-sample" action="pages/TiepNhanHocSinh/Update.php" method="post">
                             <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã học sinh</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaHocSinh" name="maHocSinh" readonly>
 
@@ -202,7 +206,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="registration" id="ValidateForm" method="post" action="../../../Admin/pages/TiepNhanHocSinh/AddHS.php">
+                        <form name="registration" id="ValidateForm" method="post" action="pages/TiepNhanHocSinh/AddHS.php">
                             <!-- Trong form thêm modal -->
                             <label for="modalTenHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
                             <div class="row">
