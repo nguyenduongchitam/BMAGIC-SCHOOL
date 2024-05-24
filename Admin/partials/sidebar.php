@@ -1,12 +1,6 @@
 
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link" href="../../../BMAGIC-SCHOOL/Admin/index.php">
-        <i class="mdi mdi-grid-large menu-icon"></i>
-        <span class="menu-title">Trang chủ</span>
-      </a>
-    </li>
     <!-- HỌC SINH -->
     <li class="nav-item nav-category">Quản lý HỌC SINH</li>
     <li class="nav-item">

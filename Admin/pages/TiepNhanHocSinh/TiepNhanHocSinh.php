@@ -85,7 +85,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card card-rounded">
                             <br>
-                            <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách Học Sinh</div>
+                            <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Tiếp nhận học sinh</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button><br><br>
                                 <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
@@ -127,20 +127,16 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button style="background-color:transparent; border-width: 0;" type="button" id="' . $rowHOCSINH['MaHocSinh'] . '" class="btn btn-primary btnXoa">
+                                                                <a href="pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
-                                                                </button>
+                                                                </a>
                                                             </td>
                                                             
                                                         </tr>
                                                     ';
                                             }
                                             ?>
-                                            <!-- <td class="text-center">
-                                                                <a href="../../../Admin/pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
-                                                                    <i class="bx bx-trash"></i>
-                                                                </a>
-                                                            </td> -->
+                                            
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -175,7 +171,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="../../../Admin/pages/TiepNhanHocSinh/Update.php" method="post" id="updateForm">
+                        <form class="forms-sample" action="pages/TiepNhanHocSinh/Update.php" method="post" id="updateForm">
                             <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Mã học sinh</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaHocSinh" name="maHocSinh" readonly>
 
@@ -222,7 +218,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="registration" id="addForm" method="post" action="../../../Admin/pages/TiepNhanHocSinh/AddHS.php">
+                        <form name="registration" id="addForm" method="post" action="pages/TiepNhanHocSinh/AddHS.php">
                             <label for="modalTenHocSinhAdd" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
                             <div class="row">
                                 <div class="col-12">
@@ -310,7 +306,7 @@
                         $("#TenHSError").text("");
                         updateFlag1 = false;
                     }
-                    toggleUpdateButton();
+                    
                 });
 
 
@@ -333,7 +329,7 @@
                             updateFlag2 = false;
                         }
                     }
-                    toggleUpdateButton();
+                    
                 });
 
 
@@ -348,7 +344,6 @@
                         $("#GTrror").text("");
                         updateFlag3 = false;
                     }
-                    toggleUpdateButton();
                 });
 
                 $("#modalDiaChi").blur(function() {
@@ -362,7 +357,6 @@
                         $("#DiaChiError").text("");
                         updateFlag4 = false;
                     }
-                    toggleUpdateButton();
                 });
 
                 $("#modalEmail").blur(function() {
@@ -377,7 +371,6 @@
                         $("#EmailError").text("");
                         updateFlag5 = false;
                     }
-                    toggleUpdateButton();
                 });
 
                 function toggleUpdateButton() {

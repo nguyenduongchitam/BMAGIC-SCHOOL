@@ -35,7 +35,10 @@ if (isset($_POST['submit'])) {
     $result4 = $mysqli->query($sql4);
     while ($row4 = $result4->fetch_assoc()) {
         $manamhoc = $row4['MaNamHoc'];
-        $sql5 = "INSERT INTO danhsachlop (manamhoc, malop, siso) VALUES ('$manamhoc', '$malop', '$siso')";
+        $sql5 = "INSERT INTO danhsachlop (manamhoc, malop, siso) VALUES ('$manamhoc', '$malop', '0')";
         $mysqli->query($sql5);
     }
+
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyLop");
+    exit();
 }

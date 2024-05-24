@@ -17,6 +17,6 @@ if (isset($_POST['submit']) && ($_POST['submit'] == 'Cập nhật')) {
     $sql1 = "UPDATE LOP SET TenLop='$tenLop', MaKhoi='$maKhoi' WHERE MaLop='$maLop'";
     $mysqli->query($sql1);
 
-    header("Location: /Admin/index.php?action=QuanLyLop");
+    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyLop");
     exit();
 }

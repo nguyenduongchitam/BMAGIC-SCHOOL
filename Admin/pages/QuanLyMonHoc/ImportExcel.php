@@ -23,9 +23,10 @@ $file = $_FILES['file']['tmp_name'];
 
         $TenMonHoc = $row['0'];
         $DiemDat= $row['1'];
+        
         $sql_add = "INSERT INTO `monhoc`( `TenMonHoc`, `DiemDat`) VALUES ('$TenMonHoc','$DiemDat')";
        $insert =  mysqli_query($mysqli,$sql_add);
     }
  }
- header('Location:/Admin/index.php?action=QuanLyMonHoc');
+ header('Location:http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=QuanLyMonHoc');
 ?>

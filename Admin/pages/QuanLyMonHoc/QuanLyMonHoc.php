@@ -78,13 +78,13 @@ $DiemToiThieu = $row["DiemToiThieu"];
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card card-rounded">
                             <br>
-                            <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách môn học</div>
+                            <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Quản lý môn học</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button><br><br>
-                               <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php"> 
+                                <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php">
                                     <input type="file" name="file">
-                                    <button type="submit" id= "ImportExcel"name="Send"> Nhập dữ liệu </button>
-                              </form> 
+                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                                </form>
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -206,8 +206,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
             $(document).ready(function() {
 
                 // Sửa
-             
-                $(".btn-Sua").click(function() {
+                $('#example').on('click', '.btn-Sua', function() {
                     $('#myModal').modal('show');
 
                     var row = $(this).closest('tr');
@@ -220,6 +219,21 @@ $DiemToiThieu = $row["DiemToiThieu"];
                     $('#modalTenMonHoc').val(tenMonHoc);
                     $('#modalDiemDat').val(diemDat);
                 });
+
+                // $(".btn-Sua").click(function() {
+                //     alert("sdfsdf")
+                //     $('#myModal').modal('show');
+
+                //     var row = $(this).closest('tr');
+                //     var maMonHoc = row.find('td:eq(0)').text();
+                //     var tenMonHoc = row.find('td:eq(1)').text();
+                //     var diemDat = row.find('td:eq(2)').text();
+
+                //     // Điền dữ liệu vào modal
+                //     $('#modalMaMonHoc').val(maMonHoc);
+                //     $('#modalTenMonHoc').val(tenMonHoc);
+                //     $('#modalDiemDat').val(diemDat);
+                // });
                 // Xóa
                 $(".btn-Xoa").click(function() {
                     $(this).closest('tr').remove();

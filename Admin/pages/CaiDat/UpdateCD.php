@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         $mysqli->query($sql);
 
         // Chuyển hướng người dùng sau khi cập nhật dữ liệu
-        header("Location: http://localhost:3000/Admin/index.php?action=CaiDat");
+        header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=CaiDat");
         exit();
     }
 }

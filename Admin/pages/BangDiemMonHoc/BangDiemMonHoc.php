@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+                    $sql = "SELECT * FROM THAMSO";
+                    $result = $mysqli->query($sql);
+                    $row = $result->fetch_assoc();
+                    $DiemToiDa = $row["DiemToiDa"];
+                    $DiemToiThieu = $row["DiemToiThieu"];
+                    ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -277,7 +283,7 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         },
 
                         {
-                            defaultContent: '<button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Sua"><i class="bx bxs-edit"></i></button> '
+                            defaultContent: '<button style="background-color:transparent; border-width: 0; " type="button" class="btn btn-primary btn-Sua"><i class="bx bxs-edit"></i></button> '
                         },
                         {
                             defaultContent: '<button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Them">Thêm</button>'
@@ -498,24 +504,39 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                     var isValid = true;
 
                     // Kiểm tra từng trường input
-            
+
                     var isValid = true;
 
-                    if ( Diem15p < 0 || Diem15p > 10) {
-                        alert('Điểm 15 phút phải là số và nằm trong khoảng từ 0 đến 10.');
+                   
+                   $DiemToiDa  =  <?php echo $DiemToiDa  ?>;
+                   $DiemToiThieu = <?php echo $DiemToiThieu ?>;
+                    if (Diem15p < $DiemToiThieu || Diem15p > $DiemToiDa) {
+                        alert('Điểm 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                         isValid = false;
                     }
 
-                    if ( Diem1tiet < 0 || Diem1tiet > 10) {
-                        alert('Điểm 1 tiết phải là số và nằm trong khoảng từ 0 đến 10.');
+                    if (Diem1tiet < $DiemToiThieu || Diem1tiet > $DiemToiDa) {
+                        alert('Điểm 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                         isValid = false;
                     }
 
-                    if ( Diemhocky < 0 || Diemhocky > 10) {
-                        alert('Điểm học kỳ phải là số và nằm trong khoảng từ 0 đến 10.');
+                    if (Diemhocky < $DiemToiThieu || Diemhocky > $DiemToiDa) {
+                        alert('Điểm 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                         isValid = false;
                     }
                     if (isValid) {
+                        if (isNaN(Diem15p))
+                        {
+                            Diem15p=null;
+                        }
+                        if (isNaN(Diem1tiet))
+                        {
+                            Diem1tiet=null;
+                        }
+                        if (isNaN(Diemhocky))
+                        {
+                            Diemhocky=null;
+                        }
                         $.ajax({
                             url: 'pages/BangDiemMonHoc/ThemBangDiemMonhoc.php',
                             method: 'GET',
@@ -543,6 +564,16 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                     var MaLop = $('#lop').val();
                     var MaMonHoc = $('#mon').val();
                     var MaHocKy = $('#hocKy').val();
+                    var inputDiem15p = document.getElementById("Diem15p");
+                    // Xóa dữ liệu trong trường nhập liệu
+                    inputDiem15p.value = "";
+                    var inputDiem1tiet = document.getElementById("Diem1tiet");
+                    // Xóa dữ liệu trong trường nhập liệu
+                    inputDiem1tiet.value = "";
+
+                    var inputDiemhocky = document.getElementById("Diemhocky");
+                    // Xóa dữ liệu trong trường nhập liệu
+                    inputDiemhocky.value = "";
                     $("#tbody").empty();
                     table.ajax.reload();
                     $('#addModal').modal('hide');
@@ -569,9 +600,10 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         var MaBDTP15p = $('input[name="MaBDTP15p"]').val();
                         var MaBDTP1tiet = $('input[name="MaBDTP1tiet"]').val();
                         var MaBDTPhocky = $('input[name="MaBDTPhocky"]').val();
-
+                        $DiemToiDa  =  <?php echo $DiemToiDa  ?>;
+                       $DiemToiThieu = <?php echo $DiemToiThieu ?>;
                         function validateScore(score) {
-                            return score >= 0 && score <= 10;
+                            return score >= $DiemToiThieu && score <= $DiemToiDa ;
                         }
 
                         var isValid = true;
@@ -582,7 +614,7 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         for (var i = 0; i < Diem15pArray.length; i++) {
                             if (!validateScore(Diem15pArray[i])) {
                                 isValid = false;
-                                alert('Điểm kiểm tra 15 phút phải là số và nằm trong khoảng từ 0 đến 10.');
+                                alert('Điểm kiểm tra 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                                 break;
                             }
                         }
@@ -590,7 +622,7 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         for (var i = 0; i < Diem1tietArray.length; i++) {
                             if (!validateScore(Diem1tietArray[i])) {
                                 isValid = false;
-                                alert('Điểm kiểm tra 1 tiết phải là số và nằm trong khoảng từ 0 đến 10.');
+                                alert('Điểm kiểm tra 1 tiết phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                                 break;
                             }
                         }
@@ -598,7 +630,7 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         for (var i = 0; i < DiemhockyArray.length; i++) {
                             if (!validateScore(DiemhockyArray[i])) {
                                 isValid = false;
-                                alert('Điểm kiểm tra học kỳ phải là số và nằm trong khoảng từ 0 đến 10.');
+                                alert('Điểm kiểm tra học kỳ phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                                 break;
                             }
                         }
