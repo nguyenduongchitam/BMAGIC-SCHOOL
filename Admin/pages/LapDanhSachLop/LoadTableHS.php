@@ -1,9 +1,9 @@
 <?php
 // echo "xcv asdf xcv";
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
+$mysqli = new mysqli("localhost","root","","hocsinhphothong");
 
 
-$sql = "select hocsinh.MaHocSinh,TenHocSinh, GioiTinh, NgaySinh, DiaChi, Email, Status from hocsinh where Status = 'Mới'";
+$sql = "select hocsinh.MaHocSinh,TenHocSinh, GioiTinh, NgaySinh, DiaChi, Email, status from hocsinh where status = 'Mới'";
 $rs = $mysqli->query($sql);
 $ind = 0;
 if ($rs->num_rows > 0) {

@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
+$mysqli = new mysqli("localhost","root","","hocsinhphothong");
 
 $listSelectHS = $_POST['listSelectHS'];
 $namhoc = $_POST['namhoc'];

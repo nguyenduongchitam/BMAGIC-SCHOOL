@@ -1,6 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
-
+$mysqli = new mysqli("localhost","root","","hocsinhphothong");
 $Search = $_POST['Search'];
 
 if ($Search != "") {

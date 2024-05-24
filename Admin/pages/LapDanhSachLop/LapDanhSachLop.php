@@ -7,7 +7,7 @@
     <title>Danh sách học sinh</title>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -49,7 +49,7 @@
 
 <!-- Kết nối cơ sở dữ liệu -->
 <?php
-$mysqli = new mysqli("localhost", "root", "", "qlhs");
+$mysqli = new mysqli("localhost", "root", "", "hocsinhphothong");
 ?>
 
 <body>

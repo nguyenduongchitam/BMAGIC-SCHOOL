@@ -81,6 +81,10 @@ $DiemToiThieu = $row["DiemToiThieu"];
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách môn học</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button><br><br>
+                               <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php"> 
+                                    <input type="file" name="file">
+                                    <button type="submit" id= "ImportExcel"name="Send"> Nhập dữ liệu </button>
+                              </form> 
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -200,7 +204,9 @@ $DiemToiThieu = $row["DiemToiThieu"];
 
         <script>
             $(document).ready(function() {
+
                 // Sửa
+             
                 $(".btn-Sua").click(function() {
                     $('#myModal').modal('show');
 
