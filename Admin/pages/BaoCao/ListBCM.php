@@ -10,23 +10,30 @@ $resultDD = $mysqli->query($sqlDD);
 $rowDD = $resultDD->fetch_assoc();
 $DiemDat = $rowDD["DiemDat"];
 
-$sqlSoLuongDat = "select * 
-                from bangdiem, bangdiemmh, chitietdanhsachlop,danhsachlop
-                where bangdiemmh.mabd = bangdiem.mabangdiem 
-                and bangdiem.mahocky = '$HocKy' 
-                and bangdiemmh.mamonhoc ='$$MonHoc'
-                and chitietdanhsachlop.mactdsl = bangdiem.mactdsl 
-                and chitietdanhsachlop.madsl = danhsachlop.madsl
-                and danhsachlop.manamhoc ='$NamHoc'";
-
 $sql = "
-    SELECT distinct lop.TenLop, ctbc_tkm.SoLuongDat, ctbc_tkm.TiLe, danhsachlop.SiSo
-    FROM ctbc_tkm, bc_tkm, danhsachlop, lop
-    WHERE bc_tkm.MAMONHOC = '$MonHoc' AND
-          bc_tkm.MAHOCKY = '$HocKy' AND
-          bc_tkm.MANAMHOC = '$NamHoc' AND
-          danhsachlop.MADSL = ctbc_tkm.MADSL and
-          danhsachlop.MALOP = lop.MaLop
+SELECT 
+    danhsachlop.malop,
+    danhsachlop.siso,
+    lop.tenlop,
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) AS soluongdat,
+    COUNT(*) AS tonghocsinh,
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) / COUNT(*) * 100 AS tile
+FROM 
+    bangdiemmh
+JOIN 
+    bangdiem ON bangdiemmh.mabd = bangdiem.mabangdiem
+JOIN 
+    chitietdanhsachlop ON bangdiem.mactdsl = chitietdanhsachlop.mactdsl
+JOIN 
+    danhsachlop ON chitietdanhsachlop.madsl = danhsachlop.madsl
+JOIN 
+    lop ON lop.malop = danhsachlop.malop
+WHERE 
+    bangdiemmh.mamonhoc = '$MonHoc' AND
+    bangdiem.mahocky = '$HocKy' AND
+    danhsachlop.manamhoc = '$NamHoc'
+GROUP BY 
+    danhsachlop.malop
 ";
 
 // Thực thi truy vấn SQL
@@ -44,10 +51,10 @@ if ($result === false) {
             $stt++;
             echo '<tr>
                     <td class="text-center">' . $stt . '</td>
-                    <td id="TenLop" class="text-center">' . $row['TenLop'] . '</td>
-                    <td id="SiSo" class="text-center">' . $row['SiSo'] . '</td>
-                    <td id="SoLuongDat" class="text-center">' . $row['SoLuongDat'] . '</td>
-                    <td id="TiLe" >' . $row['TiLe'] . '</td>
+                    <td id="TenLop" class="text-center">' . $row['tenlop'] . '</td>
+                    <td id="SiSo" class="text-center">' . $row['siso'] . '</td>
+                    <td id="SoLuongDat" class="text-center">' . $row['soluongdat'] . '</td>
+                    <td id="TiLe" >' . $row['tile'] . '</td>
                   </tr>';
         }
     } else {
@@ -56,5 +63,3 @@ if ($result === false) {
     }
 }
 ?>
-
-
