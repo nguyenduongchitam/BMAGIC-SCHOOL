@@ -15,6 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+
+    <!-- moment JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <!-- DataTables Buttons JS -->
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
@@ -84,10 +88,10 @@
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách Học Sinh</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button><br><br>
-                                <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php"> 
+                                <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
                                     <input type="file" name="file">
-                                    <button type="submit" id= "ImportExcel"name="Send"> Nhập dữ liệu </button>
-                              </form> 
+                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                                </form>
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -123,14 +127,20 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                <button style="background-color:transparent; border-width: 0;" type="button" id="' . $rowHOCSINH['MaHocSinh'] . '" class="btn btn-primary btnXoa">
                                                                     <i class="bx bx-trash"></i>
-                                                                </a>
+                                                                </button>
                                                             </td>
+                                                            
                                                         </tr>
                                                     ';
                                             }
                                             ?>
+                                            <!-- <td class="text-center">
+                                                                <a href="../../../Admin/pages/TiepNhanHocSinh/DeleteHS.php?MaHocSinh=' . $rowHOCSINH['MaHocSinh'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                    <i class="bx bx-trash"></i>
+                                                                </a>
+                                                            </td> -->
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -156,6 +166,7 @@
         </div>
 
         <!-- Modal -->
+        <!-- Modal cập nhật thông tin học sinh -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -164,33 +175,38 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="pages/TiepNhanHocSinh/Update.php" method="post">
-                            <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã học sinh</label>
+                        <form class="forms-sample" action="../../../Admin/pages/TiepNhanHocSinh/Update.php" method="post" id="updateForm">
+                            <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Mã học sinh</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaHocSinh" name="maHocSinh" readonly>
 
                             <label for="modalTenHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
-                            <input type="text" class="form-control mb-2" id="modalTenHocSinh" name="tenHocSinh" placeholder="Trần Văn A">
-                            <span id="TenHSError" class="error-message"></span> <!-- Thông báo lỗi -->
+                            <input type="text" class="form-control mb-2" id="modalTenHocSinh" name="tenHocSinh" placeholder="Trần Văn A" required>
+                            <span id="TenHSError" class="error-message"></span>
 
-                            <label for="modalNgaySinh" class="col-sm-3 col-form-label fw-bold ">Ngày sinh</label>
-                            <input type="date" class="form-control mb-2" id="modalNgaySinh" name="ngaySinh" placeholder="8">
-                            <span id="NgaySinhError" class="error-message"></span> <!-- Thông báo lỗi -->
+                            <label for="modalNgaySinh" class="col-sm-3 col-form-label fw-bold">Ngày sinh</label>
+                            <input type="date" class="form-control mb-2" id="modalNgaySinh" name="ngaySinh" required>
+                            <span id="NgaySinhError" class="error-message"></span>
 
-                            <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2">Giới tính</label>
-                            <input type="text" class="form-control mb-2" id="modalGioiTinh" name="gioiTinh" placeholder="Nữ/Nam">
-                            <span id="GTrror" class="error-message"></span> <!-- Thông báo lỗi -->
+                            <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Giới tính</label>
+                            <select class="form-select" id="modalGioiTinh" name="gioiTinh" required>
+                                <option value="" selected>Chọn giới tính</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                            <span id="GTrror" class="error-message"></span>
 
                             <label for="modalDiaChi" class="col-sm-3 col-form-label fw-bold pb-2">Địa chỉ</label>
-                            <input type="text" class="form-control mb-2" id="modalDiaChi" name="diaChi" placeholder="">
-                            <span id="DiaChiError" class="error-message"></span> <!-- Thông báo lỗi -->
+                            <input type="text" class="form-control mb-2" id="modalDiaChi" name="diaChi" placeholder="" required>
+                            <span id="DiaChiError" class="error-message"></span>
 
                             <label for="modalEmail" class="col-sm-3 col-form-label fw-bold pb-2">Email</label>
-                            <input type="text" class="form-control mb-2" id="modalEmail" name="email" placeholder="abc@gmail.com">
-                            <span id="EmailError" class="error-message"></span> <!-- Thông báo lỗi -->
-                            <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2 ">Trạng thái</label>
+                            <input type="email" class="form-control mb-2" id="modalEmail" name="email" placeholder="abc@gmail.com" required>
+                            <span id="EmailError" class="error-message"></span>
+
+                            <label for="modalMaHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Trạng thái</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modaltrangthai" name="trangthai" readonly>
 
-                            <input type="submit" class="mt-4 fw-bold btn-Update" name="submit" value="Cập nhật" size="50">
+                            <input type="submit" class="mt-4 fw-bold btn-Update" id="btn-Update" name="submit" value="Cập nhật" size="50">
                         </form>
                     </div>
                 </div>
@@ -206,44 +222,44 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="registration" id="ValidateForm" method="post" action="pages/TiepNhanHocSinh/AddHS.php">
-                            <!-- Trong form thêm modal -->
-                            <label for="modalTenHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
+                        <form name="registration" id="addForm" method="post" action="../../../Admin/pages/TiepNhanHocSinh/AddHS.php">
+                            <label for="modalTenHocSinhAdd" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" class="form-control" id="modalTenHocSinh" name="tenHocSinh" placeholder="Trần Văn A" required>
-                                    <span id="TenHSError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <input type="text" class="form-control" id="modalTenHocSinhAdd" name="tenHocSinh" placeholder="Trần Văn A" required>
+                                    <span id="TenHSErrorAdd" class="error-message"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="modalNgaySinh" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Ngày sinh</label>
-                                    <input type="date" class="form-control" id="modalNgaySinh" name="ngaySinh" placeholder="" required>
-                                    <span id="NgaySinhError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <label for="modalNgaySinhAdd" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Ngày sinh</label>
+                                    <input type="date" class="form-control" id="modalNgaySinhAdd" name="ngaySinh" required>
+                                    <span id="NgaySinhErrorAdd" class="error-message"></span>
                                 </div>
                             </div>
-                            <label for="modalGioiTinh" class="col-sm-3 col-form-label fw-bold pb-2">Giới tính</label>
+                            <div class="col-12">
+                                <label for="modalGioiTinhAdd" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Giới tính</label>
+                                <select class="form-select" id="modalGioiTinhAdd" name="gioiTinh" required>
+                                    <option value="" disabled selected>Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                                <span id="GioiTinhErrorAdd" class="error-message"></span>
+                            </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" class="form-control" id="modalGioiTinh" name="gioiTinh" placeholder="Nam/Nữ" required>
-                                    <span id="GioiTinhError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <label for="modalDiaChiAdd" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="modalDiaChiAdd" name="diaChi" placeholder="Thành phố Hồ Chí Minh" required>
+                                    <span id="DiaChiErrorAdd" class="error-message"></span>
                                 </div>
                             </div>
+                            <label for="modalEmailAdd" class="col-sm-3 col-form-label fw-bold pb-2">Email</label>
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="modalDiaChi" class="col-sm-3 col-form-label fw-bold pb-2 mt-3">Địa chỉ</label>
-                                    <input type="text" class="form-control" id="modalDiaChi" name="diaChi" placeholder="Thành phố Hồ Chí Minh" required>
-                                    <span id="DiaChiError" class="error-message"></span> <!-- Thông báo lỗi -->
+                                    <input type="email" class="form-control" id="modalEmailAdd" name="email" placeholder="TranVanA@gmail.com" required>
+                                    <span id="EmailErrorAdd" class="error-message"></span>
                                 </div>
                             </div>
-                            <label for="modalEmail" class="col-sm-3 col-form-label fw-bold pb-2">Email</label>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="text" class="form-control" id="modalEmail" name="email" placeholder="TranVanA@gmail.com" required>
-                                    <span id="EmailError" class="error-message"></span> <!-- Thông báo lỗi -->
-                                </div>
-                            </div>
-
                             <input type="submit" class="mt-4 fw-bold btnThem" name="submit" value="Thêm" size="50">
                         </form>
                     </div>
@@ -251,42 +267,289 @@
             </div>
         </div>
 
-        <!-- --------------------------------------------------------- -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+
+        <?php
+        $sql = "SELECT MinAge, MaxAge FROM THAMSO";
+        $result = $mysqli->query($sql);
+        $row = $result->fetch_assoc();
+        $minAge = $row["MinAge"];
+        $maxAge = $row["MaxAge"];
+        ?>
+
         <script>
-            // Sửa
-            $(document).on('click', '.btn-Sua', function(event) {
-                $('#myModal').modal('show');
-                var row = $(this).closest('tr');
-                var maHocSinh = row.find('td:eq(0)').text();
-                var tenHocSinh = row.find('td:eq(1)').text();
-                var ngaySinh = row.find('td:eq(2)').text();
-                var gioiTinh = row.find('td:eq(3)').text();
-                var diaChi = row.find('td:eq(4)').text();
-                var email = row.find('td:eq(5)').text();
-                var trangthai = row.find('td:eq(6)').text();
-                // alert(email);
-                // Điền dữ liệu vào modal
-                $('#modalMaHocSinh').val(maHocSinh);
-                $('#modalTenHocSinh').val(tenHocSinh);
-                $('#modalNgaySinh').val(ngaySinh);
-                $('#modalGioiTinh').val(gioiTinh);
-                $('#modalDiaChi').val(diaChi);
-                $('#modalEmail').val(email);
-                $('#modaltrangthai').val(trangthai);
+            $(document).ready(function() {
+                //Biến minAge, maxAge
+                var minAge = <?php echo json_encode($minAge); ?>;
+                var maxAge = <?php echo json_encode($maxAge); ?>;
 
+                // Biến cờ cho form cập nhật
+                var updateFlag1 = true;
+                var updateFlag2 = true;
+                var updateFlag3 = true;
+                var updateFlag4 = true;
+                var updateFlag5 = true;
+
+                // Biến cờ cho form thêm
+                var addFlag1 = true;
+                var addFlag2 = true;
+                var addFlag3 = true;
+                var addFlag4 = true;
+                var addFlag5 = true;
+
+                // Kiểm tra hợp lệ cho form cập nhật
+                $("#modalTenHocSinh").blur(function() {
+                    var tenHocSinh = $(this).val();
+                    var regex = /^[a-zA-ZÀ-ỹ\s]*$/;
+                    if (!regex.test(tenHocSinh) || tenHocSinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        s
+                        $("#TenHSError").text("Tên học sinh không được chứa ký tự đặc biệt và không được để trống");
+                        updateFlag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenHSError").text("");
+                        updateFlag1 = false;
+                    }
+                    toggleUpdateButton();
+                });
+
+
+                $("#modalNgaySinh").blur(function() {
+                    var ngaySinh = $(this).val();
+                    if (ngaySinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#NgaySinhError").text("Ngày sinh không được để trống");
+                        updateFlag2 = true;
+                    } else {
+                        var age = moment().diff(moment(ngaySinh), 'years');
+                        // alert(age);
+                        if (age < minAge || age > maxAge) {
+                            $(this).addClass("is-invalid");
+                            $("#NgaySinhError").text("Tuổi của học sinh phải nằm trong khoảng từ " + minAge + " đến " + maxAge + " tuổi");
+                            updateFlag2 = true;
+                        } else {
+                            $(this).removeClass("is-invalid");
+                            $("#NgaySinhError").text("");
+                            updateFlag2 = false;
+                        }
+                    }
+                    toggleUpdateButton();
+                });
+
+
+                $("#modalGioiTinh").blur(function() {
+                    var gioiTinh = $(this).val();
+                    if (gioiTinh === "") {
+                        $(this).addClass("is-invalid");
+                        $("#GTrror").text("Giới tính không được để trống");
+                        updateFlag3 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#GTrror").text("");
+                        updateFlag3 = false;
+                    }
+                    toggleUpdateButton();
+                });
+
+                $("#modalDiaChi").blur(function() {
+                    var diaChi = $(this).val();
+                    if (diaChi.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#DiaChiError").text("Địa chỉ không được để trống");
+                        updateFlag4 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#DiaChiError").text("");
+                        updateFlag4 = false;
+                    }
+                    toggleUpdateButton();
+                });
+
+                $("#modalEmail").blur(function() {
+                    var email = $(this).val();
+                    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                    if (!emailPattern.test(email) || email.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#EmailError").text("Email không hợp lệ và không được để trống");
+                        updateFlag5 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#EmailError").text("");
+                        updateFlag5 = false;
+                    }
+                    toggleUpdateButton();
+                });
+
+                function toggleUpdateButton() {
+                    if (!updateFlag1 && !updateFlag2 && !updateFlag3 && !updateFlag4 && !updateFlag5) {
+                        $("#btn-Update").prop("disabled", false);
+                    } else {
+                        $("#btn-Update").prop("disabled", true);
+                    }
+                }
+
+                // Kiểm tra hợp lệ cho form thêm
+                $("#modalTenHocSinhAdd").blur(function() {
+                    var tenHocSinh = $(this).val();
+                    var regex = /^[a-zA-ZÀ-ỹ\s]*$/;
+                    if (!regex.test(tenHocSinh) || tenHocSinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#TenHSErrorAdd").text("Tên học sinh không được chứa ký tự đặc biệt và không được để trống");
+                        addFlag1 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#TenHSErrorAdd").text("");
+                        addFlag1 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalNgaySinhAdd").blur(function() {
+                    var ngaySinh = $(this).val();
+                    if (ngaySinh.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#NgaySinhErrorAdd").text("Ngày sinh không được để trống");
+                        addFlag2 = true;
+                    } else {
+                        var birthday = moment(ngaySinh);
+                        var now = moment();
+                        var age = now.diff(birthday, 'years');
+                        if (age < minAge || age > maxAge) {
+                            $(this).addClass("is-invalid");
+                            $("#NgaySinhErrorAdd").text("Tuổi phải từ " + minAge + " đến " + maxAge);
+                            addFlag2 = true;
+                        } else {
+                            $(this).removeClass("is-invalid");
+                            $("#NgaySinhErrorAdd").text("");
+                            addFlag2 = false;
+                        }
+                    }
+                    toggleAddButton();
+                });
+
+
+                $("#modalGioiTinhAdd").blur(function() {
+                    var gioiTinh = $(this).val();
+                    if (gioiTinh === "") {
+                        $(this).addClass("is-invalid");
+                        $("#GioiTinhErrorAdd").text("Giới tính không được để trống");
+                        addFlag3 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#GioiTinhErrorAdd").text("");
+                        addFlag3 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalDiaChiAdd").blur(function() {
+                    var diaChi = $(this).val();
+                    if (diaChi.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#DiaChiErrorAdd").text("Địa chỉ không được để trống");
+                        addFlag4 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#DiaChiErrorAdd").text("");
+                        addFlag4 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                $("#modalEmailAdd").blur(function() {
+                    var email = $(this).val();
+                    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                    if (!emailPattern.test(email) || email.trim() === "") {
+                        $(this).addClass("is-invalid");
+                        $("#EmailErrorAdd").text("Email không hợp lệ và không được để trống");
+                        addFlag5 = true;
+                    } else {
+                        $(this).removeClass("is-invalid");
+                        $("#EmailErrorAdd").text("");
+                        addFlag5 = false;
+                    }
+                    toggleAddButton();
+                });
+
+                function toggleAddButton() {
+                    if (!addFlag1 && !addFlag2 && !addFlag3 && !addFlag4 && !addFlag5) {
+                        $(".btnThem").prop("disabled", false);
+                    } else {
+                        $(".btnThem").prop("disabled", true);
+                    }
+                }
+
+                // Mở modal sửa và điền dữ liệu vào modal
+                $(document).on('click', '.btn-Sua', function(event) {
+                    $('#myModal').modal('show');
+                    var row = $(this).closest('tr');
+                    var maHocSinh = row.find('td:eq(0)').text();
+                    var tenHocSinh = row.find('td:eq(1)').text();
+                    var ngaySinh = row.find('td:eq(2)').text();
+                    var gioiTinh = row.find('td:eq(3)').text();
+                    var diaChi = row.find('td:eq(4)').text();
+                    var email = row.find('td:eq(5)').text();
+                    var trangthai = row.find('td:eq(6)').text();
+
+                    $('#modalMaHocSinh').val(maHocSinh);
+                    $('#modalTenHocSinh').val(tenHocSinh);
+                    $('#modalNgaySinh').val(ngaySinh);
+                    $('#modalGioiTinh').val(gioiTinh);
+                    $('#modalDiaChi').val(diaChi);
+                    $('#modalEmail').val(email);
+                    $('#modaltrangthai').val(trangthai);
+                });
+
+
+
+                // Xóa
+                $(".btnXoa").click(function() {
+
+                    var row = $(this).closest('tr');
+
+                    var MaHS = $(this).attr('id');
+                    // let text = "Bạn có muốn xóa không?";
+                    // if (confirm(text) == true) {
+                    // $.post("Admin\pages\TiepNhanHocSinh\DeleteHS.php", {
+                    //         MaHocSinh: MaHS,
+                    //     },
+                    //     function(data, status) {
+                    //         if (status == "success") {
+                    //             alert(data);
+                    //             $(this).parents("tr").remove();
+                    //         }
+                    //     }
+                    // );
+                    $.ajax({
+
+                        url: 'pages/TiepNhanHocSinh/TiepNhanHocSinh.php',
+                        method: 'GET',
+                        dataType: "json",
+                        data: {
+                            MaHocSinh: MaHS
+                        },
+                        success: function(response) {
+                            // Handle success
+                            console.log('Data submitted successfully');
+                            // Hide the modal
+
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            // Handle error
+                            console.log('Error: ' + errorThrown);
+                        }
+                    });
+
+                    // }
+                });
+
+                // Thêm
+                $(".btn-Them").click(function() {
+                    $('#myModal1').modal('show');
+                });
             });
-            // Xóa
-            $(".btn-Xoa").click(function() {
-                $(this).closest('tr').remove();
-            });
-            // Thêm
-            $(".btn-Them").click(function() {
-                $('#myModal1').modal('show');
-            });
+            // });
         </script>
-
 
         <!-- datatable -->
         <script>
