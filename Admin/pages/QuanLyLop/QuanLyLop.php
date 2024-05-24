@@ -197,8 +197,8 @@
                                 <div class="col-12">
                                     <input type="text" class="form-control" id="modalTenLopadd" name="tenLop" placeholder="Lớp 10A1" required>
                                     <span id="TenLopErroradd" class="error-message"></span> <!-- Thông báo lỗi -->
-                                    <input type="text" class="form-control" id="modalTenLop" name="tenLop" placeholder="10A1" required>
-                                    <span id="TenLopError" class="error-message"></span> <!-- Thông báo lỗi -->
+
+
                                 </div>
                             </div>
                             <!-- <div class="row">
