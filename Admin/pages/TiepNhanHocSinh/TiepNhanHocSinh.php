@@ -31,7 +31,7 @@
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
 
     <!-- Add Validate data form -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="js/form-validation.js"></script>
 
@@ -88,6 +88,10 @@
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách Học Sinh</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button><br><br>
+                                <form method="POST" enctype="multipart/form-data" action="pages/TiepNhanHocSinh/ImportExcel.php">
+                                    <input type="file" name="file">
+                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                                </form>
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>

@@ -5,20 +5,40 @@ $MonHoc = $_POST['MonHoc'];
 $HocKy = $_POST['HocKy'];
 $NamHoc = $_POST['NamHoc'];
 
+$sqlDD = "SELECT * FROM MONHOC WHERE MAMONHOC = '$MonHoc'";
+$resultDD = $mysqli->query($sqlDD);
+$rowDD = $resultDD->fetch_assoc();
+$DiemDat = $rowDD["DiemDat"];
 
 $sql = "
-    SELECT distinct lop.TenLop, ctbc_tkm.SoLuongDat, ctbc_tkm.TiLe, danhsachlop.SiSo
-    FROM ctbc_tkm, bc_tkm, danhsachlop, lop
-    WHERE bc_tkm.MAMONHOC = '$MonHoc' AND
-          bc_tkm.MAHOCKY = '$HocKy' AND
-          bc_tkm.MANAMHOC = '$NamHoc' AND
-          danhsachlop.MADSL = ctbc_tkm.MADSL and
-          danhsachlop.MALOP = lop.MaLop
+SELECT 
+    danhsachlop.malop,
+    danhsachlop.siso,
+    lop.tenlop,
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) AS soluongdat,
+    COUNT(*) AS tonghocsinh,
+    COUNT(CASE WHEN bangdiemmh.dtbmh >= $DiemDat THEN 1 END) / COUNT(*) * 100 AS tile
+FROM 
+    bangdiemmh
+JOIN 
+    bangdiem ON bangdiemmh.mabd = bangdiem.mabangdiem
+JOIN 
+    chitietdanhsachlop ON bangdiem.mactdsl = chitietdanhsachlop.mactdsl
+JOIN 
+    danhsachlop ON chitietdanhsachlop.madsl = danhsachlop.madsl
+JOIN 
+    lop ON lop.malop = danhsachlop.malop
+WHERE 
+    bangdiemmh.mamonhoc = '$MonHoc' AND
+    bangdiem.mahocky = '$HocKy' AND
+    danhsachlop.manamhoc = '$NamHoc'
+GROUP BY 
+    danhsachlop.malop
 ";
 
 // Thực thi truy vấn SQL
 $result = $mysqli->query($sql);
-
+$data = [];
 // Kiểm tra xem truy vấn có thành công không
 if ($result === false) {
     // Xử lý trường hợp truy vấn không thành công
@@ -29,17 +49,16 @@ if ($result === false) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $stt++;
-            echo '<tr>
-                    <td class="text-center">' . $stt . '</td>
-                    <td id="TenLop" class="text-center">' . $row['TenLop'] . '</td>
-                    <td id="SiSo" class="text-center">' . $row['SiSo'] . '</td>
-                    <td id="SoLuongDat" class="text-center">' . $row['SoLuongDat'] . '</td>
-                    <td id="TiLe" >' . $row['TiLe'] . '</td>
-                  </tr>';
+            $data[] = [
+                'STT' => $stt,
+                'TenLop' => $row['tenlop'],
+                'SiSo' => $siso,
+                'SoLuongDat' => $row['soluongdat'],
+                'TiLe' => $tile
+            ];
         }
-    } else {
-        // Nếu không có dữ liệu, in ra thông báo không có dữ liệu
-        echo '<tr><td colspan="5">Không có dữ liệu.</td></tr>';
-    }
+    } 
 }
+
+echo json_encode($data);
 ?>

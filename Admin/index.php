@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>BMagic School </title>
-
+   
     <!-- plugins:css -->
     <link rel="stylesheet" href="css/vendors/feather/feather.css">
     <link rel="stylesheet" href="css/vendors/mdi/css/materialdesignicons.min.css">
@@ -18,9 +18,7 @@
 
     <!--plugins:css-boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="css/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -33,7 +31,8 @@
 
 <body>
     <!-- kết nối cơ sở dữ liệu -->
-    <?php include "../Database/Config/config.php" ?>
+    <?php include "../Database/Config/config.php"
+    ?>
 
     <div class="container-scroller">
         <!-- thanh menu ngang -->
@@ -42,7 +41,7 @@
         <!-- trang chính -->
         <div class="container-fluid page-body-wrapper">
             <!-- thanh menu dọc -->
-            <?php include "partials/sidebar.php"; ?>
+            <?php include "partials/sidebar.php";  ?>
             <!-- custom panel -->
             <?php include "partials/settings-panel.php"; ?>
             <!-- Nội dung trang -->
@@ -55,7 +54,7 @@
             </div>
         </div>
     </div>
-
+      
     <!-- plugins:js -->
     <script src="js/vendors/vendor.bundle.base.js"></script>
     <script src="js/vendors/bootstrap-datepicker.min.js"></script>

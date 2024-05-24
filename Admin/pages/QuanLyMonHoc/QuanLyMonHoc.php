@@ -4,6 +4,7 @@ $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
 $DiemToiDa = $row["DiemToiDa"];
 $DiemToiThieu = $row["DiemToiThieu"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,6 +81,10 @@ $DiemToiThieu = $row["DiemToiThieu"];
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Danh sách môn học</div>
                             <div class="card-body">
                                 <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button><br><br>
+                               <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php"> 
+                                    <input type="file" name="file">
+                                    <button type="submit" id= "ImportExcel"name="Send"> Nhập dữ liệu </button>
+                              </form> 
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -93,9 +98,11 @@ $DiemToiThieu = $row["DiemToiThieu"];
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $monHocList = array();
                                             $sqlMonHoc = "SELECT * FROM MONHOC";
                                             $resultMonHoc = $mysqli->query($sqlMonHoc);
                                             while ($rowMonHoc = $resultMonHoc->fetch_assoc()) {
+                                                $monHocList[] = $rowMonHoc['TenMonHoc'];
                                                 echo '
                                                         <tr>
                                                             <td class="text-center">' . $rowMonHoc['MaMonHoc'] . '</td>
@@ -107,7 +114,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="../../../Admin/pages/QuanLyMonHoc/DeleteMH.php?MaMonHoc=' . $rowMonHoc['MaMonHoc'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
+                                                                <a href="pages/QuanLyMonHoc/DeleteMH.php?MaMonHoc=' . $rowMonHoc['MaMonHoc'] . '" type="button" class="btn-Xoa text-primary" style="color:black">
                                                                     <i class="bx bx-trash"></i>
                                                                 </a>
                                                             </td>
@@ -144,7 +151,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="forms-sample" action="../../../Admin/pages/QuanLyMonHoc/Update.php" method="post">
+                        <form class="forms-sample" action="pages/QuanLyMonHoc/Update.php" method="post">
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2 ">Mã môn học</label>
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaMonHoc" name="maMonHoc" readonly>
 
@@ -172,7 +179,7 @@ $DiemToiThieu = $row["DiemToiThieu"];
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="../../../Admin/pages/QuanLyMonHoc/AddMH.php">
+                        <form method="post" action="pages/QuanLyMonHoc/AddMH.php">
                             <!-- Trong form thêm modal -->
                             <label for="modalTenMonHoc" class="col-sm-3 col-form-label fw-bold pb-2">Tên môn học</label>
                             <div class="row">
@@ -197,7 +204,9 @@ $DiemToiThieu = $row["DiemToiThieu"];
 
         <script>
             $(document).ready(function() {
+
                 // Sửa
+             
                 $(".btn-Sua").click(function() {
                     $('#myModal').modal('show');
 
@@ -230,13 +239,21 @@ $DiemToiThieu = $row["DiemToiThieu"];
                 var flag2 = false;
                 var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
                 var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
+                var existingSubjects = <?php echo json_encode($monHocList); ?>;
+                const originalSubjectName = $(modalTenMonHoc).val();
 
                 $("#modalTenMonHoc").blur(function() {
                     var Ten = $(this).val();
+
                     var regex = /^[a-zA-Z\sÀ-ỹ]*$/; // Regular expression to allow only letters and spaces
+
                     if (!regex.test(Ten) || Ten.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#TenMHError").text("Tên môn học không được chứa số, ký tự đặc biệt và để trống");
+                        flag1 = true;
+                    } else if (existingSubjects.includes(Ten) && Ten !== originalSubjectName) {
+                        $(this).addClass("is-invalid");
+                        $("#TenMHError").text("Tên môn học đã tồn tại");
                         flag1 = true;
                     } else {
                         $(this).removeClass("is-invalid");
@@ -275,7 +292,8 @@ $DiemToiThieu = $row["DiemToiThieu"];
             });
         </script>
 
-        
+
+
         <!-- thêm -->
         <script>
             $(document).ready(function() {
@@ -283,7 +301,8 @@ $DiemToiThieu = $row["DiemToiThieu"];
                 var flag2 = true;
                 var DiemToiDa = <?php echo json_encode($DiemToiDa); ?>;
                 var DiemToiThieu = <?php echo json_encode($DiemToiThieu); ?>;
-                console.log(parseFloat(DiemToiDa));
+                var existingSubjects = <?php echo json_encode($monHocList); ?>;
+
 
                 $("#ThemTenMH").blur(function() {
                     var Ten = $(this).val();
@@ -291,6 +310,9 @@ $DiemToiThieu = $row["DiemToiThieu"];
                     if (!regex.test(Ten) || Ten.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#ThemTenMHError").text("Tên môn học không được chứa số hoặc ký tự đặc biệt và không được để trống");
+                    } else if (existingSubjects.includes(Ten)) {
+                        $(this).addClass("is-invalid");
+                        $("#ThemTenMHError").text("Tên môn học đã tồn tại");
                     } else {
                         $(this).removeClass("is-invalid");
                         $("#ThemTenMHError").text("");

@@ -145,6 +145,7 @@
 
 </html>
 
+<!-- Charts -->
 <script>
     $(document).ready(function() {
         $('#NamHoc').change(function() {
@@ -152,17 +153,17 @@
             $('#HocKy').prop('disabled', false).val("");
             $('#HocKy').change(function() {
                 var HocKy = $(this).val();
-                $('#tb').empty();
+                // $('#tb').empty();
 
-                $.post("../../../Admin/pages/BaoCao/ListBCHK.php", {
-                    HocKy: HocKy,
-                    NamHoc: NamHoc
-                }, function(data, status) {
-                    if (status == "success") {
+                // $.post("../../../Admin/pages/BaoCao/ListBCHK.php", {
+                //     HocKy: HocKy,
+                //     NamHoc: NamHoc
+                // }, function(data, status) {
+                //     if (status == "success") {
 
-                        $("#tb").html(data);
-                    }
-                });
+                //         $("#tb").html(data);
+                //     }
+                // });
 
                 $.post("../../../Admin/pages/BaoCao/ChartBCHK.php", {
                     HocKy: HocKy,
@@ -203,13 +204,11 @@
 
         })
 
-
-
     });
 </script>
 
 <!-- DATATABLE -->
-<script>
+<!-- <script>
     var table = new DataTable('#BaoCaoBoMon', {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
@@ -231,20 +230,88 @@
         }
     });
 
-    $('#submit').on('click', function(e) {
-        e.preventDefault();
-        var data = table.$('input, select').serialize();
-    });
-
     table.on('mouseenter', 'td', function() {
         let colIdx = table.cell(this).index().column;
         table.cells().nodes().each((el) => el.classList.remove('highlight'));
         table.column(colIdx).nodes().each((el) => el.classList.add('highlight'));
     });
-</script>
+</script> -->
 
 <style>
     td.highlight {
         background-color: rgba(var(--dt-row-hover), 0.052) !important;
     }
 </style>
+
+<script>
+    var listSelectHS = [];
+
+    $(document).ready(function() {
+        $.noConflict(true);
+        var table = $('#BaoCaoBoMon').DataTable({
+            "Processing": true,
+            "ajax": {
+                "type": "POST",
+                "url": "pages/BaoCao/ChartBCHK.php",
+                "dataSrc": "",
+                "data": function(d) {
+                    d.NamHoc = $('#NamHoc').val();
+                    d.HocKy = $('#HocKy').val();
+                }
+            },
+            "columns": [{
+                    "data": "STT",
+                    "className": "text-center"
+                },
+                {
+                    "data": "TenLop",
+                    "className": "text-center"
+                },
+                {
+                    "data": "SiSo",
+                    "className": "text-center"
+                },
+                {
+                    "data": "SoLuongDat",
+                    "className": "text-center"
+                },
+                {
+                    "data": "TiLe",
+                    "className": "text-center"
+                },
+            ],
+
+
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
+            },
+            layout: {
+                topStart: {
+                    buttons: [
+                        'pdf',
+                        'csv',
+                        'excel',
+                        'copy',
+                        'colvis'
+                    ]
+                },
+                topEnd: 'search',
+                bottomStart: 'pageLength',
+                bottomEnd: 'info',
+                bottom2center: 'paging'
+            }
+        });
+
+
+
+
+        $("#HocKy").change(function(e) {
+            var NamHoc = document.getElementById("NamHoc").value;
+            var HocKy = document.getElementById("HocKy").value;
+
+            $("#tb").empty();
+            table.ajax.reload();
+
+        });
+    });
+</script>
