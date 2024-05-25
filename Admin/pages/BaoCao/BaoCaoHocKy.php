@@ -151,7 +151,7 @@
         
         $('#NamHoc').change(function() {
             var NamHoc = $(this).val();
-            $('#HocKy').prop('disabled', false).val("Học Kỳ");
+            $('#HocKy').prop('disabled', false).val("Học kỳ");
             $('#HocKy').change(function() {
                 var HocKy = $(this).val();
                 // $('#tb').empty();
