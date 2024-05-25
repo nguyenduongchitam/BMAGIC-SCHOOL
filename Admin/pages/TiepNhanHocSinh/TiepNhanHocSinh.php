@@ -89,7 +89,7 @@
                             <div class="card-body">
                                 <button style="float: left" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh mới</button>
                                 <button style="float: right" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Nhap" type="button"><i class='bx bx-import btn-Nhap'></i>Nhập file</button><br><br><br>
-                                
+
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,15 +115,18 @@
                                                 <th class="text-center">Giới tính</th>
                                                 <th class="text-center">Địa chỉ</th>
                                                 <th class="text-center">Email</th>
+                                                <th class="text-center">Trạng thái</th>
                                                 <th class="text-center">Chỉnh sửa</th>
                                                 <th class="text-center">Xóa</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $HSlist = array();
                                             $sqlHOCSINH = "SELECT * FROM HOCSINH";
                                             $resultHOCSINH = $mysqli->query($sqlHOCSINH);
                                             while ($rowHOCSINH = $resultHOCSINH->fetch_assoc()) {
+                                                $HSlist[] = $rowHOCSINH['Email'];
                                                 echo '
                                                         <tr>
                                                             <td class="text-center">' . $rowHOCSINH['MaHocSinh'] . '</td>
@@ -132,6 +135,7 @@
                                                             <td class="text-center">' . $rowHOCSINH['GioiTinh'] . '</td>
                                                             <td class="text-center">' . $rowHOCSINH['DiaChi'] . '</td>
                                                             <td class="text-center">' . $rowHOCSINH['Email'] . '</td>
+                                                            <td class="text-center">' . $rowHOCSINH['status'] . '</td>
                                                             <td class="text-center">
                                                                 <button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Sua">
                                                                     <i class="bx bxs-edit"></i>
@@ -147,7 +151,7 @@
                                                     ';
                                             }
                                             ?>
-                                            
+
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -288,6 +292,9 @@
                 //Biến minAge, maxAge
                 var minAge = <?php echo json_encode($minAge); ?>;
                 var maxAge = <?php echo json_encode($maxAge); ?>;
+                var existing = <?php echo json_encode($HSlist); ?>;
+                const originalupdate = $(modalEmail).val();
+                const originalinsert = $(modalEmailAdd).val();
 
                 // Biến cờ cho form cập nhật
                 var updateFlag1 = true;
@@ -317,7 +324,7 @@
                         $("#TenHSError").text("");
                         updateFlag1 = false;
                     }
-                    
+
                 });
 
 
@@ -340,7 +347,7 @@
                             updateFlag2 = false;
                         }
                     }
-                    
+
                 });
 
 
@@ -376,6 +383,10 @@
                     if (!emailPattern.test(email) || email.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#EmailError").text("Email không hợp lệ và không được để trống");
+                        updateFlag5 = true;
+                    } else if (existing.includes(email) && email !== originalupdate) {
+                        $(this).addClass("is-invalid");
+                        $("#EmailError").text("Email đã tồn tại");
                         updateFlag5 = true;
                     } else {
                         $(this).removeClass("is-invalid");
@@ -467,6 +478,10 @@
                         $(this).addClass("is-invalid");
                         $("#EmailErrorAdd").text("Email không hợp lệ và không được để trống");
                         addFlag5 = true;
+                    } else if (existing.includes(email) && email !== originalinsert) {
+                        $(this).addClass("is-invalid");
+                        $("#EmailErrorAdd").text("Email đã tồn tại");
+                        addFlag5 = true;
                     } else {
                         $(this).removeClass("is-invalid");
                         $("#EmailErrorAdd").text("");
@@ -552,6 +567,7 @@
                     $('#myModal1').modal('show');
                 });
 
+                //Import 
                 $(".btn-Nhap").click(function() {
                     $('#exampleModalCenter').modal('show');
                 });

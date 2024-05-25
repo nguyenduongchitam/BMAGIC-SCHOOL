@@ -283,10 +283,12 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                         },
 
                         {
-                            defaultContent: '<button style="background-color:transparent; border-width: 0; " type="button" class="btn btn-primary btn-Sua"><i class="bx bxs-edit"></i></button> '
+                            defaultContent: '<button style="background-color:transparent; border-width: 0; " type="button" class="btn btn-primary btn-Sua"><i class="bx bxs-edit"></i></button> ',
+                            "className": "text-center"
                         },
                         {
-                            defaultContent: '<button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Them">Thêm</button>'
+                            defaultContent: '<button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Them">Thêm</button>',
+                            "className": "text-center"
                         },
                         {
                             "data": "MaBDMH",

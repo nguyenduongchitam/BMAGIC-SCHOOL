@@ -8,10 +8,12 @@ if (isset($_POST['submit'])) {
     //MAKHOI
     $sql = "SELECT MAKHOI FROM KHOILOP WHERE TENKHOI = '$tenKhoi'";
     $result = $mysqli->query($sql);
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $maKhoi = $row['MAKHOI'];
-    }
+    $row = $result->fetch_assoc();
+    $maKhoi = $row['MAKHOI'];
+
+    $sql6 = "SELECT count(*) as count FROM LOP WHERE tenlop = '$tenLop' and makhoi = '$maKhoi'";
+    $result6 = $mysqli->query($sql6);
+    $row6 = $result6->fetch_assoc();
     // Insert LOP 
     $sql1 = "INSERT INTO LOP (TenLop, MaKhoi) VALUES ('$tenLop', '$maKhoi')";
     $mysqli->query($sql1);
