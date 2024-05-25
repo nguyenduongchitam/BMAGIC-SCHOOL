@@ -29,7 +29,7 @@
     <li class="nav-item">
       <a class="nav-link" href="index.php?action=LapDanhSachLop">
         <i class="menu-icon"><span class="material-symbols-outlined">tenancy</span></i>
-        <span class="menu-title">Lập danh sách lớp</span>
+        <span class="menu-title">Danh sách lớp</span>
         <i class="menu-arrow"></i>
       </a>
     </li>

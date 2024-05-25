@@ -115,7 +115,6 @@
                                                 <th class="text-center">Giới tính</th>
                                                 <th class="text-center">Địa chỉ</th>
                                                 <th class="text-center">Email</th>
-                                                <th class="text-center">Trạng thái</th>
                                                 <th class="text-center">Chỉnh sửa</th>
                                                 <th class="text-center">Xóa</th>
                                             </tr>
@@ -133,7 +132,6 @@
                                                             <td class="text-center">' . $rowHOCSINH['GioiTinh'] . '</td>
                                                             <td class="text-center">' . $rowHOCSINH['DiaChi'] . '</td>
                                                             <td class="text-center">' . $rowHOCSINH['Email'] . '</td>
-                                                            <td class="text-center">' . $rowHOCSINH['status'] . '</td>
                                                             <td class="text-center">
                                                                 <button style="background-color:transparent; border-width: 0;" type="button" class="btn btn-primary btn-Sua">
                                                                     <i class="bx bxs-edit"></i>
@@ -552,6 +550,10 @@
                 // Thêm
                 $(".btn-Them").click(function() {
                     $('#myModal1').modal('show');
+                });
+
+                $(".btn-Nhap").click(function() {
+                    $('#exampleModalCenter').modal('show');
                 });
             });
             // });

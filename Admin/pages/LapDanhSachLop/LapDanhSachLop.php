@@ -120,7 +120,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <div class="modal-body">
+                                                            <div class="modal-body" style="height: 500px !important; overflow-y: scroll">
                                                                 <div class="topnav">
                                                                     <div class="search-container">
                                                                         <input type="text" id="search" placeholder="Search.." name="search" style="background-color: #e9e9e9;">
@@ -139,7 +139,6 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                                                                                         <th style="text-align: center;">Năm sinh</th>
                                                                                         <th style="text-align: center;">Địa chỉ</th>
                                                                                         <th style="text-align: center;">Email</th>
-                                                                                        <th style="text-align: center;">Tình trạng</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody id="table_HS_body">
@@ -375,19 +374,18 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
         // Xu ly su kien nhan row thi check checkbox
         $(document).on('click', '.row_hs', function(event) {
             mahs = $(this).closest('tr').attr("val");
-
             var checkBoxes = $(this).closest('tr').find('input:checkbox')
 
             checkBoxes.prop("checked", !checkBoxes.prop("checked"));
 
-            // listSelectHS.push(mahs);
+            listSelectHS.push(mahs);
         })
 
         // Xu ly su kien luu hs
         $('#save').click(function(e) {
-            $("[name=checkbox_val]:checked").each(function() {
-                listSelectHS.push($(this).closest('tr').attr("val")) //push value in array
-            });
+            // $("[name=checkbox_val]:checked").each(function() {
+            //     listSelectHS.push($(this).closest('tr').attr("val")) //push value in array
+            // });
 
             var namhoc = document.getElementById("NamHoc").value;
             var lop = document.getElementById("Lop").value;
@@ -406,7 +404,6 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                     }
                 );
             }
-
 
             $("#exampleModalLong").modal('hide');
         });
@@ -431,7 +428,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                 $("#exampleModalLong").modal('show');
                 // Load table them hs
                 $.post("pages/LapDanhSachLop/LoadTableHS.php", {
-
+                        namhoc : namhoc
                     },
                     function(data, status) {
                         if (status == "success") {
@@ -449,10 +446,13 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
         });
 
         $("#search").keyup(function() {
+            listSelectHS = [];
             var Search = $("#search").val();
+            var namhoc = document.getElementById("NamHoc").value;
             if ($(this).val().length >= 0) {
                 $.post("pages/LapDanhSachLop/SearchHSAjax.php", {
                         Search: Search,
+                        namhoc : namhoc
                     },
                     function(data, status) {
                         if (status == "success") {

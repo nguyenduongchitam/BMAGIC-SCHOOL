@@ -12,7 +12,7 @@ $MaDSL = $row['MaDSL'];
 
 $sql3 = "Select Count(*) AS SUM
     From chitietdanhsachlop, hocsinh
-    WHERE chitietdanhsachlop.MaHocSinh = hocsinh.MaHocSinh and chitietdanhsachlop.MaDSL = '" . $MaDSL . "' and (hocsinh.Status = '' or hocsinh.Status = '" . $MaDSL . "')";
+    WHERE chitietdanhsachlop.MaHocSinh = hocsinh.MaHocSinh and chitietdanhsachlop.MaDSL = '" . $MaDSL . "'";
 $rs3 = $mysqli->query($sql3);
 $row3  = $rs3->fetch_assoc();
 $SoLuongHocSinhTrongLop = $row3['SUM'];
