@@ -7,10 +7,10 @@
     </div>
     <div>
       <a class="navbar-brand brand-logo" href="index.php?action=TiepNhanHocSinh">
-        <img src="../../Admin/images/logo-text.svg" alt="logo1" />
+        <img src="images/logo-text.svg" alt="logo1" />
       </a>
       <a class="navbar-brand brand-logo-mini" href="index.php?action=TiepNhanHocSinh">
-        <img src="../../Admin/images/logo.png" alt="logo2" />
+        <img src="images/logo.png" alt="logo2" />
       </a>
     </div>
   </div>
@@ -41,7 +41,7 @@
           <img class="img-xs rounded-circle" src="images/logo.png" alt="Profile image"> </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <div class="dropdown-header text-center">
-            <img class="img-md rounded-circle" src=".images/logo.png" alt="Profile image">
+            <img class="img-md rounded-circle" src="images/logo.png" alt="Profile image">
             <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
             <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
           </div>

@@ -107,7 +107,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                                                 <!-- <span id="them" class="btn btn-primary text-white me-0" style="float:right; font-size:medium; padding:15px; width:100px"><i class="fa fa-download"></i> Thêm</span> -->
                                                 <!-- Button trigger modal -->
                                                 <br><br>
-                                                <button style="float: left; margin-left: 25px;" id="btn_them" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button>
+                                                <button style="float: left; margin-left: 25px;" id="btn_them" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh vào danh sách</button>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
