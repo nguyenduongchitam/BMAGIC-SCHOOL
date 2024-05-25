@@ -17,11 +17,11 @@ $MaBDTPhocky = $_GET['MaBDTPhocky'];
 
 
 
-echo $Diem15p . '|' . $MaBDTP15p . '<br>';
+// echo $Diem15p . '|' . $MaBDTP15p . '<br>';
 
-echo $Diem1tiet . '|' . $MaBDTP1tiet . '<br>';
+// echo $Diem1tiet . '|' . $MaBDTP1tiet . '<br>';
 
-echo  $Diemhocky . '|' . $MaBDTPhocky . '<br>';
+// echo  $Diemhocky . '|' . $MaBDTPhocky . '<br>';
 
 
 // xử lý array điểm 15p 
@@ -35,7 +35,7 @@ for ($i = 0; $i < count($Diem15pArray); $i++) {
     $value1 = $Diem15pArray[$i];
     $value2 = $MaBDTP15pArray[$i];
 
-    $sql = "UPDATE `bangdiemthanhphan` SET `ketqua`=$value1 WHERE MaBDTP=$value2";
+    $sql = "UPDATE `bangdiemthanhphan` SET `ketqua`= '$value1' WHERE MaBDTP= '$value2'";
     if (mysqli_query($mysqli, $sql)) {
         $updatedMaBDTP15p[] = $value2;
     }
@@ -46,7 +46,7 @@ $remainingMaBDTP15p = array_diff($MaBDTP15pArray, $updatedMaBDTP15p);
 
 // Xóa các giá trị không được cập nhật
 foreach ($remainingMaBDTP15p as $value) {
-    $sql = "DELETE FROM `bangdiemthanhphan` WHERE MaBDTP=$value";
+    $sql = "DELETE FROM `bangdiemthanhphan` WHERE MaBDTP= '$value'";
     mysqli_query($mysqli, $sql);
 }
  
@@ -60,7 +60,7 @@ for ($i = 0; $i < count($Diem1tietArray); $i++) {
     $value1 = $Diem1tietArray[$i];
     $value2 = $MaBDTP1tietArray[$i];
 
-    $sql = "UPDATE `bangdiemthanhphan` SET `ketqua`=$value1 WHERE MaBDTP=$value2";
+    $sql = "UPDATE `bangdiemthanhphan` SET `ketqua`='$value1' WHERE MaBDTP= '$value2'";
     if (mysqli_query($mysqli, $sql)) {
         $updatedMaBDTP1tiet[] = $value2;
     }
@@ -68,7 +68,7 @@ for ($i = 0; $i < count($Diem1tietArray); $i++) {
 
 $remainingMaBDTP1tiet = array_diff($MaBDTP1tietArray, $updatedMaBDTP1tiet);
 foreach ($remainingMaBDTP1tiet as $value) {
-    $sql = "DELETE FROM `bangdiemthanhphan` WHERE MaBDTP=$value";
+    $sql = "DELETE FROM `bangdiemthanhphan` WHERE MaBDTP='$value'";
     mysqli_query($mysqli, $sql);
 }
 
@@ -81,7 +81,7 @@ for ($i = 0; $i < count($DiemhockyArray); $i++) {
     $value1 = $DiemhockyArray[$i];
     $value2 = $MaBDTPhockyArray[$i];
 
-    $sql = "UPDATE `bangdiemthanhphan` SET `ketqua`=$value1 WHERE MaBDTP=$value2";
+    $sql = "UPDATE `bangdiemthanhphan` SET `ketqua`= '$value1' WHERE MaBDTP='$value2'";
     if (mysqli_query($mysqli, $sql)) {
         $updatedMaBDTPhocky[] = $value2;
     }
@@ -89,6 +89,6 @@ for ($i = 0; $i < count($DiemhockyArray); $i++) {
 
 $remainingMaBDTPhocky = array_diff($MaBDTPhockyArray, $updatedMaBDTPhocky);
 foreach ($remainingMaBDTPhocky as $value) {
-    $sql = "DELETE FROM `bangdiemthanhphan` WHERE MaBDTP=$value";
+    $sql = "DELETE FROM `bangdiemthanhphan` WHERE MaBDTP='$value'";
     mysqli_query($mysqli, $sql);
 }

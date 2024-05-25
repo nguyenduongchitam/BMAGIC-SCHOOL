@@ -1,9 +1,11 @@
 <?php
 // echo "xcv asdf xcv";
-$mysqli = new mysqli("localhost","root","","qlhs");
+$mysqli = new mysqli("localhost", "root", "", "qlhs");
 
 $MaCTDSL = $_POST['MaCTDSL'];
 $MaHocSinh = $_POST['MaHocSinh'];
+$namhoc = $_POST['namhoc'];
+
 
 // $sql = "DELETE FROM chitietdanhsachlop WHERE MaCTDSL = '" . $MaCTDSL . "'";
 
@@ -25,24 +27,31 @@ if ($rs->num_rows > 0) {
 }
 
 if ($ind == 1) {
+    $flag = false;
     for ($i = 0; $i < sizeof($arr); $i++) {
         // Xoa bang diem mon hoc
         $sql1 = "DELETE FROM bangdiemmh WHERE MaBD = '" . $arr[$i] . "'";
-        mysqli_query($mysqli, $sql1);
 
-        // Xoa bang diem
-        $sql2 = "DELETE FROM bangdiem WHERE MaBangDiem = '" . $arr[$i] . "'";
-        mysqli_query($mysqli, $sql2);
+        if (mysqli_query($mysqli, $sql1) == true) {
+            // Xoa bang diem
+            $sql2 = "DELETE FROM bangdiem WHERE MaBangDiem = '" . $arr[$i] . "'";
+            mysqli_query($mysqli, $sql2);
+        } else {
+            echo "Không thể xóa vì đã có điểm môn học";
+            $flag = true;
+            break;
+        }
     }
 
-    // Xoa Chi tiet danh sach lop
-    $sql3 = "DELETE FROM chitietdanhsachlop WHERE MaCTDSL = '" . $MaCTDSL . "'";
-    mysqli_query($mysqli, $sql3);
+    if ($flag != true) {
+        // Xoa Chi tiet danh sach lop
+        $sql3 = "DELETE FROM chitietdanhsachlop WHERE MaCTDSL = '" . $MaCTDSL . "'";
+        mysqli_query($mysqli, $sql3);
 
-    $sql4 = "UPDATE hocsinh SET Status='Mới' WHERE MaHocSinh = '" . $MaHocSinh . "'";
-    mysqli_query($mysqli, $sql4);
-
-    echo "Thành công";
+        $sql4 = "UPDATE hocsinh SET Status='Mới' WHERE MaHocSinh = '" . $MaHocSinh . "'";
+        mysqli_query($mysqli, $sql4);
+        echo "Thành công";
+    }
 } else {
     echo "Không thể xóa vì đã có điểm môn học";
 }

@@ -367,16 +367,32 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             var MaCTDSL = table.row(row).data().MaCTDSL;
             var MaHocSinh = table.row(row).data().MaHocSinh;
 
+            var namhoc = document.getElementById("NamHoc").value;
+            var lop = document.getElementById("Lop").value;
+
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
                 $.post("pages/LapDanhSachLop/XoaHocSinh.php", {
                         MaCTDSL: MaCTDSL,
                         MaHocSinh: MaHocSinh,
+                        namhoc: namhoc,
                     },
                     function(data, status) {
                         if (status == "success") {
                             alert(data);
                             table.ajax.reload();
+
+                            $.post("pages/LapDanhSachLop/GetSiSoAjax.php", {
+                                    namhoc: namhoc,
+                                    lop: lop,
+                                },
+                                function(data, status) {
+                                    if (status == "success") {
+                                        document.getElementById("SiSo").value = data;
+                                        table.ajax.reload();
+                                    }
+                                }
+                            );
                         }
                     }
                 );
@@ -415,6 +431,17 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                         if (status == "success") {
                             alert(data);
                             table.ajax.reload();
+                            $.post("pages/LapDanhSachLop/GetSiSoAjax.php", {
+                                    namhoc: namhoc,
+                                    lop: lop,
+                                },
+                                function(data, status) {
+                                    if (status == "success") {
+                                        document.getElementById("SiSo").value = data;
+                                        table.ajax.reload();
+                                    }
+                                }
+                            );
                         }
                     }
                 );
@@ -443,7 +470,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                 $("#exampleModalLong").modal('show');
                 // Load table them hs
                 $.post("pages/LapDanhSachLop/LoadTableHS.php", {
-                        namhoc : namhoc
+                        namhoc: namhoc
                     },
                     function(data, status) {
                         if (status == "success") {
@@ -467,7 +494,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             if ($(this).val().length >= 0) {
                 $.post("pages/LapDanhSachLop/SearchHSAjax.php", {
                         Search: Search,
-                        namhoc : namhoc
+                        namhoc: namhoc
                     },
                     function(data, status) {
                         if (status == "success") {

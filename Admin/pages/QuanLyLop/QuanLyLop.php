@@ -99,10 +99,12 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $Loplist = array();
                                             $sqlLop = "SELECT MaLop, TenLop, Lop.MaKhoi, TenKhoi FROM LOP, KHOILOP WHERE LOP.MAKHOI = KHOILOP.MAKHOI";
                                             $resultLop = $mysqli->query($sqlLop);
                                             $stt = 0;
                                             while ($rowLop = $resultLop->fetch_assoc()) {
+                                                $Loplist[] = $rowLop['TenLop'];
                                                 $stt += 1;
                                                 echo '
                                                         <tr>
@@ -221,7 +223,7 @@
         <script>
             $(document).ready(function() {
                 // Sửa
-                $(".btn-Sua").click(function() {
+                $('#example').on('click', '.btn-Sua', function() {
                     $('#myModal').modal('show');
 
                     var row = $(this).closest('tr');
@@ -248,6 +250,8 @@
                 // Xử lý validation cho modal Sửa
                 var updateFlag1 = false; // được submit
                 var updateFlag2 = false;
+                var existing = <?php echo json_encode($Loplist); ?>;
+                const originalupdate = $(modalTenLop).val();
 
                 $("#modalTenLop").blur(function() {
                     var Lop = $(this).val();
@@ -255,6 +259,10 @@
                     if (!regex.test(Lop) || Lop.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#TenLHError").text("Tên lớp học không được chứa ký tự đặc biệt và để trống");
+                        updateFlag1 = true;
+                    } else if (existing.includes(Lop) && Lop !== originalupdate) {
+                        $(this).addClass("is-invalid");
+                        $("#TenLHError").text("Tên lớp học đã tồn tại");
                         updateFlag1 = true;
                     } else {
                         $(this).removeClass("is-invalid");
@@ -289,13 +297,17 @@
                 // Xử lý validation cho modal Thêm
                 var addFlag1 = true; // không được submit
                 var addFlag2 = true;
-
+                const originaladd = $(modalTenLopadd).val();
                 $("#modalTenLopadd").blur(function() {
                     var Lop = $(this).val();
                     var regex = /^[a-zA-ZÀ-ỹ\s0-9]*$/;
                     if (!regex.test(Lop) || Lop.trim() === "") {
                         $(this).addClass("is-invalid");
                         $("#TenLopErroradd").text("Tên lớp học không được chứa ký tự đặc biệt và không được để trống");
+                        addFlag1 = true;
+                    } else if (existing.includes(Lop) && Lop !== originaladd) {
+                        $(this).addClass("is-invalid");
+                        $("#TenLopErroradd").text("Tên lớp học đã tồn tại");
                         addFlag1 = true;
                     } else {
                         $(this).removeClass("is-invalid");
