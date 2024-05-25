@@ -233,11 +233,11 @@
 
         $('#NamHoc').change(function() {
             var NamHoc = $(this).val();
-            $('#MonHoc').prop('disabled', false).val("");
-            $('#HocKy').prop('disabled', false).val("");
+            $('#MonHoc').prop('disabled', false).val("Môn học");
+            $('#HocKy').prop('disabled', false).val("Học kỳ");
             $('#MonHoc').change(function() {
                 var MonHoc = $(this).val();
-                $('#HocKy').prop('disabled', false).val(""); // Reset dropdown when subject changes
+                $('#HocKy').prop('disabled', false).val("Học kỳ"); // Reset dropdown when subject changes
                 $('#tb').empty(); // Clear table content when subject changes
 
                 $('#HocKy').change(function() {

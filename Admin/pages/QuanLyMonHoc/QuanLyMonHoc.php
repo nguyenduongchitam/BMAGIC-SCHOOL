@@ -80,11 +80,25 @@ $DiemToiThieu = $row["DiemToiThieu"];
                             <br>
                             <div class="text-uppercase" style="text-align: center; font-weight: bolder; font-size: large;">Quản lý môn học</div>
                             <div class="card-body">
-                                <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button><br><br>
-                                <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php">
-                                    <input type="file" name="file">
-                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
-                                </form>
+                                <button class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm môn học mới</button>
+                                <button style="float: right" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Nhap" type="button"><i class='bx bx-import btn-Nhap'></i>Nhập file</button><br><br><br>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <form method="POST" enctype="multipart/form-data" action="pages/QuanLyMonHoc/ImportExcel.php">
+                                                    <input type="file" name="file">
+                                                    <button type="submit" id="ImportExcel" name="Send"> Nhập dữ liệu </button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -240,20 +254,6 @@ $DiemToiThieu = $row["DiemToiThieu"];
                     $('#modalDiemDat').val(diemDat);
                 });
 
-                // $(".btn-Sua").click(function() {
-                //     alert("sdfsdf")
-                //     $('#myModal').modal('show');
-
-                //     var row = $(this).closest('tr');
-                //     var maMonHoc = row.find('td:eq(0)').text();
-                //     var tenMonHoc = row.find('td:eq(1)').text();
-                //     var diemDat = row.find('td:eq(2)').text();
-
-                //     // Điền dữ liệu vào modal
-                //     $('#modalMaMonHoc').val(maMonHoc);
-                //     $('#modalTenMonHoc').val(tenMonHoc);
-                //     $('#modalDiemDat').val(diemDat);
-                // });
                 // Xóa
                 $(".btn-Xoa").click(function() {
                     $(this).closest('tr').remove();

@@ -7,7 +7,7 @@
     <title>Danh sách học sinh</title>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+    <!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -106,9 +106,8 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                                                 Danh sách lớp
                                                 <!-- <span id="them" class="btn btn-primary text-white me-0" style="float:right; font-size:medium; padding:15px; width:100px"><i class="fa fa-download"></i> Thêm</span> -->
                                                 <!-- Button trigger modal -->
-                                                <button type="button" id="btn_them" class="btn btn-primary" style="float:right; font-size:medium; padding:15px; width:100px">
-                                                    Thêm
-                                                </button>
+                                                <br><br>
+                                                <button style="float: left; margin-left: 25px;" id="btn_them" class="btn btn-primary btn-lg text-white mb-0 me-0 btn-Them" type="button"><i class='bx bx-plus btn-Them'></i>Thêm học sinh vào danh sách</button>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -268,7 +267,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
 
 <script>
     var listSelectHS = [];
-    
+
 
     $(document).ready(function() {
         $.noConflict(true);
@@ -313,9 +312,25 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
                 },
             ],
             dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json',
+            },
+
+            layout: {
+                topStart: {
+                    buttons: [
+                        'pdf',
+                        'csv',
+                        'excel',
+                        'copy',
+                        'colvis'
+                    ]
+                },
+                topEnd: 'search',
+                bottomStart: 'pageLength',
+                bottomEnd: 'info',
+                bottom2center: 'paging'
+            }
 
         });;
 
@@ -345,13 +360,13 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             }
 
         });
-        
+
         $('#DanhSachLop tbody').on('click', '.delete', function() {
             var row = $(this).closest('tr');
 
             var MaCTDSL = table.row(row).data().MaCTDSL;
             var MaHocSinh = table.row(row).data().MaHocSinh;
-            
+
             let text = "Bạn có muốn xóa không?";
             if (confirm(text) == true) {
                 $.post("pages/LapDanhSachLop/XoaHocSinh.php", {
@@ -369,7 +384,7 @@ $mysqli = new mysqli("localhost", "root", "", "qlhs");
             }
         });
 
-    
+
 
         // Xu ly su kien nhan row thi check checkbox
         $(document).on('click', '.row_hs', function(event) {

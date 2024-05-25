@@ -148,9 +148,10 @@
 <!-- Charts -->
 <script>
     $(document).ready(function() {
+        
         $('#NamHoc').change(function() {
             var NamHoc = $(this).val();
-            $('#HocKy').prop('disabled', false).val("");
+            $('#HocKy').prop('disabled', false).val("Học kỳ");
             $('#HocKy').change(function() {
                 var HocKy = $(this).val();
                 // $('#tb').empty();
