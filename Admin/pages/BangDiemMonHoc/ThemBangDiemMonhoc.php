@@ -4,6 +4,7 @@ include("../../../Database/Config/config.php");
 
 if(isset($_GET['MaBDMH']))
 {   
+    
 $MaBDMH = $_GET['MaBDMH'];
 $Diem15p = $_GET['Diem15p'];
 $Diem1tiet = $_GET['Diem1tiet'];

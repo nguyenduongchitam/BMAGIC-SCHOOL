@@ -180,7 +180,7 @@
                             <input type="text" class="form-control mb-2 bg-secondary" id="modalMaHocSinh" name="maHocSinh" readonly>
 
                             <label for="modalTenHocSinh" class="col-sm-3 col-form-label fw-bold pb-2">Tên học sinh</label>
-                            <input type="text" class="form-control mb-2" id="modalTenHocSinh" name="tenHocSinh" placeholder="Trần Văn A" required>
+                            <input type="text" class="form-control mb-2" id="modalTenHocSinh" name="tenHocSinh" placeholder="Trần Văn A" >
                             <span id="TenHSError" class="error-message"></span>
 
                             <label for="modalNgaySinh" class="col-sm-3 col-form-label fw-bold">Ngày sinh</label>
@@ -310,10 +310,10 @@
                         $("#TenHSError").text("");
                         updateFlag1 = false;
                     }
-                    toggleUpdateButton();
+                   
                 });
 
-
+ 
                 $("#modalNgaySinh").blur(function() {
                     var ngaySinh = $(this).val();
                     if (ngaySinh.trim() === "") {

@@ -495,9 +495,10 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
 
                     var MaBDMH = $('#BDMH').val();
                     var Diem15p = parseFloat($('input[name="Diem15p"]').val());
+                     
                     var Diem1tiet = parseFloat($('input[name="Diem1tiet"]').val());
                     var Diemhocky = parseFloat($('input[name="Diemhocky"]').val());
-
+                   
                     var isNotEmpty = $('#Diem15p').val() !== '' || $('#Diem1tiet').val() !== '' || $('#Diemhocky').val() !== '';
 
                     // Kiểm tra điểm có hợp lệ không nếu có giá trị
@@ -510,21 +511,37 @@ $resultNienKhoa = mysqli_query($mysqli, $sqlNienKhoa);
                    
                    $DiemToiDa  =  <?php echo $DiemToiDa  ?>;
                    $DiemToiThieu = <?php echo $DiemToiThieu ?>;
-                    if (Diem15p < $DiemToiThieu || Diem15p > $DiemToiDa) {
+
+                    if (Diem15p < $DiemToiThieu || Diem15p > $DiemToiDa ) {
                         alert('Điểm 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                         isValid = false;
                     }
+                   else isValid = true;
 
                     if (Diem1tiet < $DiemToiThieu || Diem1tiet > $DiemToiDa) {
                         alert('Điểm 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                         isValid = false;
-                    }
+                    } else isValid = true;
 
                     if (Diemhocky < $DiemToiThieu || Diemhocky > $DiemToiDa) {
                         alert('Điểm 15 phút phải là số và nằm trong khoảng từ <?php echo $DiemToiThieu ?> đến <?php echo $DiemToiDa  ?>.');
                         isValid = false;
                     }
                     if (isValid) {
+
+
+                        if (isNaN(Diem15p))
+                        {
+                            Diem15p=null;
+                        }
+                        if (isNaN(Diem1tiet))
+                        {
+                            Diem1tiet=null;
+                        }
+                        if (isNaN(Diemhocky))
+                        {
+                            Diemhocky=null;
+                        }
                         $.ajax({
                             url: 'pages/BangDiemMonHoc/ThemBangDiemMonhoc.php',
                             method: 'GET',

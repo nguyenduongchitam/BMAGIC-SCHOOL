@@ -2,7 +2,7 @@
 include "../../../Database/Config/config.php";
 if (isset($_POST['submit']) && ($_POST['submit'] == 'Cập nhật')) {
 
-    $maHocSinhS = $_POST['maHocSinh'];
+    $maHocSinh = $_POST['maHocSinh'];
     $tenHocSinh = $_POST['tenHocSinh'];
     $ngaySinh = $_POST['ngaySinh'];
     $gioiTinh = $_POST['gioiTinh'];
@@ -11,9 +11,9 @@ if (isset($_POST['submit']) && ($_POST['submit'] == 'Cập nhật')) {
 
     $sql = "UPDATE HOCSINH 
             SET TenHocSinh='$tenHocSinh', NgaySinh='$ngaySinh', GioiTinh='$gioiTinh', DiaChi='$diaChi', Email='$email' 
-            WHERE MaHocSinh='$maHocSinhS'";
+            WHERE MaHocSinh='$maHocSinh'";
     $mysqli->query($sql);
 
-    header("Location: http://localhost:3000/BMAGIC-SCHOOL/Admin/index.php?action=TiepNhanHocSinh");
+    header("Location: http://localhost:3000/Admin/index.php?action=TiepNhanHocSinh");
     exit();
 }
